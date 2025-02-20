@@ -27,8 +27,9 @@ public class UserController {
     }
 
     @GetMapping("/search")
-    public Optional<User> getUserByQueryParam(@RequestParam Integer id) {
-        return userService.getUser(id);
+    public List<User> getUserByQueryParam(@RequestParam String username) {
+        System.out.println("Searching for username: " + username);
+        return userService.getUserByUsername(username);
     }
 
     @GetMapping("/{id}")
