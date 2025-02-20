@@ -28,7 +28,6 @@ public class UserController {
 
     @GetMapping("/search")
     public List<User> getUserByQueryParam(@RequestParam String username) {
-        System.out.println("Searching for username: " + username);
         return userService.getUserByUsername(username);
     }
 
