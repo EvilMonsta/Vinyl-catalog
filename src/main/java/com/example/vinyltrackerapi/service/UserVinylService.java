@@ -8,7 +8,9 @@ import com.example.vinyltrackerapi.api.models.Vinyl;
 import com.example.vinyltrackerapi.api.repositories.UserVinylRepository;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class UserVinylService {
@@ -42,6 +44,6 @@ public class UserVinylService {
             userVinyl.setStatus(newStatus);
             return userVinylRepository.save(userVinyl);
         }
-        throw new RuntimeException("Запись не найдена!");
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Запись не найдена!");
     }
 }
