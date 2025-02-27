@@ -1,6 +1,8 @@
 package com.example.vinyltrackerapi.api.models;
 
 import com.example.vinyltrackerapi.api.enums.Genre;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -51,8 +53,10 @@ public class Vinyl {
 
     @ManyToOne
     @JoinColumn(name = "added_by_id", nullable = false)
+    @JsonIgnoreProperties({"username", "email", "password", "role", "userVinyls"})
     private User addedBy;
 
     @OneToMany(mappedBy = "vinyl", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<UserVinyl> userVinyls;
 }

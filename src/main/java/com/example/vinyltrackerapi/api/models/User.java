@@ -1,6 +1,7 @@
 package com.example.vinyltrackerapi.api.models;
 
 import com.example.vinyltrackerapi.api.enums.Role;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -42,13 +43,6 @@ public class User {
     private Role role;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<UserVinyl> userVinyls;
-
-    public User(Integer id, String username, String email, String password, Role role) {
-        this.id = id;
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.role = role;
-    }
 }

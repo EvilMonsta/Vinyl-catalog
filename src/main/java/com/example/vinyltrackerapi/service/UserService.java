@@ -18,11 +18,42 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    public Optional<User> getUser(Integer id) {
+        return userRepository.findById(id);
+    }
+
     public List<User> getUserByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 
-    public Optional<User> getUser(Integer id) {
-        return userRepository.findById(id);
+    public Optional<User> getUserByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    public User createUser(User user) {
+        if (userRepository.existsByEmail(user.getEmail())) {
+            throw new RuntimeException("Пользователь с таким email уже существует!");
+        }
+        if (userRepository.existsByUsername(user.getUsername())) {
+            throw new RuntimeException("Пользователь с таким username уже существует!");
+        }
+        return userRepository.save(user);
+    }
+
+    public User updateUser(Integer id, User newUserData) {
+        return userRepository.findById(id).map(user -> {
+            user.setUsername(newUserData.getUsername());
+            user.setEmail(newUserData.getEmail());
+            user.setPassword(newUserData.getPassword());
+            user.setRole(newUserData.getRole());
+            return userRepository.save(user);
+        }).orElseThrow(() -> new RuntimeException("Пользователь не найден!"));
+    }
+
+    public void deleteUser(Integer id) {
+        if (!userRepository.existsById(id)) {
+            throw new RuntimeException("Пользователь с ID " + id + " не найден!");
+        }
+        userRepository.deleteById(id);
     }
 }
