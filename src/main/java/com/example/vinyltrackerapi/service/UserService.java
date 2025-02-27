@@ -4,7 +4,9 @@ import com.example.vinyltrackerapi.api.models.User;
 import com.example.vinyltrackerapi.api.repositories.UserRepository;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class UserService {
@@ -32,10 +34,12 @@ public class UserService {
 
     public User createUser(User user) {
         if (userRepository.existsByEmail(user.getEmail())) {
-            throw new RuntimeException("Пользователь с таким email уже существует!");
+            throw new ResponseStatusException(HttpStatus.CONFLICT,
+                    "Пользователь с таким email уже существует!");
         }
         if (userRepository.existsByUsername(user.getUsername())) {
-            throw new RuntimeException("Пользователь с таким username уже существует!");
+            throw new ResponseStatusException(HttpStatus.CONFLICT,
+                    "Пользователь с таким email уже существует!");
         }
         return userRepository.save(user);
     }
@@ -52,7 +56,8 @@ public class UserService {
 
     public void deleteUser(Integer id) {
         if (!userRepository.existsById(id)) {
-            throw new RuntimeException("Пользователь с ID " + id + " не найден!");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "Пользователь с ID " + id + " не найден!");
         }
         userRepository.deleteById(id);
     }

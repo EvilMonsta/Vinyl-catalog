@@ -5,8 +5,9 @@ import com.example.vinyltrackerapi.api.models.Vinyl;
 import com.example.vinyltrackerapi.api.repositories.VinylRepository;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class VinylService {
@@ -37,7 +38,7 @@ public class VinylService {
         if (releaseYear != null) {
             return vinylRepository.findByReleaseYear(releaseYear);
         }
-        return vinylRepository.findAll(); // Если параметры не переданы, вернуть все винилы
+        return vinylRepository.findAll();
     }
 
     public Vinyl createVinyl(Vinyl vinyl) {
@@ -58,7 +59,8 @@ public class VinylService {
 
     public void deleteVinyl(Integer id) {
         if (!vinylRepository.existsById(id)) {
-            throw new RuntimeException("Винил с ID " + id + " не найден!");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "Винил с ID " + id + " не найден!");
         }
         vinylRepository.deleteById(id);
     }
