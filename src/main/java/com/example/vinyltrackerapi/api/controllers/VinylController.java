@@ -28,7 +28,7 @@ public class VinylController {
     public List<VinylDto> getAllVinyls() {
         return vinylService.getAllVinyls().stream()
                 .map(VinylDto::new)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @GetMapping("/{id}")
@@ -46,7 +46,7 @@ public class VinylController {
             @RequestParam(required = false) Integer releaseYear) {
         return vinylService.searchVinyls(title, artist, genre, releaseYear)
                 .stream().map(VinylDto::new)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @PostMapping("/create")

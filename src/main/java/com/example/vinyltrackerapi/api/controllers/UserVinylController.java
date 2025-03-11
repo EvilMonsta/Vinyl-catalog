@@ -47,7 +47,7 @@ public class UserVinylController {
     public List<UserVinylDto> getUserVinyls(@PathVariable Integer userId) {
         return userVinylService.getUserVinyls(userId).stream()
                 .map(UserVinylDto::new)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @PutMapping("/update-status")

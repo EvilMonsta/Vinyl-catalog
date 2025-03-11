@@ -28,7 +28,7 @@ public class UserController {
     public List<UserDto> getAllUsers() {
         return userService.getAllUsers().stream()
                 .map(UserDto::new)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     // ✅ Получить пользователя по ID
@@ -44,7 +44,7 @@ public class UserController {
     public List<UserDto> getUserByUsername(@RequestParam String username) {
         return userService.getUserByUsername(username).stream()
                 .map(UserDto::new)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     // ✅ Найти пользователя по email
