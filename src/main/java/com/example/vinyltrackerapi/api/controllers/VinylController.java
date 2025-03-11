@@ -1,9 +1,12 @@
 package com.example.vinyltrackerapi.api.controllers;
 
+import com.example.vinyltrackerapi.api.dto.VinylDto;
 import com.example.vinyltrackerapi.api.enums.Genre;
 import com.example.vinyltrackerapi.api.models.Vinyl;
 import com.example.vinyltrackerapi.service.VinylService;
 import java.util.List;
+import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,43 +20,44 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/vinyls")
+@RequiredArgsConstructor
 public class VinylController {
     private final VinylService vinylService;
 
-    public VinylController(VinylService vinylService) {
-        this.vinylService = vinylService;
-    }
-
     @GetMapping
-    public List<Vinyl> getAllVinyls() {
-        return vinylService.getAllVinyls();
+    public List<VinylDto> getAllVinyls() {
+        return vinylService.getAllVinyls().stream()
+                .map(VinylDto::new)
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Vinyl> getVinylById(@PathVariable Integer id) {
+    public ResponseEntity<VinylDto> getVinylById(@PathVariable Integer id) {
         return vinylService.getVinyl(id)
-                .map(ResponseEntity::ok)
+                .map(vinyl -> ResponseEntity.ok(new VinylDto(vinyl)))
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/search")
-    public List<Vinyl> searchVinyls(
+    public List<VinylDto> searchVinyls(
             @RequestParam(required = false) String title,
             @RequestParam(required = false) String artist,
             @RequestParam(required = false) Genre genre,
-            @RequestParam(required = false) Integer releaseYear
-    ) {
-        return vinylService.searchVinyls(title, artist, genre, releaseYear);
+            @RequestParam(required = false) Integer releaseYear) {
+        return vinylService.searchVinyls(title, artist, genre, releaseYear)
+                .stream().map(VinylDto::new)
+                .collect(Collectors.toList());
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Vinyl> createVinyl(@RequestBody Vinyl vinyl) {
-        return ResponseEntity.ok(vinylService.createVinyl(vinyl));
+    public ResponseEntity<VinylDto> createVinyl(@RequestBody VinylDto vinylDto) {
+        return ResponseEntity.ok(new VinylDto(vinylService.createVinyl(vinylDto)));
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Vinyl> updateVinyl(@PathVariable Integer id, @RequestBody Vinyl vinyl) {
-        return ResponseEntity.ok(vinylService.updateVinyl(id, vinyl));
+    public ResponseEntity<VinylDto> updateVinyl(@PathVariable Integer id, @RequestBody VinylDto vinylDto) {
+        Vinyl updatedVinyl = vinylService.updateVinyl(id, vinylDto.toEntity());
+        return ResponseEntity.ok(new VinylDto(updatedVinyl));
     }
 
     @DeleteMapping("/delete/{id}")

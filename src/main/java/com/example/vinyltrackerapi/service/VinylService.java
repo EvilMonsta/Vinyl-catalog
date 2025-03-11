@@ -1,7 +1,10 @@
 package com.example.vinyltrackerapi.service;
 
+import com.example.vinyltrackerapi.api.dto.VinylDto;
 import com.example.vinyltrackerapi.api.enums.Genre;
+import com.example.vinyltrackerapi.api.models.User;
 import com.example.vinyltrackerapi.api.models.Vinyl;
+import com.example.vinyltrackerapi.api.repositories.UserRepository;
 import com.example.vinyltrackerapi.api.repositories.VinylRepository;
 import java.util.List;
 import java.util.Optional;
@@ -12,9 +15,11 @@ import org.springframework.web.server.ResponseStatusException;
 @Service
 public class VinylService {
     private final VinylRepository vinylRepository;
+    private final UserRepository userRepository;
 
-    public VinylService(VinylRepository vinylRepository) {
+    public VinylService(VinylRepository vinylRepository, UserRepository userRepository) {
         this.vinylRepository = vinylRepository;
+        this.userRepository = userRepository;
     }
 
     public List<Vinyl> getAllVinyls() {
@@ -41,7 +46,16 @@ public class VinylService {
         return vinylRepository.findAll();
     }
 
-    public Vinyl createVinyl(Vinyl vinyl) {
+    public Vinyl createVinyl(VinylDto vinylDto) {
+        Vinyl vinyl = vinylDto.toEntity();
+
+        if (vinylDto.getAddedById() != null) {
+            User addedBy = userRepository.findById(vinylDto.getAddedById())
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                            "Пользователь не найден!"));
+            vinyl.setAddedBy(addedBy);
+        }
+
         return vinylRepository.save(vinyl);
     }
 

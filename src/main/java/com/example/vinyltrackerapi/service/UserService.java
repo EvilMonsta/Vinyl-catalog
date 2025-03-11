@@ -1,5 +1,6 @@
 package com.example.vinyltrackerapi.service;
 
+import com.example.vinyltrackerapi.api.dto.UserDto;
 import com.example.vinyltrackerapi.api.models.User;
 import com.example.vinyltrackerapi.api.repositories.UserRepository;
 import java.util.List;
@@ -32,15 +33,19 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
-    public User createUser(User user) {
+    public User createUser(UserDto userDto) {
+        User user = userDto.toEntity();
+
         if (userRepository.existsByEmail(user.getEmail())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT,
                     "Пользователь с таким email уже существует!");
         }
+
         if (userRepository.existsByUsername(user.getUsername())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT,
-                    "Пользователь с таким email уже существует!");
+                    "Пользователь с таким username уже существует!");
         }
+
         return userRepository.save(user);
     }
 
