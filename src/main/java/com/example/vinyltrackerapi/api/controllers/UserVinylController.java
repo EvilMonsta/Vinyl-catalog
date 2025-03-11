@@ -4,7 +4,6 @@ import com.example.vinyltrackerapi.api.dto.UserVinylDto;
 import com.example.vinyltrackerapi.api.enums.VinylStatus;
 import com.example.vinyltrackerapi.service.UserVinylService;
 import java.util.List;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
