@@ -5,6 +5,7 @@ import com.example.vinyltrackerapi.api.models.User;
 import com.example.vinyltrackerapi.api.repositories.UserRepository;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -12,9 +13,11 @@ import org.springframework.web.server.ResponseStatusException;
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final VinylService vinylService;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, @Lazy VinylService vinylService) {
         this.userRepository = userRepository;
+        this.vinylService = vinylService;
     }
 
     public List<User> getAllUsers() {
@@ -60,10 +63,10 @@ public class UserService {
     }
 
     public void deleteUser(Integer id) {
-        if (!userRepository.existsById(id)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                    "Пользователь с ID " + id + " не найден!");
-        }
+        User user = userRepository.findById(id).orElseThrow(() -> new
+                ResponseStatusException(HttpStatus.NOT_FOUND,
+                "Пользователь с ID " + id + " не найден!"));
+        vinylService.detachUserFromVinyl(user);
         userRepository.deleteById(id);
     }
 }

@@ -6,9 +6,7 @@ import com.example.vinyltrackerapi.api.models.User;
 import com.example.vinyltrackerapi.api.models.UserVinyl;
 import com.example.vinyltrackerapi.api.models.UserVinylId;
 import com.example.vinyltrackerapi.api.models.Vinyl;
-import com.example.vinyltrackerapi.api.repositories.UserRepository;
 import com.example.vinyltrackerapi.api.repositories.UserVinylRepository;
-import com.example.vinyltrackerapi.api.repositories.VinylRepository;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.http.HttpStatus;
@@ -18,21 +16,21 @@ import org.springframework.web.server.ResponseStatusException;
 @Service
 public class UserVinylService {
     private final UserVinylRepository userVinylRepository;
-    private final UserRepository userRepository;
-    private final VinylRepository vinylRepository;
+    private final UserService userService;
+    private final VinylService vinylService;
 
     public UserVinylService(UserVinylRepository userVinylRepository,
-                            UserRepository userRepository, VinylRepository vinylRepository) {
+                            UserService userService, VinylService vinylService) {
         this.userVinylRepository = userVinylRepository;
-        this.userRepository = userRepository;
-        this.vinylRepository = vinylRepository;
+        this.userService = userService;
+        this.vinylService = vinylService;
     }
 
     public UserVinyl addVinylToUser(Integer userId, Integer vinylId, VinylStatus status) {
-        final User user = userRepository.findById(userId)
+        final User user = userService.getUser(userId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "Пользователь не найден!"));
-        final Vinyl vinyl = vinylRepository.findById(vinylId)
+        final Vinyl vinyl = vinylService.getVinyl(vinylId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Винил не найден!"));
 
         UserVinylDto userVinylDto = new UserVinylDto();
@@ -52,7 +50,7 @@ public class UserVinylService {
     }
 
     public List<UserVinyl> getUserVinyls(Integer userId) {
-        User user = userRepository.findById(userId)
+        User user = userService.getUser(userId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "Пользователь с ID " + userId + " не найден!"));
 

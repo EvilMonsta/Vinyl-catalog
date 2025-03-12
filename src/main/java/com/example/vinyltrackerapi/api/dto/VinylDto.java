@@ -25,7 +25,7 @@ public class VinylDto {
         this.releaseYear = vinyl.getReleaseYear();
         this.description = vinyl.getDescription();
         this.coverUrl = vinyl.getCoverUrl();
-        this.addedById = vinyl.getAddedBy() != null ? vinyl.getAddedBy().getId() : null;
+        this.addedById = vinyl.getAddedBy() != null ? vinyl.getAddedBy().getId() : -1;
     }
 
     public Vinyl toEntity() {

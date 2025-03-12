@@ -52,7 +52,7 @@ public class Vinyl {
     private String coverUrl;
 
     @ManyToOne
-    @JoinColumn(name = "added_by_id", nullable = false)
+    @JoinColumn(name = "added_by_id", referencedColumnName = "id", nullable = true)
     @JsonIgnoreProperties({"username", "email", "password", "role", "userVinyls"})
     private User addedBy;
 
