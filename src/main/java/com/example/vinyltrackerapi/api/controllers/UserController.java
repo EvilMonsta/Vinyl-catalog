@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
     private final UserService userService;
 
-    // ✅ Получить всех пользователей
     @GetMapping
     public List<UserDto> getAllUsers() {
         return userService.getAllUsers().stream()
@@ -30,7 +29,6 @@ public class UserController {
                 .toList();
     }
 
-    // ✅ Получить пользователя по ID
     @GetMapping("/{id}")
     public ResponseEntity<UserDto> getUserById(@PathVariable Integer id) {
         return userService.getUser(id)
@@ -38,7 +36,6 @@ public class UserController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // ✅ Найти пользователя по username
     @GetMapping("/search")
     public List<UserDto> getUserByUsername(@RequestParam String username) {
         return userService.getUserByUsername(username).stream()
@@ -46,7 +43,6 @@ public class UserController {
                 .toList();
     }
 
-    // ✅ Найти пользователя по email
     @GetMapping("/email")
     public ResponseEntity<UserDto> getUserByEmail(@RequestParam String email) {
         return userService.getUserByEmail(email)
@@ -54,20 +50,17 @@ public class UserController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // ✅ Создать пользователя
     @PostMapping("/create")
     public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) {
         return ResponseEntity.ok(new UserDto(userService.createUser(userDto)));
     }
 
-    // ✅ Обновить пользователя
     @PutMapping("/update/{id}")
     public ResponseEntity<UserDto> updateUser(@PathVariable Integer id, @RequestBody UserDto userDto) {
         User updatedUser = userService.updateUser(id, userDto.toEntity());
         return ResponseEntity.ok(new UserDto(updatedUser));
     }
 
-    // ✅ Удалить пользователя
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Integer id) {
         userService.deleteUser(id);
