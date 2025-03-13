@@ -26,19 +26,21 @@ public class UserVinylService {
         this.vinylService = vinylService;
     }
 
-    public UserVinyl addVinylToUser(Integer userId, Integer vinylId, VinylStatus status) {
+    public UserVinylDto addVinylToUser(Integer userId, Integer vinylId, VinylStatus status) {
         final User user = userService.getUser(userId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "Пользователь не найден!"));
         final Vinyl vinyl = vinylService.getVinyl(vinylId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Винил не найден!"));
 
-        UserVinylDto userVinylDto = new UserVinylDto();
-        userVinylDto.setUserId(userId);
-        userVinylDto.setVinylId(vinylId);
-        userVinylDto.setStatus(status);
+        UserVinyl userVinyl = new UserVinyl();
+        userVinyl.setUser(user);
+        userVinyl.setVinyl(vinyl);
+        userVinyl.setStatus(status);
 
-        return userVinylRepository.save(userVinylDto.toEntity(user, vinyl));
+        UserVinyl savedUserVinyl = userVinylRepository.save(userVinyl);
+
+        return new UserVinylDto(savedUserVinyl);
     }
 
     public Optional<UserVinyl> findUserVinyl(Integer userId, Integer vinylId) {
@@ -55,6 +57,12 @@ public class UserVinylService {
                         "Пользователь с ID " + userId + " не найден!"));
 
         return userVinylRepository.findByUser(user);
+    }
+
+    public List<UserVinylDto> getAllUserVinyls() {
+        return userVinylRepository.findAll().stream()
+                .map(UserVinylDto::new)
+                .toList();
     }
 
     public UserVinyl updateVinylStatus(Integer userId, Integer vinylId, VinylStatus newStatus) {

@@ -10,13 +10,13 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class UserVinylDto {
-    private Integer userId;
-    private Integer vinylId;
+    private UserDto user;
+    private VinylDto vinyl;
     private VinylStatus status;
 
     public UserVinylDto(UserVinyl userVinyl) {
-        this.userId = userVinyl.getUser().getId();
-        this.vinylId = userVinyl.getVinyl().getId();
+        this.user = new UserDto(userVinyl.getUser());
+        this.vinyl = new VinylDto(userVinyl.getVinyl());
         this.status = userVinyl.getStatus();
     }
 

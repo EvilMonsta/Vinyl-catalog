@@ -3,6 +3,9 @@ package com.example.vinyltrackerapi.service;
 import com.example.vinyltrackerapi.api.dto.UserDto;
 import com.example.vinyltrackerapi.api.models.User;
 import com.example.vinyltrackerapi.api.repositories.UserRepository;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.context.annotation.Lazy;
@@ -48,7 +51,7 @@ public class UserService {
             throw new ResponseStatusException(HttpStatus.CONFLICT,
                     "Пользователь с таким username уже существует!");
         }
-
+        user.setPassword(hashPassword(userDto.getPassword()));
         return userRepository.save(user);
     }
 
@@ -56,7 +59,9 @@ public class UserService {
         return userRepository.findById(id).map(user -> {
             user.setUsername(newUserData.getUsername());
             user.setEmail(newUserData.getEmail());
-            user.setPassword(newUserData.getPassword());
+            if (newUserData.getPassword() != null && !newUserData.getPassword().isBlank()) {
+                user.setPassword(hashPassword(newUserData.getPassword()));
+            }
             user.setRole(newUserData.getRole());
             return userRepository.save(user);
         }).orElseThrow(() -> new RuntimeException("Пользователь не найден!"));
@@ -68,5 +73,20 @@ public class UserService {
                 "Пользователь с ID " + id + " не найден!"));
         vinylService.detachUserFromVinyl(user);
         userRepository.deleteById(id);
+    }
+
+    private String hashPassword(String password) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] encodedHash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
+
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : encodedHash) {
+                hexString.append(String.format("%02x", b));
+            }
+            return hexString.toString();
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("eror", e);
+        }
     }
 }

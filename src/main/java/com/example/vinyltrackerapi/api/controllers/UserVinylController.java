@@ -25,7 +25,12 @@ public class UserVinylController {
     public ResponseEntity<UserVinylDto> addUserVinyl(@RequestParam Integer userId,
                                                      @RequestParam Integer vinylId,
                                                      @RequestParam VinylStatus status) {
-        return ResponseEntity.ok(new UserVinylDto(userVinylService.addVinylToUser(userId, vinylId, status)));
+        return ResponseEntity.ok(userVinylService.addVinylToUser(userId, vinylId, status));
+    }
+
+    @GetMapping
+    public List<UserVinylDto> getAllUserVinyls() {
+        return userVinylService.getAllUserVinyls();
     }
 
     @GetMapping("/find")
