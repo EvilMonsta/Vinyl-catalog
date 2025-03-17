@@ -1,7 +1,6 @@
 package com.example.vinyltrackerapi.api.controllers;
 
 import com.example.vinyltrackerapi.api.dto.VinylDto;
-import com.example.vinyltrackerapi.api.enums.Genre;
 import com.example.vinyltrackerapi.api.models.Vinyl;
 import com.example.vinyltrackerapi.service.VinylService;
 import java.util.List;

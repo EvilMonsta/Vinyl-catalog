@@ -4,6 +4,10 @@ import com.example.vinyltrackerapi.api.models.Vinyl;
 import org.springframework.data.jpa.domain.Specification;
 
 public class VinylSpecification {
+    private VinylSpecification() {
+        throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
+    }
+
     public static Specification<Vinyl> hasTitle(String title) {
         return (root, query, criteriaBuilder) -> title == null ? null :
                 criteriaBuilder.like(criteriaBuilder.lower(root.get("title")),

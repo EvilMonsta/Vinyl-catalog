@@ -21,6 +21,10 @@ public class UserVinylService {
     private final VinylService vinylService;
     private final CacheService<List<UserVinyl>> userVinylCache;
     private final CacheService<List<UserVinyl>> vinylUserCache;
+    private final String keyUserVinyls = "user-vinyls-";
+    private final String keyVinylUsers = "vinyl-users-";
+    private final String vinylNotFound = "Винил не найден!";
+    private final String userNotFound = "Пользователь не найден!";
 
     public UserVinylService(UserVinylRepository userVinylRepository,
                             @Lazy UserService userService, @Lazy VinylService vinylService,
@@ -36,9 +40,9 @@ public class UserVinylService {
     public UserVinylDto addVinylToUser(Integer userId, Integer vinylId, VinylStatus status) {
         final User user = userService.getUser(userId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Пользователь не найден!"));
+                        userNotFound));
         final Vinyl vinyl = vinylService.getVinyl(vinylId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Винил не найден!"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, vinylNotFound));
 
         UserVinyl userVinyl = new UserVinyl();
         userVinyl.setUser(user);
@@ -60,7 +64,7 @@ public class UserVinylService {
     }
 
     public List<UserVinyl> getUserVinyls(Integer userId) {
-        String cacheKey = "user-vinyls-" + userId;
+        String cacheKey = keyUserVinyls + userId;
         if (userVinylCache.contains(cacheKey)) {
             return userVinylCache.get(cacheKey);
         }
@@ -75,14 +79,14 @@ public class UserVinylService {
     }
 
     public List<UserVinyl> getUsersByVinyl(Integer vinylId) {
-        String cacheKey = "vinyl-users-" + vinylId;
+        String cacheKey = keyVinylUsers + vinylId;
         if (vinylUserCache.contains(cacheKey)) {
             return vinylUserCache.get(cacheKey);
         }
 
         List<UserVinyl> users = userVinylRepository.findByVinyl(
                 vinylService.getVinyl(vinylId).orElseThrow(() ->
-                        new ResponseStatusException(HttpStatus.NOT_FOUND, "Винил не найден!"))
+                        new ResponseStatusException(HttpStatus.NOT_FOUND, vinylNotFound))
         );
 
         vinylUserCache.put(cacheKey, users);
@@ -110,16 +114,16 @@ public class UserVinylService {
     private void updateCacheAfterChange(Integer userId, Integer vinylId) {
         List<UserVinyl> updatedUserVinyls = userVinylRepository.findByUser(
                 userService.getUser(userId).orElseThrow(() ->
-                        new ResponseStatusException(HttpStatus.NOT_FOUND, "Пользователь не найден!"))
+                        new ResponseStatusException(HttpStatus.NOT_FOUND, userNotFound))
         );
 
         List<UserVinyl> updatedVinylUsers = userVinylRepository.findByVinyl(
                 vinylService.getVinyl(vinylId).orElseThrow(() ->
-                        new ResponseStatusException(HttpStatus.NOT_FOUND, "Винил не найден!"))
+                        new ResponseStatusException(HttpStatus.NOT_FOUND, vinylNotFound))
         );
 
-        userVinylCache.put("user-vinyls-" + userId, updatedUserVinyls);
-        vinylUserCache.put("vinyl-users-" + vinylId, updatedVinylUsers);
+        userVinylCache.put(keyUserVinyls + userId, updatedUserVinyls);
+        vinylUserCache.put(keyVinylUsers + vinylId, updatedVinylUsers);
     }
 
     public void handleUserDeletion(Integer userId) {
@@ -127,7 +131,7 @@ public class UserVinylService {
         userVinyls.forEach(userVinyl ->
                 userVinylRepository.deleteById(new UserVinylId(userId, userVinyl.getVinyl().getId())));
 
-        userVinylCache.remove("user-vinyls-" + userId);
+        userVinylCache.remove(keyUserVinyls + userId);
         System.out.println("[CACHE] Удалён пользователь из всех связей: userId = " + userId);
     }
 
@@ -136,7 +140,7 @@ public class UserVinylService {
         vinylUsers.forEach(userVinyl ->
                 userVinylRepository.deleteById(new UserVinylId(userVinyl.getUser().getId(), vinylId)));
 
-        vinylUserCache.remove("vinyl-users-" + vinylId);
+        vinylUserCache.remove(keyVinylUsers + vinylId);
         System.out.println("[CACHE] Удалён винил из всех связей: vinylId = " + vinylId);
     }
 }

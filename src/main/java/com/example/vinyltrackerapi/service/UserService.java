@@ -21,6 +21,9 @@ public class UserService {
     private final CacheService<User> userCache;
     private final CacheService<List<User>> userListCache;
     private final CacheService<List<User>> userByUsernameCache;
+    private final String keyAll = "all-users";
+    private final String keyId = "user-";
+    private final String keyName = "user-username-";
 
     public UserService(UserRepository userRepository, @Lazy VinylService vinylService,
                        CacheService<User> userCache,
@@ -36,7 +39,7 @@ public class UserService {
     }
 
     public List<User> getAllUsers() {
-        String cacheKey = "all-users";
+        String cacheKey = keyAll;
         if (userListCache.contains(cacheKey)) {
             return userListCache.get(cacheKey);
         }
@@ -46,7 +49,7 @@ public class UserService {
     }
 
     public Optional<User> getUser(Integer id) {
-        String cacheKey = "user-" + id;
+        String cacheKey = keyId + id;
         if (userCache.contains(cacheKey)) {
             return Optional.of(userCache.get(cacheKey));
         }
@@ -56,7 +59,7 @@ public class UserService {
     }
 
     public List<User> getUserByUsername(String username) {
-        String cacheKey = "user-username-" + username;
+        String cacheKey = keyName + username;
         if (userByUsernameCache.contains(cacheKey)) {
             return userByUsernameCache.get(cacheKey);
         }
@@ -83,9 +86,9 @@ public class UserService {
         user.setPassword(hashPassword(userDto.getPassword()));
         User savedUser = userRepository.save(user);
 
-        userCache.put("user-" + savedUser.getId(), savedUser);
-        userListCache.put("all-users", userRepository.findAll());
-        userByUsernameCache.put("user-username-" + savedUser.getUsername(), List.of(savedUser));
+        userCache.put(keyId + savedUser.getId(), savedUser);
+        userListCache.put(keyAll, userRepository.findAll());
+        userByUsernameCache.put(keyName + savedUser.getUsername(), List.of(savedUser));
 
         return savedUser;
     }
@@ -100,9 +103,9 @@ public class UserService {
             user.setRole(newUserData.getRole());
             User updatedUser = userRepository.save(user);
 
-            userCache.put("user-" + id, updatedUser);
-            userListCache.put("all-users", userRepository.findAll());
-            userByUsernameCache.put("user-username-" + updatedUser.getUsername(), List.of(updatedUser));
+            userCache.put(keyId + id, updatedUser);
+            userListCache.put(keyAll, userRepository.findAll());
+            userByUsernameCache.put(keyName + updatedUser.getUsername(), List.of(updatedUser));
 
             return updatedUser;
         }).orElseThrow(() -> new RuntimeException("Пользователь не найден!"));
@@ -116,9 +119,9 @@ public class UserService {
         vinylService.detachUserFromVinyl(user);
         userRepository.deleteById(id);
 
-        userCache.remove("user-" + id);
-        userListCache.put("all-users", userRepository.findAll());
-        userByUsernameCache.remove("user-username-" + user.getUsername());
+        userCache.remove(keyId + id);
+        userListCache.put(keyAll, userRepository.findAll());
+        userByUsernameCache.remove(keyName + user.getUsername());
     }
 
     private String hashPassword(String password) {

@@ -22,6 +22,8 @@ public class VinylService {
     private final CacheService<Vinyl> vinylCache;
     private final CacheService<List<Vinyl>> vinylListCache;
     private final CacheKeyTracker vinylKeyTracker;
+    private final String keyAll = "all-vinyls";
+    private final String keyId = "vinyl-";
 
     public VinylService(VinylRepository vinylRepository, UserService userService,
                         @Lazy UserVinylService userVinylService,
@@ -36,7 +38,7 @@ public class VinylService {
     }
 
     public List<Vinyl> getAllVinyls() {
-        String cacheKey = "all-vinyls";
+        String cacheKey = keyAll;
 
         if (vinylListCache.contains(cacheKey)) {
             return vinylListCache.get(cacheKey);
@@ -48,7 +50,7 @@ public class VinylService {
     }
 
     public Optional<Vinyl> getVinyl(Integer id) {
-        String cacheKey = "vinyl-" + id;
+        String cacheKey = keyId + id;
 
         if (vinylCache.contains(cacheKey)) {
             return Optional.of(vinylCache.get(cacheKey));
@@ -96,8 +98,8 @@ public class VinylService {
 
         Vinyl savedVinyl = vinylRepository.save(vinyl);
 
-        vinylCache.put("vinyl-" + savedVinyl.getId(), savedVinyl);
-        vinylListCache.put("all-vinyls", vinylRepository.findAll());
+        vinylCache.put(keyId + savedVinyl.getId(), savedVinyl);
+        vinylListCache.put(keyAll, vinylRepository.findAll());
 
         return savedVinyl;
     }
@@ -113,7 +115,7 @@ public class VinylService {
 
             Vinyl updatedVinyl = vinylRepository.save(vinyl);
 
-            vinylCache.put("vinyl-" + id, updatedVinyl);
+            vinylCache.put(keyId + id, updatedVinyl);
 
             Set<String> affectedCacheKeys = vinylKeyTracker.getVinylCacheKeys(id);
             for (String key : affectedCacheKeys) {
@@ -121,7 +123,7 @@ public class VinylService {
             }
             vinylKeyTracker.removeVinylCacheKeys(id);
 
-            vinylListCache.put("all-vinyls", vinylRepository.findAll());
+            vinylListCache.put(keyAll, vinylRepository.findAll());
             return updatedVinyl;
         }).orElseThrow(() -> new RuntimeException("Винил не найден!"));
     }
@@ -132,13 +134,13 @@ public class VinylService {
         }
         userVinylService.handleVinylDeletion(id);
         vinylRepository.deleteById(id);
-        vinylCache.remove("vinyl-" + id);
+        vinylCache.remove(keyId + id);
         Set<String> affectedCacheKeys = vinylKeyTracker.getVinylCacheKeys(id);
         for (String key : affectedCacheKeys) {
             vinylListCache.remove(key);
         }
         vinylKeyTracker.removeVinylCacheKeys(id);
-        vinylListCache.put("all-vinyls", vinylRepository.findAll());
+        vinylListCache.put(keyAll, vinylRepository.findAll());
     }
 
     public void detachUserFromVinyl(User user) {

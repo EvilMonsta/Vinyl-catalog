@@ -6,13 +6,16 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CacheService<T> {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CacheService.class);
     private final Map<String, CacheEntry<T>> cache = new ConcurrentHashMap<>();
-    private static final long CACHE_EXPIRATION_TIME_MS = 5 * 60 * 1000; // 5 минут
-    private static final int MAX_CACHE_SIZE = 100; // Ограничение кеша
+    private static final long CACHE_EXPIRATION_TIME_MS = 5L * 60 * 1000;
+    private static final int MAX_CACHE_SIZE = 100;
 
     public CacheService() {
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
@@ -24,14 +27,14 @@ public class CacheService<T> {
             removeOldestEntry();
         }
         cache.put(key, new CacheEntry<>(value));
-        System.out.println("[CACHE] Добавлено: " + key);
+        LOGGER.info("[CACHE] Добавлено: {}", key);
     }
 
     public T get(String key) {
         CacheEntry<T> entry = cache.get(key);
         if (entry != null) {
             entry.refresh();
-            System.out.println("[CACHE] Найдено в кеше: " + key);
+            LOGGER.info("[CACHE] Найдено в кеше: {}", key);
             return entry.getValue();
         }
         return null;
@@ -44,17 +47,20 @@ public class CacheService<T> {
     private void cleanUp() {
         long now = System.currentTimeMillis();
         cache.entrySet().removeIf(entry -> now - entry.getValue().getTimestamp() > CACHE_EXPIRATION_TIME_MS);
-        System.out.println("[CACHE] Очистка старых записей...");
+        LOGGER.info("[CACHE] Очистка старых записей...");
     }
 
     private void removeOldestEntry() {
         cache.entrySet().stream()
                 .min(Comparator.comparingLong(entry -> entry.getValue().getTimestamp()))
-                .ifPresent(entry -> cache.remove(entry.getKey()));
+                .ifPresent(entry -> {
+                    cache.remove(entry.getKey());
+                    LOGGER.info("[CACHE] Удалена самая старая запись: {}", entry.getKey());
+                });
     }
 
     public void remove(String key) {
         cache.remove(key);
-        System.out.println("[CACHE] Удален ключ: " + key);
+        LOGGER.info("[CACHE] Удален ключ: {}", key);
     }
 }
