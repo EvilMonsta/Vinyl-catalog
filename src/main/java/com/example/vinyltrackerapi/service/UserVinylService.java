@@ -9,6 +9,8 @@ import com.example.vinyltrackerapi.api.models.Vinyl;
 import com.example.vinyltrackerapi.api.repositories.UserVinylRepository;
 import java.util.List;
 import java.util.Optional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -16,15 +18,16 @@ import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class UserVinylService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserVinylService.class);
     private final UserVinylRepository userVinylRepository;
     private final UserService userService;
     private final VinylService vinylService;
     private final CacheService<List<UserVinyl>> userVinylCache;
     private final CacheService<List<UserVinyl>> vinylUserCache;
-    private final String keyUserVinyls = "user-vinyls-";
-    private final String keyVinylUsers = "vinyl-users-";
-    private final String vinylNotFound = "Винил не найден!";
-    private final String userNotFound = "Пользователь не найден!";
+    private static final String KEY_USER_VINYLS = "user-vinyls-";
+    private static final String KEY_VINYL_USERS = "vinyl-users-";
+    private static final String VINYL_NOT_FOUND = "Винил не найден!";
+    private static final String USER_NOT_FOUND = "Пользователь не найден!";
 
     public UserVinylService(UserVinylRepository userVinylRepository,
                             @Lazy UserService userService, @Lazy VinylService vinylService,
@@ -40,9 +43,9 @@ public class UserVinylService {
     public UserVinylDto addVinylToUser(Integer userId, Integer vinylId, VinylStatus status) {
         final User user = userService.getUser(userId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        userNotFound));
+                        USER_NOT_FOUND));
         final Vinyl vinyl = vinylService.getVinyl(vinylId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, vinylNotFound));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, VINYL_NOT_FOUND));
 
         UserVinyl userVinyl = new UserVinyl();
         userVinyl.setUser(user);
@@ -64,7 +67,7 @@ public class UserVinylService {
     }
 
     public List<UserVinyl> getUserVinyls(Integer userId) {
-        String cacheKey = keyUserVinyls + userId;
+        String cacheKey = KEY_USER_VINYLS + userId;
         if (userVinylCache.contains(cacheKey)) {
             return userVinylCache.get(cacheKey);
         }
@@ -79,14 +82,14 @@ public class UserVinylService {
     }
 
     public List<UserVinyl> getUsersByVinyl(Integer vinylId) {
-        String cacheKey = keyVinylUsers + vinylId;
+        String cacheKey = KEY_VINYL_USERS + vinylId;
         if (vinylUserCache.contains(cacheKey)) {
             return vinylUserCache.get(cacheKey);
         }
 
         List<UserVinyl> users = userVinylRepository.findByVinyl(
                 vinylService.getVinyl(vinylId).orElseThrow(() ->
-                        new ResponseStatusException(HttpStatus.NOT_FOUND, vinylNotFound))
+                        new ResponseStatusException(HttpStatus.NOT_FOUND, VINYL_NOT_FOUND))
         );
 
         vinylUserCache.put(cacheKey, users);
@@ -114,16 +117,16 @@ public class UserVinylService {
     private void updateCacheAfterChange(Integer userId, Integer vinylId) {
         List<UserVinyl> updatedUserVinyls = userVinylRepository.findByUser(
                 userService.getUser(userId).orElseThrow(() ->
-                        new ResponseStatusException(HttpStatus.NOT_FOUND, userNotFound))
+                        new ResponseStatusException(HttpStatus.NOT_FOUND, USER_NOT_FOUND))
         );
 
         List<UserVinyl> updatedVinylUsers = userVinylRepository.findByVinyl(
                 vinylService.getVinyl(vinylId).orElseThrow(() ->
-                        new ResponseStatusException(HttpStatus.NOT_FOUND, vinylNotFound))
+                        new ResponseStatusException(HttpStatus.NOT_FOUND, VINYL_NOT_FOUND))
         );
 
-        userVinylCache.put(keyUserVinyls + userId, updatedUserVinyls);
-        vinylUserCache.put(keyVinylUsers + vinylId, updatedVinylUsers);
+        userVinylCache.put(KEY_USER_VINYLS + userId, updatedUserVinyls);
+        vinylUserCache.put(KEY_VINYL_USERS + vinylId, updatedVinylUsers);
     }
 
     public void handleUserDeletion(Integer userId) {
@@ -131,8 +134,8 @@ public class UserVinylService {
         userVinyls.forEach(userVinyl ->
                 userVinylRepository.deleteById(new UserVinylId(userId, userVinyl.getVinyl().getId())));
 
-        userVinylCache.remove(keyUserVinyls + userId);
-        System.out.println("[CACHE] Удалён пользователь из всех связей: userId = " + userId);
+        userVinylCache.remove(KEY_USER_VINYLS + userId);
+        LOGGER.info("[CACHE] Удалён пользователь из всех связей: {}", userId);
     }
 
     public void handleVinylDeletion(Integer vinylId) {
@@ -140,7 +143,7 @@ public class UserVinylService {
         vinylUsers.forEach(userVinyl ->
                 userVinylRepository.deleteById(new UserVinylId(userVinyl.getUser().getId(), vinylId)));
 
-        vinylUserCache.remove(keyVinylUsers + vinylId);
-        System.out.println("[CACHE] Удалён винил из всех связей: vinylId = " + vinylId);
+        vinylUserCache.remove(KEY_VINYL_USERS + vinylId);
+        LOGGER.info("[CACHE] Удалён винил из всех связей: {}", vinylId);
     }
 }
