@@ -5,10 +5,11 @@ import com.example.vinyltrackerapi.api.models.User;
 import com.example.vinyltrackerapi.api.models.Vinyl;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface VinylRepository extends JpaRepository<Vinyl, Integer> {
+public interface VinylRepository extends JpaRepository<Vinyl, Integer>, JpaSpecificationExecutor<Vinyl> {
     List<Vinyl> findByTitleContainingIgnoreCase(String title);
 
     List<Vinyl> findByArtistContainingIgnoreCase(String artist);

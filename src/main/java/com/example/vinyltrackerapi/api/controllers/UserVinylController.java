@@ -47,9 +47,16 @@ public class UserVinylController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/{userId}")
+    @GetMapping("/getVinyls/{userId}")
     public List<UserVinylDto> getUserVinyls(@PathVariable Integer userId) {
         return userVinylService.getUserVinyls(userId).stream()
+                .map(UserVinylDto::new)
+                .toList();
+    }
+
+    @GetMapping("/getUsers/{vinylId}")
+    public List<UserVinylDto> getUsersByVinyl(@PathVariable Integer vinylId) {
+        return userVinylService.getUsersByVinyl(vinylId).stream()
                 .map(UserVinylDto::new)
                 .toList();
     }

@@ -41,11 +41,9 @@ public class VinylController {
     public List<VinylDto> searchVinyls(
             @RequestParam(required = false) String title,
             @RequestParam(required = false) String artist,
-            @RequestParam(required = false) Genre genre,
-            @RequestParam(required = false) Integer releaseYear) {
-        return vinylService.searchVinyls(title, artist, genre, releaseYear)
-                .stream().map(VinylDto::new)
-                .toList();
+            @RequestParam(required = false) Integer releaseYear,
+            @RequestParam(required = false) String genre) {
+        return vinylService.searchVinyls(title, artist, releaseYear, genre);
     }
 
     @PostMapping("/create")

@@ -17,22 +17,52 @@ import org.springframework.web.server.ResponseStatusException;
 public class UserService {
     private final UserRepository userRepository;
     private final VinylService vinylService;
+    private final UserVinylService userVinylService;
+    private final CacheService<User> userCache;
+    private final CacheService<List<User>> userListCache;
+    private final CacheService<List<User>> userByUsernameCache;
 
-    public UserService(UserRepository userRepository, @Lazy VinylService vinylService) {
+    public UserService(UserRepository userRepository, @Lazy VinylService vinylService,
+                       CacheService<User> userCache,
+                       @Lazy UserVinylService userVinylService,
+                       CacheService<List<User>> userListCache,
+                       CacheService<List<User>> userByUsernameCache) {
         this.userRepository = userRepository;
         this.vinylService = vinylService;
+        this.userVinylService = userVinylService;
+        this.userCache = userCache;
+        this.userListCache = userListCache;
+        this.userByUsernameCache = userByUsernameCache;
     }
 
     public List<User> getAllUsers() {
-        return userRepository.findAll();
+        String cacheKey = "all-users";
+        if (userListCache.contains(cacheKey)) {
+            return userListCache.get(cacheKey);
+        }
+        List<User> users = userRepository.findAll();
+        userListCache.put(cacheKey, users);
+        return users;
     }
 
     public Optional<User> getUser(Integer id) {
-        return userRepository.findById(id);
+        String cacheKey = "user-" + id;
+        if (userCache.contains(cacheKey)) {
+            return Optional.of(userCache.get(cacheKey));
+        }
+        Optional<User> user = userRepository.findById(id);
+        user.ifPresent(u -> userCache.put(cacheKey, u));
+        return user;
     }
 
     public List<User> getUserByUsername(String username) {
-        return userRepository.findByUsername(username);
+        String cacheKey = "user-username-" + username;
+        if (userByUsernameCache.contains(cacheKey)) {
+            return userByUsernameCache.get(cacheKey);
+        }
+        List<User> users = userRepository.findByUsername(username);
+        userByUsernameCache.put(cacheKey, users);
+        return users;
     }
 
     public Optional<User> getUserByEmail(String email) {
@@ -41,7 +71,6 @@ public class UserService {
 
     public User createUser(UserDto userDto) {
         User user = userDto.toEntity();
-
         if (userRepository.existsByEmail(user.getEmail())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT,
                     "Пользователь с таким email уже существует!");
@@ -52,7 +81,13 @@ public class UserService {
                     "Пользователь с таким username уже существует!");
         }
         user.setPassword(hashPassword(userDto.getPassword()));
-        return userRepository.save(user);
+        User savedUser = userRepository.save(user);
+
+        userCache.put("user-" + savedUser.getId(), savedUser);
+        userListCache.put("all-users", userRepository.findAll());
+        userByUsernameCache.put("user-username-" + savedUser.getUsername(), List.of(savedUser));
+
+        return savedUser;
     }
 
     public User updateUser(Integer id, User newUserData) {
@@ -63,16 +98,27 @@ public class UserService {
                 user.setPassword(hashPassword(newUserData.getPassword()));
             }
             user.setRole(newUserData.getRole());
-            return userRepository.save(user);
+            User updatedUser = userRepository.save(user);
+
+            userCache.put("user-" + id, updatedUser);
+            userListCache.put("all-users", userRepository.findAll());
+            userByUsernameCache.put("user-username-" + updatedUser.getUsername(), List.of(updatedUser));
+
+            return updatedUser;
         }).orElseThrow(() -> new RuntimeException("Пользователь не найден!"));
     }
 
     public void deleteUser(Integer id) {
-        User user = userRepository.findById(id).orElseThrow(() -> new
-                ResponseStatusException(HttpStatus.NOT_FOUND,
-                "Пользователь с ID " + id + " не найден!"));
+        User user = userRepository.findById(id).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Пользователь с ID " + id + " не найден!"));
+
+        userVinylService.handleUserDeletion(id);
         vinylService.detachUserFromVinyl(user);
         userRepository.deleteById(id);
+
+        userCache.remove("user-" + id);
+        userListCache.put("all-users", userRepository.findAll());
+        userByUsernameCache.remove("user-username-" + user.getUsername());
     }
 
     private String hashPassword(String password) {
