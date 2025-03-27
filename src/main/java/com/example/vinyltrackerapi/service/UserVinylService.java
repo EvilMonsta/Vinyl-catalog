@@ -1,11 +1,11 @@
 package com.example.vinyltrackerapi.service;
 
 import com.example.vinyltrackerapi.api.dto.UserVinylDto;
-import com.example.vinyltrackerapi.api.enums.VinylStatus;
 import com.example.vinyltrackerapi.api.models.User;
 import com.example.vinyltrackerapi.api.models.UserVinyl;
 import com.example.vinyltrackerapi.api.models.UserVinylId;
 import com.example.vinyltrackerapi.api.models.Vinyl;
+import com.example.vinyltrackerapi.api.models.VinylStatus;
 import com.example.vinyltrackerapi.api.repositories.UserVinylRepository;
 import java.util.List;
 import java.util.Optional;
@@ -22,6 +22,7 @@ public class UserVinylService {
     private final UserVinylRepository userVinylRepository;
     private final UserService userService;
     private final VinylService vinylService;
+    private final VinylStatusService vinylStatusService;
     private final CacheService<List<UserVinyl>> userVinylCache;
     private final CacheService<List<UserVinyl>> vinylUserCache;
     private static final String KEY_USER_VINYLS = "user-vinyls-";
@@ -31,29 +32,30 @@ public class UserVinylService {
 
     public UserVinylService(UserVinylRepository userVinylRepository,
                             @Lazy UserService userService, @Lazy VinylService vinylService,
+                            VinylStatusService vinylStatusService,
                             CacheService<List<UserVinyl>> userVinylCache,
                             CacheService<List<UserVinyl>> vinylUserCache) {
         this.userVinylRepository = userVinylRepository;
         this.userService = userService;
         this.vinylService = vinylService;
+        this.vinylStatusService = vinylStatusService;
         this.userVinylCache = userVinylCache;
         this.vinylUserCache = vinylUserCache;
     }
 
-    public UserVinylDto addVinylToUser(Integer userId, Integer vinylId, VinylStatus status) {
-        final User user = userService.getUser(userId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        USER_NOT_FOUND));
-        final Vinyl vinyl = vinylService.getVinyl(vinylId)
+    public UserVinylDto addVinylToUser(Integer userId, Integer vinylId, Integer statusId) {
+        User user = userService.getUser(userId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, USER_NOT_FOUND));
+        Vinyl vinyl = vinylService.getVinyl(vinylId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, VINYL_NOT_FOUND));
+        VinylStatus status = vinylStatusService.getById(statusId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Статус не найден!"));
 
-        UserVinyl userVinyl = new UserVinyl();
-        userVinyl.setUser(user);
-        userVinyl.setVinyl(vinyl);
-        userVinyl.setStatus(status);
-        UserVinyl savedUserVinyl = userVinylRepository.save(userVinyl);
+        UserVinyl userVinyl = new UserVinyl(user, vinyl, status);
+        UserVinyl saved = userVinylRepository.save(userVinyl);
 
-        return new UserVinylDto(savedUserVinyl);
+        updateCacheAfterChange(userId, vinylId);
+        return new UserVinylDto(saved);
     }
 
     public Optional<UserVinyl> findUserVinyl(Integer userId, Integer vinylId) {
@@ -102,13 +104,15 @@ public class UserVinylService {
                 .toList();
     }
 
-    public UserVinyl updateVinylStatus(Integer userId, Integer vinylId, VinylStatus newStatus) {
+    public UserVinyl updateVinylStatus(Integer userId, Integer vinylId, Integer statusId) {
         UserVinyl userVinyl = findUserVinyl(userId, vinylId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Запись не найдена!"));
 
+        VinylStatus newStatus = vinylStatusService.getById(statusId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Статус не найден!"));
+
         userVinyl.setStatus(newStatus);
         UserVinyl updated = userVinylRepository.save(userVinyl);
-
         updateCacheAfterChange(userId, vinylId);
 
         return updated;

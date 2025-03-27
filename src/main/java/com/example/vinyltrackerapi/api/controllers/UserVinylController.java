@@ -1,10 +1,11 @@
 package com.example.vinyltrackerapi.api.controllers;
 
 import com.example.vinyltrackerapi.api.dto.UserVinylDto;
-import com.example.vinyltrackerapi.api.enums.VinylStatus;
+import com.example.vinyltrackerapi.api.models.VinylStatus;
 import com.example.vinyltrackerapi.service.UserVinylService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/user-vinyls")
@@ -24,8 +26,8 @@ public class UserVinylController {
     @PostMapping("/add")
     public ResponseEntity<UserVinylDto> addUserVinyl(@RequestParam Integer userId,
                                                      @RequestParam Integer vinylId,
-                                                     @RequestParam VinylStatus status) {
-        return ResponseEntity.ok(userVinylService.addVinylToUser(userId, vinylId, status));
+                                                     @RequestParam Integer statusId) {
+        return ResponseEntity.ok(userVinylService.addVinylToUser(userId, vinylId, statusId));
     }
 
     @GetMapping
@@ -64,8 +66,7 @@ public class UserVinylController {
     @PutMapping("/update-status")
     public ResponseEntity<UserVinylDto> updateVinylStatus(@RequestParam Integer userId,
                                                           @RequestParam Integer vinylId,
-                                                          @RequestParam VinylStatus newStatus) {
-        return ResponseEntity.ok(new UserVinylDto(userVinylService.updateVinylStatus(userId,
-                vinylId, newStatus)));
+                                                          @RequestParam Integer newStatusId) {
+        return ResponseEntity.ok(new UserVinylDto(userVinylService.updateVinylStatus(userId, vinylId, newStatusId)));
     }
 }

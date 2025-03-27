@@ -1,6 +1,7 @@
 package com.example.vinyltrackerapi.service;
 
 import com.example.vinyltrackerapi.api.dto.VinylDto;
+import com.example.vinyltrackerapi.api.models.Genre;
 import com.example.vinyltrackerapi.api.models.User;
 import com.example.vinyltrackerapi.api.models.Vinyl;
 import com.example.vinyltrackerapi.api.repositories.VinylRepository;
@@ -19,6 +20,7 @@ public class VinylService {
     private final VinylRepository vinylRepository;
     private final UserService userService;
     private final UserVinylService userVinylService;
+    private final GenreService genreService;
     private final CacheService<Vinyl> vinylCache;
     private final CacheService<List<Vinyl>> vinylListCache;
     private final CacheKeyTracker vinylKeyTracker;
@@ -27,14 +29,20 @@ public class VinylService {
 
     public VinylService(VinylRepository vinylRepository, UserService userService,
                         @Lazy UserVinylService userVinylService,
+                        GenreService genreService,
                         CacheService<Vinyl> vinylCache, CacheService<List<Vinyl>> vinylListCache,
                         CacheKeyTracker vinylKeyTracker) {
         this.vinylRepository = vinylRepository;
         this.userService = userService;
         this.userVinylService = userVinylService;
+        this.genreService = genreService;
         this.vinylCache = vinylCache;
         this.vinylListCache = vinylListCache;
         this.vinylKeyTracker = vinylKeyTracker;
+    }
+
+    public List<Vinyl> getVinylsByUploaderUsername(String username) {
+        return vinylRepository.findVinylsByUploaderUsername(username);
     }
 
     public List<Vinyl> getAllVinyls() {
@@ -87,15 +95,16 @@ public class VinylService {
     }
 
     public Vinyl createVinyl(VinylDto vinylDto) {
-        Vinyl vinyl = vinylDto.toEntity();
+        Genre genre = genreService.getGenreById(vinylDto.getGenreId()); // Получаем жанр по ID
+        User addedBy = null;
 
         if (vinylDto.getAddedById() != null) {
-            User addedBy = userService.getUser(vinylDto.getAddedById())
+            addedBy = userService.getUser(vinylDto.getAddedById())
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                             "Пользователь не найден!"));
-            vinyl.setAddedBy(addedBy);
         }
 
+        Vinyl vinyl = vinylDto.toEntity(genre, addedBy);
         Vinyl savedVinyl = vinylRepository.save(vinyl);
 
         vinylCache.put(KEY_ID + savedVinyl.getId(), savedVinyl);
@@ -104,14 +113,26 @@ public class VinylService {
         return savedVinyl;
     }
 
-    public Vinyl updateVinyl(Integer id, Vinyl newVinylData) {
+    public Vinyl updateVinyl(Integer id, VinylDto vinylDto) {
+        Genre genre = genreService.getGenreById(vinylDto.getGenreId());
+        User addedBy;
+
+        if (vinylDto.getAddedById() != null) {
+            addedBy = userService.getUser(vinylDto.getAddedById())
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                            "Пользователь не найден!"));
+        } else {
+            addedBy = null;
+        }
+
         return vinylRepository.findById(id).map(vinyl -> {
-            vinyl.setTitle(newVinylData.getTitle());
-            vinyl.setArtist(newVinylData.getArtist());
-            vinyl.setGenre(newVinylData.getGenre());
-            vinyl.setReleaseYear(newVinylData.getReleaseYear());
-            vinyl.setDescription(newVinylData.getDescription());
-            vinyl.setCoverUrl(newVinylData.getCoverUrl());
+            vinyl.setTitle(vinylDto.getTitle());
+            vinyl.setArtist(vinylDto.getArtist());
+            vinyl.setGenre(genre);
+            vinyl.setReleaseYear(vinylDto.getReleaseYear());
+            vinyl.setDescription(vinylDto.getDescription());
+            vinyl.setCoverUrl(vinylDto.getCoverUrl());
+            vinyl.setAddedBy(addedBy);
 
             Vinyl updatedVinyl = vinylRepository.save(vinyl);
 

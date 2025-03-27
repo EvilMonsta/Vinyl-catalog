@@ -3,6 +3,7 @@ package com.example.vinyltrackerapi.api.controllers;
 import com.example.vinyltrackerapi.api.dto.UserDto;
 import com.example.vinyltrackerapi.api.models.User;
 import com.example.vinyltrackerapi.service.UserService;
+import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -51,13 +52,13 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) {
+    public ResponseEntity<UserDto> createUser(@RequestBody @Valid UserDto userDto) {
         return ResponseEntity.ok(new UserDto(userService.createUser(userDto)));
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<UserDto> updateUser(@PathVariable Integer id, @RequestBody UserDto userDto) {
-        User updatedUser = userService.updateUser(id, userDto.toEntity());
+    public ResponseEntity<UserDto> updateUser(@PathVariable Integer id, @RequestBody @Valid UserDto userDto) {
+        User updatedUser = userService.updateUser(id, userDto);
         return ResponseEntity.ok(new UserDto(updatedUser));
     }
 

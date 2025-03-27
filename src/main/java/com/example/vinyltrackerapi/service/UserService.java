@@ -18,6 +18,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final VinylService vinylService;
     private final UserVinylService userVinylService;
+    private final RoleService roleService;
     private final CacheService<User> userCache;
     private final CacheService<List<User>> userListCache;
     private final CacheService<List<User>> userByUsernameCache;
@@ -28,11 +29,13 @@ public class UserService {
     public UserService(UserRepository userRepository, @Lazy VinylService vinylService,
                        CacheService<User> userCache,
                        @Lazy UserVinylService userVinylService,
+                       RoleService roleService,
                        CacheService<List<User>> userListCache,
                        CacheService<List<User>> userByUsernameCache) {
         this.userRepository = userRepository;
         this.vinylService = vinylService;
         this.userVinylService = userVinylService;
+        this.roleService = roleService;
         this.userCache = userCache;
         this.userListCache = userListCache;
         this.userByUsernameCache = userByUsernameCache;
@@ -73,7 +76,7 @@ public class UserService {
     }
 
     public User createUser(UserDto userDto) {
-        User user = userDto.toEntity();
+        User user = userDto.toEntity(roleService.getRoleById(userDto.getRoleId()));
         if (userRepository.existsByEmail(user.getEmail())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT,
                     "Пользователь с таким email уже существует!");
@@ -93,14 +96,14 @@ public class UserService {
         return savedUser;
     }
 
-    public User updateUser(Integer id, User newUserData) {
+    public User updateUser(Integer id, UserDto userDto) {
         return userRepository.findById(id).map(user -> {
-            user.setUsername(newUserData.getUsername());
-            user.setEmail(newUserData.getEmail());
-            if (newUserData.getPassword() != null && !newUserData.getPassword().isBlank()) {
-                user.setPassword(hashPassword(newUserData.getPassword()));
+            user.setUsername(userDto.getUsername());
+            user.setEmail(userDto.getEmail());
+            if (userDto.getPassword() != null && !userDto.getPassword().isBlank()) {
+                user.setPassword(hashPassword(userDto.getPassword()));
             }
-            user.setRole(newUserData.getRole());
+            user.setRole(roleService.getRoleById(userDto.getRoleId()));
             User updatedUser = userRepository.save(user);
 
             userCache.put(KEY_ID + id, updatedUser);

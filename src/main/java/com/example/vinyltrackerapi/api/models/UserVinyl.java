@@ -1,6 +1,5 @@
 package com.example.vinyltrackerapi.api.models;
 
-import com.example.vinyltrackerapi.api.enums.VinylStatus;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -34,7 +33,7 @@ public class UserVinyl {
     @JoinColumn(name = "vinyl_id", nullable = false)
     private Vinyl vinyl;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 20)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "status_id", nullable = false)
     private VinylStatus status;
 }

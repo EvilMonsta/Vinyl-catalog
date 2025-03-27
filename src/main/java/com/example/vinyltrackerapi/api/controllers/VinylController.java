@@ -4,6 +4,8 @@ import com.example.vinyltrackerapi.api.dto.VinylDto;
 import com.example.vinyltrackerapi.api.models.Vinyl;
 import com.example.vinyltrackerapi.service.VinylService;
 import java.util.List;
+
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -45,14 +47,30 @@ public class VinylController {
         return vinylService.searchVinyls(title, artist, releaseYear, genre);
     }
 
+    @GetMapping("/uploaded-by/{username}")
+    public List<VinylDto> getVinylsByUploader(@PathVariable String username) {
+        return vinylService.getVinylsByUploaderUsername(username)
+                .stream()
+                .map(VinylDto::new)
+                .toList();
+    }
+
+    @GetMapping("/uploaded-by")
+    public List<VinylDto> findVinylsByUploader(@RequestParam String username) {
+        return vinylService.getVinylsByUploaderUsername(username)
+                .stream()
+                .map(VinylDto::new)
+                .toList();
+    }
+
     @PostMapping("/create")
-    public ResponseEntity<VinylDto> createVinyl(@RequestBody VinylDto vinylDto) {
+    public ResponseEntity<VinylDto> createVinyl(@RequestBody @Valid VinylDto vinylDto) {
         return ResponseEntity.ok(new VinylDto(vinylService.createVinyl(vinylDto)));
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<VinylDto> updateVinyl(@PathVariable Integer id, @RequestBody VinylDto vinylDto) {
-        Vinyl updatedVinyl = vinylService.updateVinyl(id, vinylDto.toEntity());
+    public ResponseEntity<VinylDto> updateVinyl(@PathVariable Integer id, @RequestBody @Valid VinylDto vinylDto) {
+        Vinyl updatedVinyl = vinylService.updateVinyl(id, vinylDto);
         return ResponseEntity.ok(new VinylDto(updatedVinyl));
     }
 

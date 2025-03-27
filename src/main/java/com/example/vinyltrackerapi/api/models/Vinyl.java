@@ -1,6 +1,5 @@
 package com.example.vinyltrackerapi.api.models;
 
-import com.example.vinyltrackerapi.api.enums.Genre;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.CascadeType;
@@ -39,8 +38,8 @@ public class Vinyl {
     @Column(nullable = false)
     private String artist;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 50)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "genre_id", nullable = false)
     private Genre genre;
 
     @Column(name = "release_year", nullable = false)
