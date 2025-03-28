@@ -1,9 +1,11 @@
 package com.example.vinyltrackerapi.api.advice;
 
 import com.example.vinyltrackerapi.api.exceptions.ValidationException;
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.server.ResponseStatusException;
 
 @RestControllerAdvice
+@Slf4j
 public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> handleValidationErrors(MethodArgumentNotValidException ex) {
@@ -35,17 +38,42 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(error, ex.getStatusCode());
     }
 
-    @ExceptionHandler(HttpMessageNotReadableException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Map<String, String> handleEnumParsing() {
-        Map<String, String> error = new HashMap<>();
-        error.put("role", "Роль указана неверно. Допустимые значения: USER, VIP_USER, ADMIN");
-        return error;
-    }
-
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, String>> handleAllExceptions(Exception ex) {
         return ResponseEntity.internalServerError().body(Map.of("error",
                 "Непредвиденная ошибка: " + ex.getMessage()));
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Map<String, String> handleEnumParseError(HttpMessageNotReadableException ex) {
+        Throwable cause = ex.getCause();
+
+        if (cause instanceof InvalidFormatException ife) {
+            Class<?> targetType = ife.getTargetType();
+
+            String fieldName = ife.getPath().get(0).getFieldName();
+            String invalidValue = String.valueOf(ife.getValue());
+
+            if (targetType.isEnum()) {
+                Object[] allowed = targetType.getEnumConstants();
+
+                String allowedValues = String.join(", ",
+                        java.util.Arrays.stream(allowed).map(Object::toString).toList());
+
+                log.warn("[VALIDATION] Некорректное значение '{}' для поля '{}'. Разрешено: {}",
+                        invalidValue, fieldName, allowedValues);
+
+                Map<String, String> error = new HashMap<>();
+                error.put(fieldName, "Некорректное значение: '" + invalidValue +
+                        "'. Разрешённые значения: [" + allowedValues + "]");
+                return error;
+            }
+        }
+
+        log.warn("[VALIDATION] Невалидный JSON: {}", ex.getMessage());
+        Map<String, String> error = new HashMap<>();
+        error.put("error", "Невалидный JSON или значение поля");
+        return error;
     }
 }

@@ -64,7 +64,7 @@ public class UserController {
     @Operation(summary = "Создать нового пользователя")
     @PostMapping("/create")
     public ResponseEntity<UserDto> createUser(@Parameter(description = "Данные нового пользователя")
-                                                  @RequestBody @Valid UserDto userDto) {
+                                                  @Valid @RequestBody(required = true) UserDto userDto) {
         return ResponseEntity.ok(new UserDto(userService.createUser(userDto)));
     }
 
