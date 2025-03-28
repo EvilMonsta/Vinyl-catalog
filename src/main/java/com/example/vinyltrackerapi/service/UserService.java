@@ -8,6 +8,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Optional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class UserService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
     private final UserRepository userRepository;
     private final VinylService vinylService;
     private final UserVinylService userVinylService;
@@ -48,17 +51,28 @@ public class UserService {
         }
         List<User> users = userRepository.findAll();
         userListCache.put(cacheKey, users);
+        LOGGER.info("[USER] Получены все пользователи");
         return users;
     }
 
-    public Optional<User> getUser(Integer id) {
+    public User getUser(Integer id) {
         String cacheKey = KEY_ID + id;
+
         if (userCache.contains(cacheKey)) {
-            return Optional.of(userCache.get(cacheKey));
+            return userCache.get(cacheKey);
         }
-        Optional<User> user = userRepository.findById(id);
-        user.ifPresent(u -> userCache.put(cacheKey, u));
-        return user;
+
+        return userRepository.findById(id)
+                .map(user -> {
+                    userCache.put(cacheKey, user);
+                    LOGGER.info("[USER] Пользователь найден и добавлен в кэш: ID={}", id);
+                    return user;
+                })
+                .orElseThrow(() -> {
+                    LOGGER.warn("[USER] Пользователь с ID={} не найден!", id);
+                    return new ResponseStatusException(HttpStatus.NOT_FOUND,
+                            "Пользователь с ID " + id + " не найден!");
+                });
     }
 
     public List<User> getUserByUsername(String username) {
@@ -68,6 +82,7 @@ public class UserService {
         }
         List<User> users = userRepository.findByUsername(username);
         userByUsernameCache.put(cacheKey, users);
+        LOGGER.info("[USER] Получен пользователь с username={}", username);
         return users;
     }
 
@@ -78,11 +93,13 @@ public class UserService {
     public User createUser(UserDto userDto) {
         User user = userDto.toEntity(roleService.getRoleById(userDto.getRoleId()));
         if (userRepository.existsByEmail(user.getEmail())) {
+            LOGGER.warn("[USER] Пользователь с таким email уже существует: {}", userDto.getEmail());
             throw new ResponseStatusException(HttpStatus.CONFLICT,
                     "Пользователь с таким email уже существует!");
         }
 
         if (userRepository.existsByUsername(user.getUsername())) {
+            LOGGER.warn("[USER] Пользователь с таким username уже существует: {}", userDto.getUsername());
             throw new ResponseStatusException(HttpStatus.CONFLICT,
                     "Пользователь с таким username уже существует!");
         }
@@ -92,6 +109,8 @@ public class UserService {
         userCache.put(KEY_ID + savedUser.getId(), savedUser);
         userListCache.put(KEY_ALL, userRepository.findAll());
         userByUsernameCache.put(KEY_NAME + savedUser.getUsername(), List.of(savedUser));
+        LOGGER.info("[USER] Создан пользователь ID={} USERNAME={}", savedUser.getId(),
+                savedUser.getUsername());
 
         return savedUser;
     }
@@ -110,13 +129,21 @@ public class UserService {
             userListCache.put(KEY_ALL, userRepository.findAll());
             userByUsernameCache.put(KEY_NAME + updatedUser.getUsername(), List.of(updatedUser));
 
+            LOGGER.info("[USER] Обновлен пользователь с ID={}, {}", userDto.getId(), user);
+
             return updatedUser;
-        }).orElseThrow(() -> new RuntimeException("Пользователь не найден!"));
+        }).orElseThrow(() -> {
+            LOGGER.warn("[USER] Пользователь не найден!");
+            return new RuntimeException("Пользователь не найден!");
+        });
     }
 
     public void deleteUser(Integer id) {
-        User user = userRepository.findById(id).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, "Пользователь с ID " + id + " не найден!"));
+        User user = userRepository.findById(id).orElseThrow(() -> {
+            LOGGER.warn("[USER] Пользователь с таким ID={} не найден!", id);
+            return new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "Пользователь с ID " + id + " не найден!");
+        });
 
         userVinylService.handleUserDeletion(id);
         vinylService.detachUserFromVinyl(user);
@@ -125,6 +152,7 @@ public class UserService {
         userCache.remove(KEY_ID + id);
         userListCache.put(KEY_ALL, userRepository.findAll());
         userByUsernameCache.remove(KEY_NAME + user.getUsername());
+        LOGGER.info("[USER] Удалён пользователь с ID={}", id);
     }
 
     private String hashPassword(String password) {

@@ -1,0 +1,312 @@
+2025-03-28T00:00:17.180+03:00  INFO 4056 --- [VinylTrackerAPI] [http-nio-8080-exec-1] c.e.v.api.aspects.LoggingAspect          : [GET] /users/1 - ResponseEntity com.example.vinyltrackerapi.api.controllers.UserController.getUserById(Integer)
+2025-03-28T00:00:17.205+03:00  INFO 4056 --- [VinylTrackerAPI] [http-nio-8080-exec-1] c.e.v.service.CacheService               : [CACHE] Добавлено: user-1
+2025-03-28T00:00:17.205+03:00  INFO 4056 --- [VinylTrackerAPI] [http-nio-8080-exec-1] c.e.vinyltrackerapi.service.UserService  : [USER] Получен пользователь с ID=1
+2025-03-28T00:00:40.447+03:00  INFO 4056 --- [VinylTrackerAPI] [http-nio-8080-exec-2] c.e.v.api.aspects.LoggingAspect          : [GET] /users/1 - ResponseEntity com.example.vinyltrackerapi.api.controllers.UserController.getUserById(Integer)
+2025-03-28T00:00:40.530+03:00  INFO 4056 --- [VinylTrackerAPI] [http-nio-8080-exec-2] c.e.v.service.CacheService               : [CACHE] Найдено в кеше: user-1
+2025-03-28T00:01:04.696+03:00  INFO 4056 --- [VinylTrackerAPI] [http-nio-8080-exec-4] c.e.v.api.aspects.LoggingAspect          : [GET] /users - List com.example.vinyltrackerapi.api.controllers.UserController.getAllUsers()
+2025-03-28T00:01:04.701+03:00  INFO 4056 --- [VinylTrackerAPI] [http-nio-8080-exec-4] c.e.v.service.CacheService               : [CACHE] Добавлено: all-users
+2025-03-28T00:01:04.701+03:00  INFO 4056 --- [VinylTrackerAPI] [http-nio-8080-exec-4] c.e.vinyltrackerapi.service.UserService  : [USER] Получены все пользователи
+2025-03-28T00:01:09.658+03:00  INFO 4056 --- [VinylTrackerAPI] [http-nio-8080-exec-3] c.e.v.api.aspects.LoggingAspect          : [GET] /users - List com.example.vinyltrackerapi.api.controllers.UserController.getAllUsers()
+2025-03-28T00:01:09.659+03:00  INFO 4056 --- [VinylTrackerAPI] [http-nio-8080-exec-3] c.e.v.service.CacheService               : [CACHE] Найдено в кеше: all-users
+2025-03-28T00:01:18.494+03:00  INFO 4056 --- [VinylTrackerAPI] [http-nio-8080-exec-5] c.e.v.api.aspects.LoggingAspect          : [GET] /users/3 - ResponseEntity com.example.vinyltrackerapi.api.controllers.UserController.getUserById(Integer)
+2025-03-28T00:01:18.495+03:00  INFO 4056 --- [VinylTrackerAPI] [http-nio-8080-exec-5] c.e.vinyltrackerapi.service.UserService  : [USER] Получен пользователь с ID=3
+2025-03-28T00:01:33.368+03:00  INFO 4056 --- [VinylTrackerAPI] [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-03-28T00:01:33.900+03:00  INFO 4056 --- [VinylTrackerAPI] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-03-28T00:01:33.910+03:00  INFO 4056 --- [VinylTrackerAPI] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-03-28T00:01:33.913+03:00  INFO 4056 --- [VinylTrackerAPI] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-03-28T00:01:33.915+03:00  INFO 4056 --- [VinylTrackerAPI] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-03-28T00:09:23.581+03:00  INFO 16480 --- [VinylTrackerAPI] [restartedMain] c.e.v.VinylTrackerApiApplication         : Starting VinylTrackerApiApplication using Java 23.0.2 with PID 16480 (C:\JCP\VinylTrackerAPI\target\classes started by Roman Ambrosevich in C:\JCP\VinylTrackerAPI)
+2025-03-28T00:09:23.583+03:00 DEBUG 16480 --- [VinylTrackerAPI] [restartedMain] c.e.v.VinylTrackerApiApplication         : Running with Spring Boot v3.4.2, Spring v6.2.2
+2025-03-28T00:09:23.583+03:00  INFO 16480 --- [VinylTrackerAPI] [restartedMain] c.e.v.VinylTrackerApiApplication         : No active profile set, falling back to 1 default profile: "default"
+2025-03-28T00:09:23.644+03:00  INFO 16480 --- [VinylTrackerAPI] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-03-28T00:09:23.645+03:00  INFO 16480 --- [VinylTrackerAPI] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-03-28T00:09:24.800+03:00  INFO 16480 --- [VinylTrackerAPI] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-03-28T00:09:24.881+03:00  INFO 16480 --- [VinylTrackerAPI] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 69 ms. Found 6 JPA repository interfaces.
+2025-03-28T00:09:25.506+03:00  INFO 16480 --- [VinylTrackerAPI] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-03-28T00:09:25.518+03:00  INFO 16480 --- [VinylTrackerAPI] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-03-28T00:09:25.518+03:00  INFO 16480 --- [VinylTrackerAPI] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-03-28T00:09:25.556+03:00  INFO 16480 --- [VinylTrackerAPI] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-03-28T00:09:25.556+03:00  INFO 16480 --- [VinylTrackerAPI] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1911 ms
+2025-03-28T00:09:25.805+03:00  INFO 16480 --- [VinylTrackerAPI] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-03-28T00:09:25.856+03:00  INFO 16480 --- [VinylTrackerAPI] [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.5.Final
+2025-03-28T00:09:25.880+03:00  INFO 16480 --- [VinylTrackerAPI] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-03-28T00:09:26.089+03:00  INFO 16480 --- [VinylTrackerAPI] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-03-28T00:09:26.113+03:00  INFO 16480 --- [VinylTrackerAPI] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-03-28T00:09:26.314+03:00  INFO 16480 --- [VinylTrackerAPI] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@7dcbd0bc
+2025-03-28T00:09:26.316+03:00  INFO 16480 --- [VinylTrackerAPI] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-03-28T00:09:26.549+03:00  WARN 16480 --- [VinylTrackerAPI] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-28T00:09:26.564+03:00  INFO 16480 --- [VinylTrackerAPI] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 17.2
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-03-28T00:09:27.363+03:00  INFO 16480 --- [VinylTrackerAPI] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-03-28T00:09:27.830+03:00  INFO 16480 --- [VinylTrackerAPI] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-03-28T00:09:28.162+03:00  INFO 16480 --- [VinylTrackerAPI] [restartedMain] c.e.vinyltrackerapi.service.RoleService  : [ROLE] Все роли загружены в кэш
+2025-03-28T00:09:28.311+03:00  INFO 16480 --- [VinylTrackerAPI] [restartedMain] c.e.v.service.VinylStatusService         : [VINYL-STATUS] Все жанры загружены в кэш
+2025-03-28T00:09:28.331+03:00  INFO 16480 --- [VinylTrackerAPI] [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-03-28T00:09:28.358+03:00  INFO 16480 --- [VinylTrackerAPI] [restartedMain] c.e.v.service.GenreService               : [GENRE] Все жанры загружены в кэш
+2025-03-28T00:09:28.427+03:00  WARN 16480 --- [VinylTrackerAPI] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-03-28T00:09:29.057+03:00  INFO 16480 --- [VinylTrackerAPI] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-03-28T00:09:29.065+03:00  INFO 16480 --- [VinylTrackerAPI] [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2025-03-28T00:09:29.123+03:00  INFO 16480 --- [VinylTrackerAPI] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-03-28T00:09:29.135+03:00  INFO 16480 --- [VinylTrackerAPI] [restartedMain] c.e.v.VinylTrackerApiApplication         : Started VinylTrackerApiApplication in 5.947 seconds (process running for 6.583)
+2025-03-28T00:09:29.347+03:00  INFO 16480 --- [VinylTrackerAPI] [RMI TCP Connection(4)-192.168.56.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-03-28T00:09:29.348+03:00  INFO 16480 --- [VinylTrackerAPI] [RMI TCP Connection(4)-192.168.56.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-03-28T00:09:29.349+03:00  INFO 16480 --- [VinylTrackerAPI] [RMI TCP Connection(4)-192.168.56.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2025-03-28T00:09:48.108+03:00  INFO 16480 --- [VinylTrackerAPI] [http-nio-8080-exec-1] c.e.v.api.aspects.LoggingAspect          : [GET] /users/3 - ResponseEntity com.example.vinyltrackerapi.api.controllers.UserController.getUserById(Integer)
+2025-03-28T00:09:48.124+03:00  WARN 16480 --- [VinylTrackerAPI] [http-nio-8080-exec-1] c.e.vinyltrackerapi.service.UserService  : [USER] Пользователь с ID=3 не найден!
+2025-03-28T00:09:48.128+03:00 ERROR 16480 --- [VinylTrackerAPI] [http-nio-8080-exec-1] c.e.v.api.aspects.LoggingAspect          : [ERROR] [GET] /users/3 - ResponseEntity com.example.vinyltrackerapi.api.controllers.UserController.getUserById(Integer): 404 NOT_FOUND "Пользователь с ID 3 не найден!"
+2025-03-28T00:09:48.151+03:00  WARN 16480 --- [VinylTrackerAPI] [http-nio-8080-exec-1] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [org.springframework.web.server.ResponseStatusException: 404 NOT_FOUND "Пользователь с ID 3 не найден!"]
+2025-03-28T00:10:14.953+03:00  INFO 16480 --- [VinylTrackerAPI] [http-nio-8080-exec-3] c.e.v.api.aspects.LoggingAspect          : [GET] /users/2 - ResponseEntity com.example.vinyltrackerapi.api.controllers.UserController.getUserById(Integer)
+2025-03-28T00:10:14.963+03:00  INFO 16480 --- [VinylTrackerAPI] [http-nio-8080-exec-3] c.e.v.service.CacheService               : [CACHE] Добавлено: user-2
+2025-03-28T00:10:14.963+03:00  INFO 16480 --- [VinylTrackerAPI] [http-nio-8080-exec-3] c.e.vinyltrackerapi.service.UserService  : [USER] Пользователь найден и добавлен в кэш: ID=2
+2025-03-28T00:11:32.374+03:00  INFO 16480 --- [VinylTrackerAPI] [http-nio-8080-exec-4] c.e.v.api.aspects.LoggingAspect          : [GET] /user-vinyls - List com.example.vinyltrackerapi.api.controllers.UserVinylController.getAllUserVinyls()
+2025-03-28T00:11:32.374+03:00  INFO 16480 --- [VinylTrackerAPI] [http-nio-8080-exec-4] c.e.v.service.UserVinylService           : [USER-VINYL] Получены все связи
+2025-03-28T00:11:42.724+03:00  INFO 16480 --- [VinylTrackerAPI] [http-nio-8080-exec-5] c.e.v.api.aspects.LoggingAspect          : [GET] /user-vinyls - List com.example.vinyltrackerapi.api.controllers.UserVinylController.getAllUserVinyls()
+2025-03-28T00:11:42.724+03:00  INFO 16480 --- [VinylTrackerAPI] [http-nio-8080-exec-5] c.e.v.service.UserVinylService           : [USER-VINYL] Получены все связи
+2025-03-28T00:12:02.073+03:00  INFO 16480 --- [VinylTrackerAPI] [http-nio-8080-exec-6] c.e.v.api.aspects.LoggingAspect          : [PUT] /user-vinyls/update-status - ResponseEntity com.example.vinyltrackerapi.api.controllers.UserVinylController.updateVinylStatus(Integer,Integer,Integer)
+2025-03-28T00:12:02.073+03:00  INFO 16480 --- [VinylTrackerAPI] [http-nio-8080-exec-6] c.e.v.service.UserVinylService           : [USER-VINYL] Найдена связь пользователя с ID=1 и пластинки с ID=11
+2025-03-28T00:12:02.076+03:00  WARN 16480 --- [VinylTrackerAPI] [http-nio-8080-exec-6] c.e.v.service.UserVinylService           : [USER-VINYL] Связь пользователя с ID=1 и пластини с ID=11 не найдена
+2025-03-28T00:12:02.077+03:00 ERROR 16480 --- [VinylTrackerAPI] [http-nio-8080-exec-6] c.e.v.api.aspects.LoggingAspect          : [ERROR] [PUT] /user-vinyls/update-status - ResponseEntity com.example.vinyltrackerapi.api.controllers.UserVinylController.updateVinylStatus(Integer,Integer,Integer): 404 NOT_FOUND "Запись не найдена!"
+2025-03-28T00:12:02.079+03:00  WARN 16480 --- [VinylTrackerAPI] [http-nio-8080-exec-6] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [org.springframework.web.server.ResponseStatusException: 404 NOT_FOUND "Запись не найдена!"]
+2025-03-28T00:12:34.164+03:00  INFO 16480 --- [VinylTrackerAPI] [http-nio-8080-exec-2] c.e.v.api.aspects.LoggingAspect          : [PUT] /user-vinyls/update-status - ResponseEntity com.example.vinyltrackerapi.api.controllers.UserVinylController.updateVinylStatus(Integer,Integer,Integer)
+2025-03-28T00:12:34.165+03:00  INFO 16480 --- [VinylTrackerAPI] [http-nio-8080-exec-2] c.e.v.service.UserVinylService           : [USER-VINYL] Найдена связь пользователя с ID=1 и пластинки с ID=1
+2025-03-28T00:12:34.166+03:00  WARN 16480 --- [VinylTrackerAPI] [http-nio-8080-exec-2] c.e.v.service.UserVinylService           : [USER-VINYL] Связь пользователя с ID=1 и пластини с ID=1 не найдена
+2025-03-28T00:12:34.167+03:00 ERROR 16480 --- [VinylTrackerAPI] [http-nio-8080-exec-2] c.e.v.api.aspects.LoggingAspect          : [ERROR] [PUT] /user-vinyls/update-status - ResponseEntity com.example.vinyltrackerapi.api.controllers.UserVinylController.updateVinylStatus(Integer,Integer,Integer): 404 NOT_FOUND "Запись не найдена!"
+2025-03-28T00:12:34.167+03:00  WARN 16480 --- [VinylTrackerAPI] [http-nio-8080-exec-2] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [org.springframework.web.server.ResponseStatusException: 404 NOT_FOUND "Запись не найдена!"]
+2025-03-28T00:12:43.371+03:00  INFO 16480 --- [VinylTrackerAPI] [http-nio-8080-exec-8] c.e.v.api.aspects.LoggingAspect          : [PUT] /user-vinyls/update-status - ResponseEntity com.example.vinyltrackerapi.api.controllers.UserVinylController.updateVinylStatus(Integer,Integer,Integer)
+2025-03-28T00:12:43.372+03:00  INFO 16480 --- [VinylTrackerAPI] [http-nio-8080-exec-8] c.e.v.service.UserVinylService           : [USER-VINYL] Найдена связь пользователя с ID=2 и пластинки с ID=1
+2025-03-28T00:12:43.374+03:00  INFO 16480 --- [VinylTrackerAPI] [http-nio-8080-exec-8] c.e.v.service.VinylStatusService         : [VINYL-STATUS] Статус получен
+2025-03-28T00:12:43.389+03:00  INFO 16480 --- [VinylTrackerAPI] [http-nio-8080-exec-8] c.e.v.service.CacheService               : [CACHE] Найдено в кеше: user-2
+2025-03-28T00:12:43.403+03:00  INFO 16480 --- [VinylTrackerAPI] [http-nio-8080-exec-8] c.e.v.service.CacheService               : [CACHE] Добавлено: vinyl-1
+2025-03-28T00:12:43.404+03:00  INFO 16480 --- [VinylTrackerAPI] [http-nio-8080-exec-8] c.e.v.service.VinylService               : [VINYL] Получена пластинка с ID=1
+2025-03-28T00:12:43.406+03:00  INFO 16480 --- [VinylTrackerAPI] [http-nio-8080-exec-8] c.e.v.service.CacheService               : [CACHE] Добавлено: user-vinyls-2
+2025-03-28T00:12:43.406+03:00  INFO 16480 --- [VinylTrackerAPI] [http-nio-8080-exec-8] c.e.v.service.CacheService               : [CACHE] Добавлено: vinyl-users-1
+2025-03-28T00:12:43.406+03:00  INFO 16480 --- [VinylTrackerAPI] [http-nio-8080-exec-8] c.e.v.service.UserVinylService           : [USER-VINYL] Обновлен статус пользователя с ID=2 и пластинки с ID=1 на статус с ID=1
+2025-03-28T00:13:02.204+03:00  INFO 16480 --- [VinylTrackerAPI] [http-nio-8080-exec-9] c.e.v.api.aspects.LoggingAspect          : [PUT] /user-vinyls/update-status - ResponseEntity com.example.vinyltrackerapi.api.controllers.UserVinylController.updateVinylStatus(Integer,Integer,Integer)
+2025-03-28T00:13:02.205+03:00  INFO 16480 --- [VinylTrackerAPI] [http-nio-8080-exec-9] c.e.v.service.UserVinylService           : [USER-VINYL] Найдена связь пользователя с ID=2 и пластинки с ID=1
+2025-03-28T00:13:02.210+03:00  INFO 16480 --- [VinylTrackerAPI] [http-nio-8080-exec-9] c.e.v.service.VinylStatusService         : [VINYL-STATUS] Статус получен
+2025-03-28T00:13:02.211+03:00  WARN 16480 --- [VinylTrackerAPI] [http-nio-8080-exec-9] c.e.v.service.UserVinylService           : [USER-VINYL] Статус с ID=4 не найден
+2025-03-28T00:13:02.212+03:00 ERROR 16480 --- [VinylTrackerAPI] [http-nio-8080-exec-9] c.e.v.api.aspects.LoggingAspect          : [ERROR] [PUT] /user-vinyls/update-status - ResponseEntity com.example.vinyltrackerapi.api.controllers.UserVinylController.updateVinylStatus(Integer,Integer,Integer): 404 NOT_FOUND "Статус не найден!"
+2025-03-28T00:13:02.214+03:00  WARN 16480 --- [VinylTrackerAPI] [http-nio-8080-exec-9] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [org.springframework.web.server.ResponseStatusException: 404 NOT_FOUND "Статус не найден!"]
+2025-03-28T00:13:04.636+03:00  INFO 16480 --- [VinylTrackerAPI] [http-nio-8080-exec-10] c.e.v.api.aspects.LoggingAspect          : [PUT] /user-vinyls/update-status - ResponseEntity com.example.vinyltrackerapi.api.controllers.UserVinylController.updateVinylStatus(Integer,Integer,Integer)
+2025-03-28T00:13:04.636+03:00  INFO 16480 --- [VinylTrackerAPI] [http-nio-8080-exec-10] c.e.v.service.UserVinylService           : [USER-VINYL] Найдена связь пользователя с ID=2 и пластинки с ID=1
+2025-03-28T00:13:04.638+03:00  INFO 16480 --- [VinylTrackerAPI] [http-nio-8080-exec-10] c.e.v.service.VinylStatusService         : [VINYL-STATUS] Статус получен
+2025-03-28T00:13:04.652+03:00  INFO 16480 --- [VinylTrackerAPI] [http-nio-8080-exec-10] c.e.v.service.CacheService               : [CACHE] Найдено в кеше: user-2
+2025-03-28T00:13:04.654+03:00  INFO 16480 --- [VinylTrackerAPI] [http-nio-8080-exec-10] c.e.v.service.CacheService               : [CACHE] Найдено в кеше: vinyl-1
+2025-03-28T00:13:04.656+03:00  INFO 16480 --- [VinylTrackerAPI] [http-nio-8080-exec-10] c.e.v.service.CacheService               : [CACHE] Добавлено: user-vinyls-2
+2025-03-28T00:13:04.656+03:00  INFO 16480 --- [VinylTrackerAPI] [http-nio-8080-exec-10] c.e.v.service.CacheService               : [CACHE] Добавлено: vinyl-users-1
+2025-03-28T00:13:04.656+03:00  INFO 16480 --- [VinylTrackerAPI] [http-nio-8080-exec-10] c.e.v.service.UserVinylService           : [USER-VINYL] Обновлен статус пользователя с ID=2 и пластинки с ID=1 на статус с ID=3
+2025-03-28T00:14:25.473+03:00  WARN 16480 --- [VinylTrackerAPI] [http-nio-8080-exec-3] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [org.springframework.web.servlet.resource.NoResourceFoundException: No static resource logs.]
+2025-03-28T00:14:28.152+03:00  INFO 16480 --- [VinylTrackerAPI] [pool-2-thread-1] c.e.v.service.CacheService               : [CACHE] Очистка старых записей...
+2025-03-28T00:14:41.867+03:00  INFO 16480 --- [VinylTrackerAPI] [http-nio-8080-exec-7] c.e.v.api.aspects.LoggingAspect          : [GET] /logs/2025-03-28 - ResponseEntity com.example.vinyltrackerapi.api.controllers.LogController.getLogsByDate(String)
+2025-03-28T00:15:06.827+03:00  INFO 16480 --- [VinylTrackerAPI] [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-03-28T00:15:07.351+03:00  INFO 16480 --- [VinylTrackerAPI] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-03-28T00:15:07.365+03:00  INFO 16480 --- [VinylTrackerAPI] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-03-28T00:15:07.373+03:00  INFO 16480 --- [VinylTrackerAPI] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-03-28T00:15:07.378+03:00  INFO 16480 --- [VinylTrackerAPI] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-03-28T00:23:58.240+03:00  INFO 16040 --- [VinylTrackerAPI] [restartedMain] c.e.v.VinylTrackerApiApplication         : Starting VinylTrackerApiApplication using Java 23.0.2 with PID 16040 (C:\JCP\VinylTrackerAPI\target\classes started by Roman Ambrosevich in C:\JCP\VinylTrackerAPI)
+2025-03-28T00:23:58.243+03:00 DEBUG 16040 --- [VinylTrackerAPI] [restartedMain] c.e.v.VinylTrackerApiApplication         : Running with Spring Boot v3.4.2, Spring v6.2.2
+2025-03-28T00:23:58.244+03:00  INFO 16040 --- [VinylTrackerAPI] [restartedMain] c.e.v.VinylTrackerApiApplication         : No active profile set, falling back to 1 default profile: "default"
+2025-03-28T00:23:58.306+03:00  INFO 16040 --- [VinylTrackerAPI] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-03-28T00:23:58.306+03:00  INFO 16040 --- [VinylTrackerAPI] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-03-28T00:23:59.529+03:00  INFO 16040 --- [VinylTrackerAPI] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-03-28T00:23:59.589+03:00  INFO 16040 --- [VinylTrackerAPI] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 52 ms. Found 6 JPA repository interfaces.
+2025-03-28T00:24:00.292+03:00  INFO 16040 --- [VinylTrackerAPI] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-03-28T00:24:00.306+03:00  INFO 16040 --- [VinylTrackerAPI] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-03-28T00:24:00.306+03:00  INFO 16040 --- [VinylTrackerAPI] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-03-28T00:24:00.353+03:00  INFO 16040 --- [VinylTrackerAPI] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-03-28T00:24:00.354+03:00  INFO 16040 --- [VinylTrackerAPI] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2048 ms
+2025-03-28T00:24:00.624+03:00  INFO 16040 --- [VinylTrackerAPI] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-03-28T00:24:00.674+03:00  INFO 16040 --- [VinylTrackerAPI] [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.5.Final
+2025-03-28T00:24:00.698+03:00  INFO 16040 --- [VinylTrackerAPI] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-03-28T00:24:00.915+03:00  INFO 16040 --- [VinylTrackerAPI] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-03-28T00:24:00.939+03:00  INFO 16040 --- [VinylTrackerAPI] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-03-28T00:24:01.020+03:00  INFO 16040 --- [VinylTrackerAPI] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@be2aa48
+2025-03-28T00:24:01.021+03:00  INFO 16040 --- [VinylTrackerAPI] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-03-28T00:24:01.260+03:00  WARN 16040 --- [VinylTrackerAPI] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-28T00:24:01.275+03:00  INFO 16040 --- [VinylTrackerAPI] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 17.2
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-03-28T00:24:02.482+03:00  INFO 16040 --- [VinylTrackerAPI] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-03-28T00:24:02.986+03:00  INFO 16040 --- [VinylTrackerAPI] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-03-28T00:24:03.334+03:00  INFO 16040 --- [VinylTrackerAPI] [restartedMain] c.e.vinyltrackerapi.service.RoleService  : [ROLE] Все роли загружены в кэш
+2025-03-28T00:24:03.490+03:00  INFO 16040 --- [VinylTrackerAPI] [restartedMain] c.e.v.service.VinylStatusService         : [VINYL-STATUS] Все жанры загружены в кэш
+2025-03-28T00:24:03.511+03:00  INFO 16040 --- [VinylTrackerAPI] [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-03-28T00:24:03.538+03:00  INFO 16040 --- [VinylTrackerAPI] [restartedMain] c.e.v.service.GenreService               : [GENRE] Все жанры загружены в кэш
+2025-03-28T00:24:03.717+03:00  WARN 16040 --- [VinylTrackerAPI] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-03-28T00:24:04.461+03:00  INFO 16040 --- [VinylTrackerAPI] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-03-28T00:24:04.470+03:00  INFO 16040 --- [VinylTrackerAPI] [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2025-03-28T00:24:04.534+03:00  INFO 16040 --- [VinylTrackerAPI] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-03-28T00:24:04.547+03:00  INFO 16040 --- [VinylTrackerAPI] [restartedMain] c.e.v.VinylTrackerApiApplication         : Started VinylTrackerApiApplication in 6.904 seconds (process running for 7.897)
+2025-03-28T00:24:05.160+03:00  INFO 16040 --- [VinylTrackerAPI] [RMI TCP Connection(3)-192.168.56.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-03-28T00:24:05.161+03:00  INFO 16040 --- [VinylTrackerAPI] [RMI TCP Connection(3)-192.168.56.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-03-28T00:24:05.162+03:00  INFO 16040 --- [VinylTrackerAPI] [RMI TCP Connection(3)-192.168.56.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2025-03-28T00:24:19.210+03:00  INFO 16040 --- [VinylTrackerAPI] [http-nio-8080-exec-9] o.springdoc.api.AbstractOpenApiResource  : Init duration for springdoc-openapi is: 346 ms
+2025-03-28T00:29:03.320+03:00  INFO 16040 --- [VinylTrackerAPI] [pool-2-thread-1] c.e.v.service.CacheService               : [CACHE] Очистка старых записей...
+2025-03-28T00:31:09.497+03:00  INFO 16040 --- [VinylTrackerAPI] [http-nio-8080-exec-5] c.e.v.api.aspects.LoggingAspect          : [GET] /users - List com.example.vinyltrackerapi.api.controllers.UserController.getAllUsers()
+2025-03-28T00:31:09.515+03:00  INFO 16040 --- [VinylTrackerAPI] [http-nio-8080-exec-5] c.e.v.service.CacheService               : [CACHE] Добавлено: all-users
+2025-03-28T00:31:09.516+03:00  INFO 16040 --- [VinylTrackerAPI] [http-nio-8080-exec-5] c.e.vinyltrackerapi.service.UserService  : [USER] Получены все пользователи
+2025-03-28T00:31:13.169+03:00  INFO 16040 --- [VinylTrackerAPI] [http-nio-8080-exec-4] c.e.v.api.aspects.LoggingAspect          : [GET] /users/3 - ResponseEntity com.example.vinyltrackerapi.api.controllers.UserController.getUserById(Integer)
+2025-03-28T00:31:13.180+03:00  WARN 16040 --- [VinylTrackerAPI] [http-nio-8080-exec-4] c.e.vinyltrackerapi.service.UserService  : [USER] Пользователь с ID=3 не найден!
+2025-03-28T00:31:13.181+03:00 ERROR 16040 --- [VinylTrackerAPI] [http-nio-8080-exec-4] c.e.v.api.aspects.LoggingAspect          : [ERROR] [GET] /users/3 - ResponseEntity com.example.vinyltrackerapi.api.controllers.UserController.getUserById(Integer): 404 NOT_FOUND "Пользователь с ID 3 не найден!"
+2025-03-28T00:31:13.185+03:00  WARN 16040 --- [VinylTrackerAPI] [http-nio-8080-exec-4] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [org.springframework.web.server.ResponseStatusException: 404 NOT_FOUND "Пользователь с ID 3 не найден!"]
+2025-03-28T00:31:22.534+03:00  WARN 16040 --- [VinylTrackerAPI] [http-nio-8080-exec-9] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [org.springframework.web.servlet.resource.NoResourceFoundException: No static resource users/create/3.]
+2025-03-28T00:31:28.070+03:00  WARN 16040 --- [VinylTrackerAPI] [http-nio-8080-exec-1] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [org.springframework.web.servlet.resource.NoResourceFoundException: No static resource users/create/3.]
+2025-03-28T00:31:32.264+03:00  WARN 16040 --- [VinylTrackerAPI] [http-nio-8080-exec-7] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [org.springframework.http.converter.HttpMessageNotReadableException: Required request body is missing: public org.springframework.http.ResponseEntity<com.example.vinyltrackerapi.api.dto.UserDto> com.example.vinyltrackerapi.api.controllers.UserController.updateUser(java.lang.Integer,com.example.vinyltrackerapi.api.dto.UserDto)]
+2025-03-28T00:34:03.314+03:00  INFO 16040 --- [VinylTrackerAPI] [pool-2-thread-1] c.e.v.service.CacheService               : [CACHE] Очистка старых записей...
+2025-03-28T00:39:03.317+03:00  INFO 16040 --- [VinylTrackerAPI] [pool-2-thread-1] c.e.v.service.CacheService               : [CACHE] Очистка старых записей...
+2025-03-28T00:39:58.212+03:00  INFO 16040 --- [VinylTrackerAPI] [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-03-28T00:39:58.743+03:00  INFO 16040 --- [VinylTrackerAPI] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-03-28T00:39:58.749+03:00  INFO 16040 --- [VinylTrackerAPI] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-03-28T00:39:58.752+03:00  INFO 16040 --- [VinylTrackerAPI] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-03-28T00:39:58.754+03:00  INFO 16040 --- [VinylTrackerAPI] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-03-28T00:59:06.568+03:00  INFO 3512 --- [VinylTrackerAPI] [restartedMain] c.e.v.VinylTrackerApiApplication         : Starting VinylTrackerApiApplication using Java 23.0.2 with PID 3512 (C:\JCP\VinylTrackerAPI\target\classes started by Roman Ambrosevich in C:\JCP\VinylTrackerAPI)
+2025-03-28T00:59:06.569+03:00 DEBUG 3512 --- [VinylTrackerAPI] [restartedMain] c.e.v.VinylTrackerApiApplication         : Running with Spring Boot v3.4.2, Spring v6.2.2
+2025-03-28T00:59:06.570+03:00  INFO 3512 --- [VinylTrackerAPI] [restartedMain] c.e.v.VinylTrackerApiApplication         : No active profile set, falling back to 1 default profile: "default"
+2025-03-28T00:59:06.614+03:00  INFO 3512 --- [VinylTrackerAPI] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-03-28T00:59:06.615+03:00  INFO 3512 --- [VinylTrackerAPI] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-03-28T00:59:07.437+03:00  INFO 3512 --- [VinylTrackerAPI] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-03-28T00:59:07.491+03:00  INFO 3512 --- [VinylTrackerAPI] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 48 ms. Found 6 JPA repository interfaces.
+2025-03-28T00:59:08.123+03:00  INFO 3512 --- [VinylTrackerAPI] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-03-28T00:59:08.141+03:00  INFO 3512 --- [VinylTrackerAPI] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-03-28T00:59:08.142+03:00  INFO 3512 --- [VinylTrackerAPI] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-03-28T00:59:08.191+03:00  INFO 3512 --- [VinylTrackerAPI] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-03-28T00:59:08.191+03:00  INFO 3512 --- [VinylTrackerAPI] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1576 ms
+2025-03-28T00:59:08.506+03:00  INFO 3512 --- [VinylTrackerAPI] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-03-28T00:59:08.551+03:00  INFO 3512 --- [VinylTrackerAPI] [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.5.Final
+2025-03-28T00:59:08.579+03:00  INFO 3512 --- [VinylTrackerAPI] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-03-28T00:59:08.799+03:00  INFO 3512 --- [VinylTrackerAPI] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-03-28T00:59:08.823+03:00  INFO 3512 --- [VinylTrackerAPI] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-03-28T00:59:08.901+03:00  INFO 3512 --- [VinylTrackerAPI] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@4775d225
+2025-03-28T00:59:08.902+03:00  INFO 3512 --- [VinylTrackerAPI] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-03-28T00:59:09.144+03:00  WARN 3512 --- [VinylTrackerAPI] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-28T00:59:09.159+03:00  INFO 3512 --- [VinylTrackerAPI] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 17.2
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-03-28T00:59:09.954+03:00  INFO 3512 --- [VinylTrackerAPI] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-03-28T00:59:10.421+03:00  INFO 3512 --- [VinylTrackerAPI] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-03-28T00:59:10.774+03:00  INFO 3512 --- [VinylTrackerAPI] [restartedMain] c.e.vinyltrackerapi.service.RoleService  : [ROLE] Все роли загружены в кэш
+2025-03-28T00:59:10.920+03:00  INFO 3512 --- [VinylTrackerAPI] [restartedMain] c.e.v.service.VinylStatusService         : [VINYL-STATUS] Все жанры загружены в кэш
+2025-03-28T00:59:10.940+03:00  INFO 3512 --- [VinylTrackerAPI] [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-03-28T00:59:10.965+03:00  INFO 3512 --- [VinylTrackerAPI] [restartedMain] c.e.v.service.GenreService               : [GENRE] Все жанры загружены в кэш
+2025-03-28T00:59:11.114+03:00  WARN 3512 --- [VinylTrackerAPI] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-03-28T00:59:11.852+03:00  INFO 3512 --- [VinylTrackerAPI] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-03-28T00:59:11.862+03:00  INFO 3512 --- [VinylTrackerAPI] [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2025-03-28T00:59:11.933+03:00  INFO 3512 --- [VinylTrackerAPI] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-03-28T00:59:11.946+03:00  INFO 3512 --- [VinylTrackerAPI] [restartedMain] c.e.v.VinylTrackerApiApplication         : Started VinylTrackerApiApplication in 5.74 seconds (process running for 6.481)
+2025-03-28T00:59:12.243+03:00  INFO 3512 --- [VinylTrackerAPI] [RMI TCP Connection(1)-192.168.56.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-03-28T00:59:12.243+03:00  INFO 3512 --- [VinylTrackerAPI] [RMI TCP Connection(1)-192.168.56.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-03-28T00:59:12.246+03:00  INFO 3512 --- [VinylTrackerAPI] [RMI TCP Connection(1)-192.168.56.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
+2025-03-28T00:59:36.425+03:00  INFO 3512 --- [VinylTrackerAPI] [http-nio-8080-exec-1] c.e.v.api.aspects.LoggingAspect          : [GET] /vinyls - List com.example.vinyltrackerapi.api.controllers.VinylController.getAllVinyls()
+2025-03-28T00:59:36.440+03:00  INFO 3512 --- [VinylTrackerAPI] [http-nio-8080-exec-1] c.e.v.service.CacheService               : [CACHE] Добавлено: all-vinyls
+2025-03-28T00:59:36.440+03:00  INFO 3512 --- [VinylTrackerAPI] [http-nio-8080-exec-1] c.e.v.service.VinylService               : [VINYL] Получены все пластинки
+2025-03-28T01:00:52.006+03:00  INFO 3512 --- [VinylTrackerAPI] [http-nio-8080-exec-3] c.e.v.api.aspects.LoggingAspect          : [POST] /vinyls/create - ResponseEntity com.example.vinyltrackerapi.api.controllers.VinylController.createVinyl(VinylDto)
+2025-03-28T01:00:52.013+03:00  INFO 3512 --- [VinylTrackerAPI] [http-nio-8080-exec-3] c.e.v.service.CacheService               : [CACHE] Добавлено: user-1
+2025-03-28T01:00:52.013+03:00  INFO 3512 --- [VinylTrackerAPI] [http-nio-8080-exec-3] c.e.vinyltrackerapi.service.UserService  : [USER] Пользователь найден и добавлен в кэш: ID=1
+2025-03-28T01:00:52.044+03:00  INFO 3512 --- [VinylTrackerAPI] [http-nio-8080-exec-3] c.e.v.service.CacheService               : [CACHE] Добавлено: vinyl-2
+2025-03-28T01:00:52.046+03:00  INFO 3512 --- [VinylTrackerAPI] [http-nio-8080-exec-3] c.e.v.service.CacheService               : [CACHE] Добавлено: all-vinyls
+2025-03-28T01:00:52.046+03:00  INFO 3512 --- [VinylTrackerAPI] [http-nio-8080-exec-3] c.e.v.service.VinylService               : [VINYL] Создана пластинка с ID=2 title=МЕМ
+2025-03-28T01:00:59.472+03:00  INFO 3512 --- [VinylTrackerAPI] [http-nio-8080-exec-4] c.e.v.api.aspects.LoggingAspect          : [GET] /vinyls - List com.example.vinyltrackerapi.api.controllers.VinylController.getAllVinyls()
+2025-03-28T01:00:59.472+03:00  INFO 3512 --- [VinylTrackerAPI] [http-nio-8080-exec-4] c.e.v.service.CacheService               : [CACHE] Найдено в кеше: all-vinyls
+2025-03-28T01:01:21.868+03:00  INFO 3512 --- [VinylTrackerAPI] [http-nio-8080-exec-5] c.e.v.api.aspects.LoggingAspect          : [POST] /user-vinyls/add - ResponseEntity com.example.vinyltrackerapi.api.controllers.UserVinylController.addUserVinyl(Integer,Integer,Integer)
+2025-03-28T01:01:21.869+03:00  INFO 3512 --- [VinylTrackerAPI] [http-nio-8080-exec-5] c.e.v.service.CacheService               : [CACHE] Найдено в кеше: user-1
+2025-03-28T01:01:21.869+03:00  INFO 3512 --- [VinylTrackerAPI] [http-nio-8080-exec-5] c.e.v.service.CacheService               : [CACHE] Найдено в кеше: vinyl-2
+2025-03-28T01:01:21.869+03:00  INFO 3512 --- [VinylTrackerAPI] [http-nio-8080-exec-5] c.e.v.service.VinylStatusService         : [VINYL-STATUS] Статус получен
+2025-03-28T01:01:21.885+03:00  INFO 3512 --- [VinylTrackerAPI] [http-nio-8080-exec-5] c.e.v.service.CacheService               : [CACHE] Найдено в кеше: user-1
+2025-03-28T01:01:21.901+03:00  INFO 3512 --- [VinylTrackerAPI] [http-nio-8080-exec-5] c.e.v.service.CacheService               : [CACHE] Найдено в кеше: vinyl-2
+2025-03-28T01:01:21.903+03:00  INFO 3512 --- [VinylTrackerAPI] [http-nio-8080-exec-5] c.e.v.service.CacheService               : [CACHE] Добавлено: user-vinyls-1
+2025-03-28T01:01:21.904+03:00  INFO 3512 --- [VinylTrackerAPI] [http-nio-8080-exec-5] c.e.v.service.CacheService               : [CACHE] Добавлено: vinyl-users-2
+2025-03-28T01:01:21.904+03:00  INFO 3512 --- [VinylTrackerAPI] [http-nio-8080-exec-5] c.e.v.service.UserVinylService           : [USER-VINYL] Пользователь ID=1, пластинка ID=2, статус ID=1 связаны
+2025-03-28T01:01:34.137+03:00  INFO 3512 --- [VinylTrackerAPI] [http-nio-8080-exec-6] c.e.v.api.aspects.LoggingAspect          : [POST] /user-vinyls/add - ResponseEntity com.example.vinyltrackerapi.api.controllers.UserVinylController.addUserVinyl(Integer,Integer,Integer)
+2025-03-28T01:01:34.139+03:00  WARN 3512 --- [VinylTrackerAPI] [http-nio-8080-exec-6] c.e.vinyltrackerapi.service.UserService  : [USER] Пользователь с ID=3 не найден!
+2025-03-28T01:01:34.140+03:00 ERROR 3512 --- [VinylTrackerAPI] [http-nio-8080-exec-6] c.e.v.api.aspects.LoggingAspect          : [ERROR] [POST] /user-vinyls/add - ResponseEntity com.example.vinyltrackerapi.api.controllers.UserVinylController.addUserVinyl(Integer,Integer,Integer): 404 NOT_FOUND "Пользователь с ID 3 не найден!"
+2025-03-28T01:01:34.144+03:00  WARN 3512 --- [VinylTrackerAPI] [http-nio-8080-exec-6] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [org.springframework.web.server.ResponseStatusException: 404 NOT_FOUND "Пользователь с ID 3 не найден!"]
+2025-03-28T01:01:40.205+03:00  INFO 3512 --- [VinylTrackerAPI] [http-nio-8080-exec-7] c.e.v.api.aspects.LoggingAspect          : [POST] /user-vinyls/add - ResponseEntity com.example.vinyltrackerapi.api.controllers.UserVinylController.addUserVinyl(Integer,Integer,Integer)
+2025-03-28T01:01:40.206+03:00  INFO 3512 --- [VinylTrackerAPI] [http-nio-8080-exec-7] c.e.v.service.CacheService               : [CACHE] Найдено в кеше: user-1
+2025-03-28T01:01:40.208+03:00  INFO 3512 --- [VinylTrackerAPI] [http-nio-8080-exec-7] c.e.v.service.VinylService               : [VINYL] Получена пластинка с ID=3
+2025-03-28T01:01:40.208+03:00  WARN 3512 --- [VinylTrackerAPI] [http-nio-8080-exec-7] c.e.v.service.UserVinylService           : [USER-VINYL] Пластинка с ID=3 не найдена!
+2025-03-28T01:01:40.208+03:00 ERROR 3512 --- [VinylTrackerAPI] [http-nio-8080-exec-7] c.e.v.api.aspects.LoggingAspect          : [ERROR] [POST] /user-vinyls/add - ResponseEntity com.example.vinyltrackerapi.api.controllers.UserVinylController.addUserVinyl(Integer,Integer,Integer): 404 NOT_FOUND "Винил не найден!"
+2025-03-28T01:01:40.209+03:00  WARN 3512 --- [VinylTrackerAPI] [http-nio-8080-exec-7] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [org.springframework.web.server.ResponseStatusException: 404 NOT_FOUND "Винил не найден!"]
+2025-03-28T01:04:10.754+03:00  INFO 3512 --- [VinylTrackerAPI] [pool-2-thread-1] c.e.v.service.CacheService               : [CACHE] Очистка старых записей...
+2025-03-28T01:04:13.377+03:00  INFO 3512 --- [VinylTrackerAPI] [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-03-28T01:04:13.900+03:00  INFO 3512 --- [VinylTrackerAPI] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-03-28T01:04:13.907+03:00  INFO 3512 --- [VinylTrackerAPI] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-03-28T01:04:13.910+03:00  INFO 3512 --- [VinylTrackerAPI] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-03-28T01:04:13.912+03:00  INFO 3512 --- [VinylTrackerAPI] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-03-28T01:12:19.792+03:00  INFO 8164 --- [VinylTrackerAPI] [restartedMain] c.e.v.VinylTrackerApiApplication         : Starting VinylTrackerApiApplication using Java 23.0.2 with PID 8164 (C:\JCP\VinylTrackerAPI\target\classes started by Roman Ambrosevich in C:\JCP\VinylTrackerAPI)
+2025-03-28T01:12:19.795+03:00 DEBUG 8164 --- [VinylTrackerAPI] [restartedMain] c.e.v.VinylTrackerApiApplication         : Running with Spring Boot v3.4.2, Spring v6.2.2
+2025-03-28T01:12:19.796+03:00  INFO 8164 --- [VinylTrackerAPI] [restartedMain] c.e.v.VinylTrackerApiApplication         : No active profile set, falling back to 1 default profile: "default"
+2025-03-28T01:12:19.863+03:00  INFO 8164 --- [VinylTrackerAPI] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-03-28T01:12:19.864+03:00  INFO 8164 --- [VinylTrackerAPI] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-03-28T01:12:20.966+03:00  INFO 8164 --- [VinylTrackerAPI] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-03-28T01:12:21.024+03:00  INFO 8164 --- [VinylTrackerAPI] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 50 ms. Found 6 JPA repository interfaces.
+2025-03-28T01:12:21.616+03:00  INFO 8164 --- [VinylTrackerAPI] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-03-28T01:12:21.627+03:00  INFO 8164 --- [VinylTrackerAPI] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-03-28T01:12:21.627+03:00  INFO 8164 --- [VinylTrackerAPI] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-03-28T01:12:21.666+03:00  INFO 8164 --- [VinylTrackerAPI] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-03-28T01:12:21.666+03:00  INFO 8164 --- [VinylTrackerAPI] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1802 ms
+2025-03-28T01:12:21.917+03:00  INFO 8164 --- [VinylTrackerAPI] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-03-28T01:12:21.959+03:00  INFO 8164 --- [VinylTrackerAPI] [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.5.Final
+2025-03-28T01:12:21.983+03:00  INFO 8164 --- [VinylTrackerAPI] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-03-28T01:12:22.179+03:00  INFO 8164 --- [VinylTrackerAPI] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-03-28T01:12:22.201+03:00  INFO 8164 --- [VinylTrackerAPI] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-03-28T01:12:22.281+03:00  INFO 8164 --- [VinylTrackerAPI] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@2d58fb49
+2025-03-28T01:12:22.282+03:00  INFO 8164 --- [VinylTrackerAPI] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-03-28T01:12:22.516+03:00  WARN 8164 --- [VinylTrackerAPI] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-28T01:12:22.531+03:00  INFO 8164 --- [VinylTrackerAPI] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 17.2
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-03-28T01:12:23.324+03:00  INFO 8164 --- [VinylTrackerAPI] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-03-28T01:12:23.782+03:00  INFO 8164 --- [VinylTrackerAPI] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-03-28T01:12:24.118+03:00  INFO 8164 --- [VinylTrackerAPI] [restartedMain] c.e.vinyltrackerapi.service.RoleService  : [ROLE] Все роли загружены в кэш
+2025-03-28T01:12:24.267+03:00  INFO 8164 --- [VinylTrackerAPI] [restartedMain] c.e.v.service.VinylStatusService         : [VINYL-STATUS] Все жанры загружены в кэш
+2025-03-28T01:12:24.291+03:00  INFO 8164 --- [VinylTrackerAPI] [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-03-28T01:12:24.318+03:00  INFO 8164 --- [VinylTrackerAPI] [restartedMain] c.e.v.service.GenreService               : [GENRE] Все жанры загружены в кэш
+2025-03-28T01:12:24.457+03:00  WARN 8164 --- [VinylTrackerAPI] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-03-28T01:12:25.198+03:00  INFO 8164 --- [VinylTrackerAPI] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-03-28T01:12:25.208+03:00  INFO 8164 --- [VinylTrackerAPI] [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2025-03-28T01:12:25.278+03:00  INFO 8164 --- [VinylTrackerAPI] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-03-28T01:12:25.291+03:00  INFO 8164 --- [VinylTrackerAPI] [restartedMain] c.e.v.VinylTrackerApiApplication         : Started VinylTrackerApiApplication in 5.982 seconds (process running for 6.562)
+2025-03-28T01:12:25.553+03:00  INFO 8164 --- [VinylTrackerAPI] [RMI TCP Connection(4)-192.168.56.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-03-28T01:12:25.553+03:00  INFO 8164 --- [VinylTrackerAPI] [RMI TCP Connection(4)-192.168.56.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-03-28T01:12:25.555+03:00  INFO 8164 --- [VinylTrackerAPI] [RMI TCP Connection(4)-192.168.56.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2025-03-28T01:12:31.291+03:00  INFO 8164 --- [VinylTrackerAPI] [http-nio-8080-exec-1] c.e.v.api.aspects.LoggingAspect          : [POST] /user-vinyls/add - ResponseEntity com.example.vinyltrackerapi.api.controllers.UserVinylController.addUserVinyl(Integer,Integer,Integer)
+2025-03-28T01:12:31.310+03:00  INFO 8164 --- [VinylTrackerAPI] [http-nio-8080-exec-1] c.e.v.service.CacheService               : [CACHE] Добавлено: user-1
+2025-03-28T01:12:31.310+03:00  INFO 8164 --- [VinylTrackerAPI] [http-nio-8080-exec-1] c.e.vinyltrackerapi.service.UserService  : [USER] Пользователь найден и добавлен в кэш: ID=1
+2025-03-28T01:12:31.312+03:00  WARN 8164 --- [VinylTrackerAPI] [http-nio-8080-exec-1] c.e.v.service.VinylService               : [VINYL] Пластинка с ID=3 не найдена!
+2025-03-28T01:12:31.316+03:00 ERROR 8164 --- [VinylTrackerAPI] [http-nio-8080-exec-1] c.e.v.api.aspects.LoggingAspect          : [ERROR] [POST] /user-vinyls/add - ResponseEntity com.example.vinyltrackerapi.api.controllers.UserVinylController.addUserVinyl(Integer,Integer,Integer): 404 NOT_FOUND "Пластинка с ID 3 не найдена!"
+2025-03-28T01:12:31.333+03:00  WARN 8164 --- [VinylTrackerAPI] [http-nio-8080-exec-1] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [org.springframework.web.server.ResponseStatusException: 404 NOT_FOUND "Пластинка с ID 3 не найдена!"]
+2025-03-28T01:12:39.637+03:00  INFO 8164 --- [VinylTrackerAPI] [http-nio-8080-exec-2] c.e.v.api.aspects.LoggingAspect          : [POST] /user-vinyls/add - ResponseEntity com.example.vinyltrackerapi.api.controllers.UserVinylController.addUserVinyl(Integer,Integer,Integer)
+2025-03-28T01:12:39.637+03:00  INFO 8164 --- [VinylTrackerAPI] [http-nio-8080-exec-2] c.e.v.service.CacheService               : [CACHE] Найдено в кеше: user-1
+2025-03-28T01:12:39.639+03:00  INFO 8164 --- [VinylTrackerAPI] [http-nio-8080-exec-2] c.e.v.service.CacheService               : [CACHE] Добавлено: vinyl-1
+2025-03-28T01:12:39.639+03:00  INFO 8164 --- [VinylTrackerAPI] [http-nio-8080-exec-2] c.e.v.service.VinylService               : [VINYL] Пластинка найдена и добавлена в кэш: ID=1
+2025-03-28T01:12:39.639+03:00  INFO 8164 --- [VinylTrackerAPI] [http-nio-8080-exec-2] c.e.v.service.VinylStatusService         : [VINYL-STATUS] Статус получен
+2025-03-28T01:12:39.640+03:00  WARN 8164 --- [VinylTrackerAPI] [http-nio-8080-exec-2] c.e.v.service.UserVinylService           : [USER-VINYL] Статус с ID=4 не найден!
+2025-03-28T01:12:39.640+03:00 ERROR 8164 --- [VinylTrackerAPI] [http-nio-8080-exec-2] c.e.v.api.aspects.LoggingAspect          : [ERROR] [POST] /user-vinyls/add - ResponseEntity com.example.vinyltrackerapi.api.controllers.UserVinylController.addUserVinyl(Integer,Integer,Integer): 404 NOT_FOUND "Статус не найден!"
+2025-03-28T01:12:39.641+03:00  WARN 8164 --- [VinylTrackerAPI] [http-nio-8080-exec-2] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [org.springframework.web.server.ResponseStatusException: 404 NOT_FOUND "Статус не найден!"]
+2025-03-28T01:12:47.657+03:00  INFO 8164 --- [VinylTrackerAPI] [http-nio-8080-exec-1] o.springdoc.api.AbstractOpenApiResource  : Init duration for springdoc-openapi is: 329 ms
+2025-03-28T01:13:26.004+03:00  INFO 8164 --- [VinylTrackerAPI] [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-03-28T01:13:26.526+03:00  INFO 8164 --- [VinylTrackerAPI] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-03-28T01:13:26.531+03:00  INFO 8164 --- [VinylTrackerAPI] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-03-28T01:13:26.535+03:00  INFO 8164 --- [VinylTrackerAPI] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-03-28T01:13:26.537+03:00  INFO 8164 --- [VinylTrackerAPI] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.

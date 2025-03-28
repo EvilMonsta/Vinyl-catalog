@@ -7,8 +7,9 @@ import com.example.vinyltrackerapi.api.models.Vinyl;
 import com.example.vinyltrackerapi.api.repositories.VinylRepository;
 import com.example.vinyltrackerapi.api.specifications.VinylSpecification;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class VinylService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(VinylService.class);
     private final VinylRepository vinylRepository;
     private final UserService userService;
     private final UserVinylService userVinylService;
@@ -42,7 +44,16 @@ public class VinylService {
     }
 
     public List<Vinyl> getVinylsByUploaderUsername(String username) {
-        return vinylRepository.findVinylsByUploaderUsername(username);
+        List<Vinyl> vinyls = vinylRepository.findVinylsByUploaderUsername(username);
+
+        if (vinyls.isEmpty()) {
+            LOGGER.warn("[VINYL] Не найдено ни одной пластинки, загруженной пользователем: {}", username);
+        } else {
+            LOGGER.info("[VINYL] Найдено {} пластинок, загруженных пользователем: {}", vinyls.size(),
+                    username);
+        }
+
+        return vinyls;
     }
 
     public List<Vinyl> getAllVinyls() {
@@ -54,21 +65,28 @@ public class VinylService {
 
         List<Vinyl> vinyls = vinylRepository.findAll();
         vinylListCache.put(cacheKey, vinyls);
+        LOGGER.info("[VINYL] Получены все пластинки");
         return vinyls;
     }
 
-    public Optional<Vinyl> getVinyl(Integer id) {
+    public Vinyl getVinyl(Integer id) {
         String cacheKey = KEY_ID + id;
 
         if (vinylCache.contains(cacheKey)) {
-            return Optional.of(vinylCache.get(cacheKey));
+            return vinylCache.get(cacheKey);
         }
 
-        Optional<Vinyl> vinyl = vinylRepository.findById(id);
-
-        vinyl.ifPresent(value -> vinylCache.put(cacheKey, value));
-
-        return vinyl;
+        return vinylRepository.findById(id)
+                .map(vinyl -> {
+                    vinylCache.put(cacheKey, vinyl);
+                    LOGGER.info("[VINYL] Пластинка найдена и добавлена в кэш: ID={}", id);
+                    return vinyl;
+                })
+                .orElseThrow(() -> {
+                    LOGGER.warn("[VINYL] Пластинка с ID={} не найдена!", id);
+                    return new ResponseStatusException(HttpStatus.NOT_FOUND,
+                            "Пластинка с ID " + id + " не найдена!");
+                });
     }
 
     public List<VinylDto> searchVinyls(String title, String artist, Integer releaseYear, String genre) {
@@ -91,17 +109,21 @@ public class VinylService {
         }
 
         vinylListCache.put(cacheKey, result);
+
+        LOGGER.info("[VINYL] Получена пластинка с  ключом search-vinyl-{}-{}-{}-{}", title,
+                artist, releaseYear, genre);
+
         return result.stream().map(VinylDto::new).toList();
     }
 
     public Vinyl createVinyl(VinylDto vinylDto) {
-        Genre genre = genreService.getGenreById(vinylDto.getGenreId()); // Получаем жанр по ID
-        User addedBy = null;
+        Genre genre = genreService.getGenreById(vinylDto.getGenreId());
+        User addedBy;
 
         if (vinylDto.getAddedById() != null) {
-            addedBy = userService.getUser(vinylDto.getAddedById())
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                            "Пользователь не найден!"));
+            addedBy = userService.getUser(vinylDto.getAddedById());
+        } else {
+            addedBy = null;
         }
 
         Vinyl vinyl = vinylDto.toEntity(genre, addedBy);
@@ -109,6 +131,7 @@ public class VinylService {
 
         vinylCache.put(KEY_ID + savedVinyl.getId(), savedVinyl);
         vinylListCache.put(KEY_ALL, vinylRepository.findAll());
+        LOGGER.info("[VINYL] Создана пластинка с ID={} title={}", savedVinyl.getId(), vinyl.getTitle());
 
         return savedVinyl;
     }
@@ -118,9 +141,7 @@ public class VinylService {
         User addedBy;
 
         if (vinylDto.getAddedById() != null) {
-            addedBy = userService.getUser(vinylDto.getAddedById())
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                            "Пользователь не найден!"));
+            addedBy = userService.getUser(vinylDto.getAddedById());
         } else {
             addedBy = null;
         }
@@ -145,12 +166,19 @@ public class VinylService {
             vinylKeyTracker.removeVinylCacheKeys(id);
 
             vinylListCache.put(KEY_ALL, vinylRepository.findAll());
+
+            LOGGER.info("[VINYL] Обновлена пластинка с ID={} title={}", updatedVinyl.getId(),
+                    updatedVinyl.getTitle());
             return updatedVinyl;
-        }).orElseThrow(() -> new RuntimeException("Винил не найден!"));
+        }).orElseThrow(() -> {
+            LOGGER.warn("[USER] Пользователь не найден!");
+            return new RuntimeException("Винил не найден!");
+        });
     }
 
     public void deleteVinyl(Integer id) {
         if (!vinylRepository.existsById(id)) {
+            LOGGER.warn("[VINYL] Пластинки с ID={} не существует!", id);
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Винил с ID " + id + " не найден!");
         }
         userVinylService.handleVinylDeletion(id);
@@ -162,6 +190,7 @@ public class VinylService {
         }
         vinylKeyTracker.removeVinylCacheKeys(id);
         vinylListCache.put(KEY_ALL, vinylRepository.findAll());
+        LOGGER.info("[VINYL] Пластинка с ID={} удалена!", id);
     }
 
     public void detachUserFromVinyl(User user) {

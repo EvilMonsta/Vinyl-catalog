@@ -4,7 +4,6 @@ import com.example.vinyltrackerapi.api.exceptions.ValidationException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -38,7 +37,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Map<String, String> handleEnumParsing(HttpMessageNotReadableException ex) {
+    public Map<String, String> handleEnumParsing() {
         Map<String, String> error = new HashMap<>();
         error.put("role", "Роль указана неверно. Допустимые значения: USER, VIP_USER, ADMIN");
         return error;

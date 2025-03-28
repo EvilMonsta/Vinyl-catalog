@@ -12,9 +12,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -48,10 +45,4 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<UserVinyl> userVinyls;
-
-    public User(Integer id, @NotBlank(message = "Имя пользователя не может быть пустым")
-            String username, @NotBlank(message = "Email не может быть пустым")
-            @Email(message = "Неверный формат email") String email,
-            @Size(min = 8, message = "Пароль должен содержать минимум 8 символов")
-            @NotBlank(message = "Пароль не может быть пустым") String password, Role role) {}
 }
