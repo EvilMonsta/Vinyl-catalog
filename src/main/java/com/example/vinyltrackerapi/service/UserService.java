@@ -82,7 +82,7 @@ public class UserService {
         }
         List<User> users = userRepository.findByUsername(username);
         userByUsernameCache.put(cacheKey, users);
-        LOGGER.info("[USER] Получен пользователь с username={}", username);
+        LOGGER.info("[USER] Получен пользователь по имени");
         return users;
     }
 
@@ -109,8 +109,7 @@ public class UserService {
         userCache.put(KEY_ID + savedUser.getId(), savedUser);
         userListCache.put(KEY_ALL, userRepository.findAll());
         userByUsernameCache.put(KEY_NAME + savedUser.getUsername(), List.of(savedUser));
-        LOGGER.info("[USER] Создан пользователь ID={} USERNAME={}", savedUser.getId(),
-                savedUser.getUsername());
+        LOGGER.info("[USER] Создан пользователь ID={}", savedUser.getId());
 
         return savedUser;
     }

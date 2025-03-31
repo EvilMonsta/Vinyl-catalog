@@ -18,6 +18,7 @@ import org.springframework.web.server.ResponseStatusException;
 @RestControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
+    private static final String ERROR_MSG = "error";
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> handleValidationErrors(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
@@ -30,18 +31,18 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ValidationException.class)
     public ResponseEntity<Map<String, String>> handleCustomValidation(ValidationException ex) {
-        return ResponseEntity.badRequest().body(Map.of("error", ex.getMessage()));
+        return ResponseEntity.badRequest().body(Map.of(ERROR_MSG, ex.getMessage()));
     }
 
     @ExceptionHandler(ResponseStatusException.class)
     public ResponseEntity<Map<String, String>> handleStatusException(ResponseStatusException ex) {
-        Map<String, String> error = Map.of("error", Objects.requireNonNull(ex.getReason()));
+        Map<String, String> error = Map.of(ERROR_MSG, Objects.requireNonNull(ex.getReason()));
         return new ResponseEntity<>(error, ex.getStatusCode());
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, String>> handleAllExceptions(Exception ex) {
-        return ResponseEntity.internalServerError().body(Map.of("error",
+        return ResponseEntity.internalServerError().body(Map.of(ERROR_MSG,
                 "Непредвиденная ошибка: " + ex.getMessage()));
     }
 
@@ -74,7 +75,7 @@ public class GlobalExceptionHandler {
 
         log.warn("[VALIDATION] Невалидный JSON: {}", ex.getMessage());
         Map<String, String> error = new HashMap<>();
-        error.put("error", "Невалидный JSON или значение поля");
+        error.put(ERROR_MSG, "Невалидный JSON или значение поля");
         return error;
     }
 }

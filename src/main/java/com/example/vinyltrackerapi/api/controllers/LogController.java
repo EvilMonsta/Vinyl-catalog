@@ -7,7 +7,7 @@ import java.io.FileInputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.InputStreamResource;
@@ -29,11 +29,12 @@ public class LogController {
     @Operation(summary = "Получить лог-файл по дате",
             description = "Возвращает .log файл, сформированный в указанный день (формат: yyyy-MM-dd)")
     @GetMapping("/{date}")
-    public ResponseEntity<?> getLogsByDate(
-            @Parameter(description = "Дата в формате yyyy-MM-dd") @PathVariable String date) {
+    public ResponseEntity<InputStreamResource> getLogsByDate(
+            @Parameter(description = "Дата в формате yyyy-MM-dd")
+            @PathVariable String date) {
         try {
-            LocalDateTime localDate = LocalDateTime.parse(date, DATE_FORMATTER);
-            String fileName = "logs/vinyltracker-" + localDate + ".log";
+            LocalDate localDate = LocalDate.parse(date, DATE_FORMATTER);
+            String fileName = "logs/vinyltracker-" + DATE_FORMATTER.format(localDate) + ".log";
             Path path = Paths.get(fileName);
 
             if (!Files.exists(path)) {
@@ -41,15 +42,14 @@ public class LogController {
             }
 
             InputStreamResource resource = new InputStreamResource(new FileInputStream(fileName));
+
             return ResponseEntity.ok()
                     .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + path.getFileName())
                     .contentType(MediaType.TEXT_PLAIN)
                     .body(resource);
-
         } catch (Exception e) {
             log.error("[LOG] Ошибка получения логов: {}", e.getMessage());
-            return ResponseEntity.badRequest().body("Ошибка формата или чтения логов. " +
-                    "Ожидаемый формат: yyyy-MM-dd");
+            return ResponseEntity.badRequest().build();
         }
     }
 }

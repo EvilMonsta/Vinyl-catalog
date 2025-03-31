@@ -1,5 +1,6 @@
 package com.example.vinyltrackerapi.service;
 
+import jakarta.annotation.PreDestroy;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -16,9 +17,10 @@ public class CacheService<T> {
     private final Map<String, CacheEntry<T>> cache = new ConcurrentHashMap<>();
     private static final long CACHE_EXPIRATION_TIME_MS = 30L * 60 * 1000;
     private static final int MAX_CACHE_SIZE = 100;
+    private final ScheduledExecutorService scheduler;
 
     public CacheService() {
-        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+        this.scheduler = Executors.newScheduledThreadPool(1);
         scheduler.scheduleAtFixedRate(this::cleanUp, 5, 5, TimeUnit.MINUTES);
     }
 
@@ -62,5 +64,20 @@ public class CacheService<T> {
     public void remove(String key) {
         cache.remove(key);
         LOGGER.info("[CACHE] Удален ключ: {}", key);
+    }
+
+    @PreDestroy
+    public void shutdown() {
+        scheduler.shutdown();
+        try {
+            if (!scheduler.awaitTermination(5, TimeUnit.SECONDS)) {
+                scheduler.shutdownNow();
+            }
+            LOGGER.info("[CACHE] Планировщик успешно завершён.");
+        } catch (InterruptedException e) {
+            scheduler.shutdownNow();
+            Thread.currentThread().interrupt();
+            LOGGER.warn("[CACHE] Прерывание при завершении планировщика.");
+        }
     }
 }
