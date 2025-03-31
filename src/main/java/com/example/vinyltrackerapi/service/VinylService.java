@@ -47,10 +47,9 @@ public class VinylService {
         List<Vinyl> vinyls = vinylRepository.findVinylsByUploaderUsername(username);
 
         if (vinyls.isEmpty()) {
-            LOGGER.warn("[VINYL] Не найдено ни одной пластинки, загруженной пользователем: {}", username);
+            LOGGER.warn("[VINYL] Не найдено ни одной пластинки, загруженной данным пользователем");
         } else {
-            LOGGER.info("[VINYL] Найдено {} пластинок, загруженных пользователем: {}", vinyls.size(),
-                    username);
+            LOGGER.info("[VINYL] Найдено {} пластинок, загруженных данным пользователем", vinyls.size());
         }
 
         return vinyls;
@@ -110,8 +109,7 @@ public class VinylService {
 
         vinylListCache.put(cacheKey, result);
 
-        LOGGER.info("[VINYL] Получена пластинка с  ключом search-vinyl-{}-{}-{}-{}", title,
-                artist, releaseYear, genre);
+        LOGGER.info("[VINYL] Получена пластинка по параметрам");
 
         return result.stream().map(VinylDto::new).toList();
     }
