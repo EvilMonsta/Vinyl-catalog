@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -21,7 +20,6 @@ public class VinylService {
     private static final Logger LOGGER = LoggerFactory.getLogger(VinylService.class);
     private final VinylRepository vinylRepository;
     private final UserService userService;
-    private final UserVinylService userVinylService;
     private final GenreService genreService;
     private final CacheService<Vinyl> vinylCache;
     private final CacheService<List<Vinyl>> vinylListCache;
@@ -30,13 +28,11 @@ public class VinylService {
     private static final String KEY_ID = "vinyl-";
 
     public VinylService(VinylRepository vinylRepository, UserService userService,
-                        @Lazy UserVinylService userVinylService,
                         GenreService genreService,
                         CacheService<Vinyl> vinylCache, CacheService<List<Vinyl>> vinylListCache,
                         CacheKeyTracker vinylKeyTracker) {
         this.vinylRepository = vinylRepository;
         this.userService = userService;
-        this.userVinylService = userVinylService;
         this.genreService = genreService;
         this.vinylCache = vinylCache;
         this.vinylListCache = vinylListCache;
@@ -179,7 +175,6 @@ public class VinylService {
             LOGGER.warn("[VINYL] Пластинки с ID={} не существует!", id);
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Винил с ID " + id + " не найден!");
         }
-        userVinylService.handleVinylDeletion(id);
         vinylRepository.deleteById(id);
         vinylCache.remove(KEY_ID + id);
         Set<String> affectedCacheKeys = vinylKeyTracker.getVinylCacheKeys(id);

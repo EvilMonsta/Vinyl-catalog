@@ -36,9 +36,4 @@ public class RoleService {
         }
         return role;
     }
-
-    public Collection<Role> getAllRoles() {
-        LOGGER.info("[ROLE] Получены все роли");
-        return roleCache.values();
-    }
 }

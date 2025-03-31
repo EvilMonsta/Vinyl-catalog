@@ -105,3 +105,192 @@
 2025-04-01 00:22:41.486 INFO  [SpringApplicationShutdownHook] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
 2025-04-01 00:22:41.489 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
 2025-04-01 00:22:41.491 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-04-01 01:52:18.322 INFO  [background-preinit] o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-04-01 01:52:18.362 INFO  [restartedMain] c.e.v.VinylTrackerApiApplication - Starting VinylTrackerApiApplication using Java 23.0.2 with PID 344 (C:\JCP\VinylTrackerAPI\target\classes started by Roman Ambrosevich in C:\JCP\VinylTrackerAPI)
+2025-04-01 01:52:18.362 DEBUG [restartedMain] c.e.v.VinylTrackerApiApplication - Running with Spring Boot v3.4.2, Spring v6.2.2
+2025-04-01 01:52:18.363 INFO  [restartedMain] c.e.v.VinylTrackerApiApplication - No active profile set, falling back to 1 default profile: "default"
+2025-04-01 01:52:18.404 INFO  [restartedMain] o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-04-01 01:52:18.405 INFO  [restartedMain] o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-04-01 01:52:19.287 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-04-01 01:52:19.347 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 52 ms. Found 6 JPA repository interfaces.
+2025-04-01 01:52:20.030 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-04-01 01:52:20.045 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-04-01 01:52:20.047 INFO  [restartedMain] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-04-01 01:52:20.047 INFO  [restartedMain] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-04-01 01:52:20.115 INFO  [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-04-01 01:52:20.115 INFO  [restartedMain] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1710 ms
+2025-04-01 01:52:20.346 DEBUG [restartedMain] c.e.v.api.mdc.LoggingFilter - Filter 'loggingFilter' configured for use
+2025-04-01 01:52:20.497 INFO  [restartedMain] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-04-01 01:52:20.559 INFO  [restartedMain] org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.5.Final
+2025-04-01 01:52:20.597 INFO  [restartedMain] o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-04-01 01:52:20.915 INFO  [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-04-01 01:52:20.957 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-04-01 01:52:21.185 INFO  [restartedMain] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@7c42c51
+2025-04-01 01:52:21.187 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-04-01 01:52:21.463 WARN  [restartedMain] org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-04-01 01:52:21.478 INFO  [restartedMain] o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 17.2
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-04-01 01:52:22.284 INFO  [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-04-01 01:52:22.939 INFO  [restartedMain] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-04-01 01:52:23.247 INFO  [restartedMain] c.e.v.service.RoleService - [ROLE] Все роли загружены в кэш
+2025-04-01 01:52:23.385 INFO  [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-04-01 01:52:23.411 INFO  [restartedMain] c.e.v.service.GenreService - [GENRE] Все жанры загружены в кэш
+2025-04-01 01:52:23.447 INFO  [restartedMain] c.e.v.service.VinylStatusService - [VINYL-STATUS] Все жанры загружены в кэш
+2025-04-01 01:52:23.598 WARN  [restartedMain] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-04-01 01:52:24.329 INFO  [restartedMain] o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-04-01 01:52:24.338 INFO  [restartedMain] o.s.b.a.e.web.EndpointLinksResolver - Exposing 1 endpoint beneath base path '/actuator'
+2025-04-01 01:52:24.387 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-04-01 01:52:24.400 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-04-01 01:52:24.413 INFO  [restartedMain] c.e.v.VinylTrackerApiApplication - Started VinylTrackerApiApplication in 6.486 seconds (process running for 7.166)
+2025-04-01 01:52:24.419 INFO  [restartedMain] c.e.v.VinylTrackerApiApplication - Приложение запущено!
+2025-04-01 01:52:24.636 INFO  [RMI TCP Connection(4)-192.168.56.1] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-04-01 01:52:24.636 INFO  [RMI TCP Connection(4)-192.168.56.1] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-04-01 01:52:24.638 INFO  [RMI TCP Connection(4)-192.168.56.1] o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2025-04-01 01:53:55.620 INFO  [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-04-01 01:53:56.148 INFO  [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-04-01 01:53:56.153 INFO  [SpringApplicationShutdownHook] c.e.v.service.CacheService - [CACHE] Планировщик успешно завершён.
+2025-04-01 01:53:56.153 INFO  [SpringApplicationShutdownHook] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-04-01 01:53:56.156 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-04-01 01:53:56.158 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-04-01 01:53:59.324 INFO  [background-preinit] o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-04-01 01:53:59.366 INFO  [restartedMain] c.e.v.VinylTrackerApiApplication - Starting VinylTrackerApiApplication using Java 23.0.2 with PID 17272 (C:\JCP\VinylTrackerAPI\target\classes started by Roman Ambrosevich in C:\JCP\VinylTrackerAPI)
+2025-04-01 01:53:59.366 DEBUG [restartedMain] c.e.v.VinylTrackerApiApplication - Running with Spring Boot v3.4.2, Spring v6.2.2
+2025-04-01 01:53:59.367 INFO  [restartedMain] c.e.v.VinylTrackerApiApplication - No active profile set, falling back to 1 default profile: "default"
+2025-04-01 01:53:59.405 INFO  [restartedMain] o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-04-01 01:53:59.405 INFO  [restartedMain] o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-04-01 01:54:00.298 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-04-01 01:54:00.363 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 57 ms. Found 6 JPA repository interfaces.
+2025-04-01 01:54:01.001 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-04-01 01:54:01.013 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-04-01 01:54:01.014 INFO  [restartedMain] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-04-01 01:54:01.014 INFO  [restartedMain] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-04-01 01:54:01.065 INFO  [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-04-01 01:54:01.066 INFO  [restartedMain] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1661 ms
+2025-04-01 01:54:01.256 DEBUG [restartedMain] c.e.v.api.mdc.LoggingFilter - Filter 'loggingFilter' configured for use
+2025-04-01 01:54:01.359 INFO  [restartedMain] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-04-01 01:54:01.401 INFO  [restartedMain] org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.5.Final
+2025-04-01 01:54:01.427 INFO  [restartedMain] o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-04-01 01:54:01.650 INFO  [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-04-01 01:54:01.673 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-04-01 01:54:01.757 INFO  [restartedMain] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@66644304
+2025-04-01 01:54:01.758 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-04-01 01:54:01.990 WARN  [restartedMain] org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-04-01 01:54:02.004 INFO  [restartedMain] o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 17.2
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-04-01 01:54:02.846 INFO  [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-04-01 01:54:03.329 INFO  [restartedMain] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-04-01 01:54:03.658 INFO  [restartedMain] c.e.v.service.RoleService - [ROLE] Все роли загружены в кэш
+2025-04-01 01:54:03.802 INFO  [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-04-01 01:54:03.827 INFO  [restartedMain] c.e.v.service.GenreService - [GENRE] Все жанры загружены в кэш
+2025-04-01 01:54:03.868 INFO  [restartedMain] c.e.v.service.VinylStatusService - [VINYL-STATUS] Все жанры загружены в кэш
+2025-04-01 01:54:04.019 WARN  [restartedMain] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-04-01 01:54:05.091 INFO  [restartedMain] o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-04-01 01:54:05.104 INFO  [restartedMain] o.s.b.a.e.web.EndpointLinksResolver - Exposing 1 endpoint beneath base path '/actuator'
+2025-04-01 01:54:05.178 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-04-01 01:54:05.191 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-04-01 01:54:05.203 INFO  [restartedMain] c.e.v.VinylTrackerApiApplication - Started VinylTrackerApiApplication in 6.386 seconds (process running for 7.204)
+2025-04-01 01:54:05.210 INFO  [restartedMain] c.e.v.VinylTrackerApiApplication - Приложение запущено!
+2025-04-01 01:54:05.777 INFO  [RMI TCP Connection(1)-192.168.56.1] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-04-01 01:54:05.778 INFO  [RMI TCP Connection(1)-192.168.56.1] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-04-01 01:54:05.782 INFO  [RMI TCP Connection(1)-192.168.56.1] o.s.web.servlet.DispatcherServlet - Completed initialization in 3 ms
+2025-04-01 01:54:11.890 INFO  [http-nio-8080-exec-1] c.e.v.api.aspects.LoggingAspect - [GET] /users - List com.example.vinyltrackerapi.api.controllers.UserController.getAllUsers()
+2025-04-01 01:54:11.907 INFO  [http-nio-8080-exec-1] c.e.v.service.CacheService - [CACHE] Добавлено: all-users
+2025-04-01 01:54:11.907 INFO  [http-nio-8080-exec-1] c.e.v.service.UserService - [USER] Получены все пользователи
+2025-04-01 01:54:27.900 INFO  [http-nio-8080-exec-2] c.e.v.api.aspects.LoggingAspect - [GET] /user-vinyls - List com.example.vinyltrackerapi.api.controllers.UserVinylController.getAllUserVinyls()
+2025-04-01 01:54:27.900 INFO  [http-nio-8080-exec-2] c.e.v.service.UserVinylService - [USER-VINYL] Получены все связи
+2025-04-01 01:54:36.970 INFO  [http-nio-8080-exec-3] c.e.v.api.aspects.LoggingAspect - [GET] /user-vinyls - List com.example.vinyltrackerapi.api.controllers.UserVinylController.getAllUserVinyls()
+2025-04-01 01:54:36.970 INFO  [http-nio-8080-exec-3] c.e.v.service.UserVinylService - [USER-VINYL] Получены все связи
+2025-04-01 01:55:06.276 INFO  [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-04-01 01:55:06.796 INFO  [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-04-01 01:55:06.802 INFO  [SpringApplicationShutdownHook] c.e.v.service.CacheService - [CACHE] Планировщик успешно завершён.
+2025-04-01 01:55:06.803 INFO  [SpringApplicationShutdownHook] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-04-01 01:55:06.805 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-04-01 01:55:06.808 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-04-01 01:58:49.743 INFO  [background-preinit] o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-04-01 01:58:49.794 INFO  [restartedMain] c.e.v.VinylTrackerApiApplication - Starting VinylTrackerApiApplication using Java 23.0.2 with PID 14096 (C:\JCP\VinylTrackerAPI\target\classes started by Roman Ambrosevich in C:\JCP\VinylTrackerAPI)
+2025-04-01 01:58:49.794 DEBUG [restartedMain] c.e.v.VinylTrackerApiApplication - Running with Spring Boot v3.4.2, Spring v6.2.2
+2025-04-01 01:58:49.795 INFO  [restartedMain] c.e.v.VinylTrackerApiApplication - No active profile set, falling back to 1 default profile: "default"
+2025-04-01 01:58:49.840 INFO  [restartedMain] o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-04-01 01:58:49.841 INFO  [restartedMain] o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-04-01 01:58:51.063 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-04-01 01:58:51.150 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 77 ms. Found 6 JPA repository interfaces.
+2025-04-01 01:58:51.907 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-04-01 01:58:51.918 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-04-01 01:58:51.919 INFO  [restartedMain] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-04-01 01:58:51.919 INFO  [restartedMain] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-04-01 01:58:51.964 INFO  [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-04-01 01:58:51.964 INFO  [restartedMain] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2123 ms
+2025-04-01 01:58:52.120 DEBUG [restartedMain] c.e.v.api.mdc.LoggingFilter - Filter 'loggingFilter' configured for use
+2025-04-01 01:58:52.229 INFO  [restartedMain] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-04-01 01:58:52.270 INFO  [restartedMain] org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.5.Final
+2025-04-01 01:58:52.295 INFO  [restartedMain] o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-04-01 01:58:52.506 INFO  [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-04-01 01:58:52.528 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-04-01 01:58:52.618 INFO  [restartedMain] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@233959e1
+2025-04-01 01:58:52.619 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-04-01 01:58:52.849 WARN  [restartedMain] org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-04-01 01:58:52.864 INFO  [restartedMain] o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 17.2
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-04-01 01:58:53.707 INFO  [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-04-01 01:58:54.166 INFO  [restartedMain] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-04-01 01:58:54.492 INFO  [restartedMain] c.e.v.service.RoleService - [ROLE] Все роли загружены в кэш
+2025-04-01 01:58:54.664 INFO  [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-04-01 01:58:54.712 INFO  [restartedMain] c.e.v.service.GenreService - [GENRE] Все жанры загружены в кэш
+2025-04-01 01:58:54.777 INFO  [restartedMain] c.e.v.service.VinylStatusService - [VINYL-STATUS] Все жанры загружены в кэш
+2025-04-01 01:58:54.955 WARN  [restartedMain] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-04-01 01:58:55.709 INFO  [restartedMain] o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-04-01 01:58:55.718 INFO  [restartedMain] o.s.b.a.e.web.EndpointLinksResolver - Exposing 1 endpoint beneath base path '/actuator'
+2025-04-01 01:58:55.771 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-04-01 01:58:55.784 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-04-01 01:58:55.796 INFO  [restartedMain] c.e.v.VinylTrackerApiApplication - Started VinylTrackerApiApplication in 6.567 seconds (process running for 7.313)
+2025-04-01 01:58:55.802 INFO  [restartedMain] c.e.v.VinylTrackerApiApplication - Приложение запущено!
+2025-04-01 01:58:56.205 INFO  [RMI TCP Connection(3)-192.168.56.1] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-04-01 01:58:56.206 INFO  [RMI TCP Connection(3)-192.168.56.1] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-04-01 01:58:56.208 INFO  [RMI TCP Connection(3)-192.168.56.1] o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2025-04-01 01:59:45.994 INFO  [http-nio-8080-exec-1] c.e.v.api.aspects.LoggingAspect - [DELETE] /user-vinyls/remove - ResponseEntity com.example.vinyltrackerapi.api.controllers.UserVinylController.removeUserVinyl(Integer,Integer)
+2025-04-01 01:59:46.042 INFO  [http-nio-8080-exec-1] c.e.v.service.CacheService - [CACHE] Добавлено: user-vinyls-1
+2025-04-01 01:59:46.042 INFO  [http-nio-8080-exec-1] c.e.v.service.CacheService - [CACHE] Добавлено: vinyl-users-3
+2025-04-01 01:59:46.042 INFO  [http-nio-8080-exec-1] c.e.v.service.UserVinylService - [USER-VINYL] Удалена связь пользователя с ID=1 и пластинки с ID=3
+2025-04-01 01:59:54.337 INFO  [http-nio-8080-exec-4] c.e.v.api.aspects.LoggingAspect - [DELETE] /user-vinyls/remove - ResponseEntity com.example.vinyltrackerapi.api.controllers.UserVinylController.removeUserVinyl(Integer,Integer)
+2025-04-01 01:59:54.450 INFO  [http-nio-8080-exec-4] c.e.v.service.CacheService - [CACHE] Добавлено: user-vinyls-1
+2025-04-01 01:59:54.450 INFO  [http-nio-8080-exec-4] c.e.v.service.CacheService - [CACHE] Добавлено: vinyl-users-2
+2025-04-01 01:59:54.450 INFO  [http-nio-8080-exec-4] c.e.v.service.UserVinylService - [USER-VINYL] Удалена связь пользователя с ID=1 и пластинки с ID=2
+2025-04-01 02:00:01.290 WARN  [http-nio-8080-exec-7] o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'DELETE' is not supported]
+2025-04-01 02:00:04.941 INFO  [http-nio-8080-exec-10] c.e.v.api.aspects.LoggingAspect - [GET] /user-vinyls - List com.example.vinyltrackerapi.api.controllers.UserVinylController.getAllUserVinyls()
+2025-04-01 02:00:04.941 INFO  [http-nio-8080-exec-10] c.e.v.service.UserVinylService - [USER-VINYL] Получены все связи
+2025-04-01 02:00:35.665 INFO  [http-nio-8080-exec-5] c.e.v.api.aspects.LoggingAspect - [POST] /user-vinyls/add - ResponseEntity com.example.vinyltrackerapi.api.controllers.UserVinylController.addUserVinyl(Integer,Integer,Integer)
+2025-04-01 02:00:35.667 INFO  [http-nio-8080-exec-5] c.e.v.service.CacheService - [CACHE] Добавлено: user-1
+2025-04-01 02:00:35.667 INFO  [http-nio-8080-exec-5] c.e.v.service.UserService - [USER] Пользователь найден и добавлен в кэш: ID=1
+2025-04-01 02:00:35.669 INFO  [http-nio-8080-exec-5] c.e.v.service.CacheService - [CACHE] Добавлено: vinyl-2
+2025-04-01 02:00:35.669 INFO  [http-nio-8080-exec-5] c.e.v.service.VinylService - [VINYL] Пластинка найдена и добавлена в кэш: ID=2
+2025-04-01 02:00:35.669 INFO  [http-nio-8080-exec-5] c.e.v.service.VinylStatusService - [VINYL-STATUS] Статус получен
+2025-04-01 02:00:35.784 INFO  [http-nio-8080-exec-5] c.e.v.service.CacheService - [CACHE] Добавлено: user-vinyls-1
+2025-04-01 02:00:35.785 INFO  [http-nio-8080-exec-5] c.e.v.service.CacheService - [CACHE] Добавлено: vinyl-users-2
+2025-04-01 02:00:35.785 INFO  [http-nio-8080-exec-5] c.e.v.service.UserVinylService - [USER-VINYL] Пользователь ID=1, пластинка ID=2, статус ID=1 связаны
+2025-04-01 02:00:49.205 WARN  [http-nio-8080-exec-6] o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'POST' is not supported]
+2025-04-01 02:00:54.501 INFO  [http-nio-8080-exec-7] o.s.api.AbstractOpenApiResource - Init duration for springdoc-openapi is: 350 ms
+2025-04-01 02:01:32.300 INFO  [http-nio-8080-exec-10] c.e.v.api.aspects.LoggingAspect - [GET] /logs/2025-03-31 - ResponseEntity com.example.vinyltrackerapi.api.controllers.LogController.getLogsByDate(String)
+2025-04-01 02:01:59.587 INFO  [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-04-01 02:02:00.108 INFO  [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-04-01 02:02:00.112 INFO  [SpringApplicationShutdownHook] c.e.v.service.CacheService - [CACHE] Планировщик успешно завершён.
+2025-04-01 02:02:00.113 INFO  [SpringApplicationShutdownHook] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-04-01 02:02:00.116 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-04-01 02:02:00.119 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.

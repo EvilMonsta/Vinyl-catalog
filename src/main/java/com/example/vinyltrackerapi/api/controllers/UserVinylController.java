@@ -1,7 +1,7 @@
 package com.example.vinyltrackerapi.api.controllers;
 
 import com.example.vinyltrackerapi.api.dto.UserVinylDto;
-import com.example.vinyltrackerapi.service.UserVinylService;
+import com.example.vinyltrackerapi.service.UserVinylFacade;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -23,27 +23,27 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "Связь Пользователь-Пластинка", description = "Пользователь добавляет" +
         " пластинки себе в коллекцию с определённым статусом")
 public class UserVinylController {
-    private final UserVinylService userVinylService;
+    private final UserVinylFacade userVinylFacade;
 
     @Operation(summary = "Добавить пластинку пользователю")
     @PostMapping("/add")
     public ResponseEntity<UserVinylDto> addUserVinyl(@RequestParam Integer userId,
                                                      @RequestParam Integer vinylId,
                                                      @RequestParam Integer statusId) {
-        return ResponseEntity.ok(userVinylService.addVinylToUser(userId, vinylId, statusId));
+        return ResponseEntity.ok(userVinylFacade.addVinylToUser(userId, vinylId, statusId));
     }
 
     @Operation(summary = "Получить все связи")
     @GetMapping
     public List<UserVinylDto> getAllUserVinyls() {
-        return userVinylService.getAllUserVinyls();
+        return userVinylFacade.getAllUserVinyls();
     }
 
     @Operation(summary = "Получить конкретную связь")
     @GetMapping("/find")
     public ResponseEntity<UserVinylDto> findUserVinyl(@RequestParam Integer userId,
                                                       @RequestParam Integer vinylId) {
-        return userVinylService.findUserVinyl(userId, vinylId)
+        return userVinylFacade.findUserVinyl(userId, vinylId)
                 .map(uv -> ResponseEntity.ok(new UserVinylDto(uv)))
                 .orElse(ResponseEntity.notFound().build());
     }
@@ -51,7 +51,7 @@ public class UserVinylController {
     @Operation(summary = "Удалить пластинку у пользователя")
     @DeleteMapping("/remove")
     public ResponseEntity<Void> removeUserVinyl(@RequestParam Integer userId, @RequestParam Integer vinylId) {
-        userVinylService.removeVinylFromUser(userId, vinylId);
+        userVinylFacade.removeVinylFromUser(userId, vinylId);
         return ResponseEntity.noContent().build();
     }
 
@@ -59,7 +59,7 @@ public class UserVinylController {
     @GetMapping("/getVinyls/{userId}")
     public List<UserVinylDto> getUserVinyls(@Parameter(description = "ID пользователя")
                                                 @PathVariable Integer userId) {
-        return userVinylService.getUserVinyls(userId).stream()
+        return userVinylFacade.getUserVinyls(userId).stream()
                 .map(UserVinylDto::new)
                 .toList();
     }
@@ -68,7 +68,7 @@ public class UserVinylController {
     @GetMapping("/getUsers/{vinylId}")
     public List<UserVinylDto> getUsersByVinyl(@Parameter(description = "ID пластинки")
                                                   @PathVariable Integer vinylId) {
-        return userVinylService.getUsersByVinyl(vinylId).stream()
+        return userVinylFacade.getUsersByVinyl(vinylId).stream()
                 .map(UserVinylDto::new)
                 .toList();
     }
@@ -78,7 +78,7 @@ public class UserVinylController {
     public ResponseEntity<UserVinylDto> updateVinylStatus(@RequestParam Integer userId,
                                                           @RequestParam Integer vinylId,
                                                           @RequestParam Integer newStatusId) {
-        return ResponseEntity.ok(new UserVinylDto(userVinylService.updateVinylStatus(userId,
+        return ResponseEntity.ok(new UserVinylDto(userVinylFacade.updateVinylStatus(userId,
                 vinylId, newStatusId)));
     }
 }

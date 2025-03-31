@@ -35,7 +35,7 @@ class VinylServiceTest {
     void setUp() {
         closeable = MockitoAnnotations.openMocks(this);
         vinylService = new VinylService(
-                vinylRepository, userService, userVinylService,
+                vinylRepository, userService,
                 genreService, vinylCache, vinylListCache, vinylKeyTracker
         );
     }

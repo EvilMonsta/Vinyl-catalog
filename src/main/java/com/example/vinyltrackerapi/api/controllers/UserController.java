@@ -3,6 +3,7 @@ package com.example.vinyltrackerapi.api.controllers;
 import com.example.vinyltrackerapi.api.dto.UserDto;
 import com.example.vinyltrackerapi.api.models.User;
 import com.example.vinyltrackerapi.service.UserService;
+import com.example.vinyltrackerapi.service.UserVinylFacade;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "Пользователи", description = "Управление пользователями")
 public class UserController {
     private final UserService userService;
+    private final UserVinylFacade userVinylFacade;
 
     @Operation(summary = "Получить всех пользователей")
     @GetMapping
@@ -64,7 +66,7 @@ public class UserController {
     @Operation(summary = "Создать нового пользователя")
     @PostMapping("/create")
     public ResponseEntity<UserDto> createUser(@Parameter(description = "Данные нового пользователя")
-                                                  @Valid @RequestBody(required = true) UserDto userDto) {
+                                                  @Valid @RequestBody UserDto userDto) {
         return ResponseEntity.ok(new UserDto(userService.createUser(userDto)));
     }
 
@@ -81,7 +83,7 @@ public class UserController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteUser(@Parameter(description = "ID пользователя")
                                                @PathVariable Integer id) {
-        userService.deleteUser(id);
+        userVinylFacade.deleteUser(id);
         return ResponseEntity.noContent().build();
     }
 }

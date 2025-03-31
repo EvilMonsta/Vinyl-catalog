@@ -2,6 +2,7 @@ package com.example.vinyltrackerapi.api.controllers;
 
 import com.example.vinyltrackerapi.api.dto.VinylDto;
 import com.example.vinyltrackerapi.api.models.Vinyl;
+import com.example.vinyltrackerapi.service.UserVinylFacade;
 import com.example.vinyltrackerapi.service.VinylService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "Пластинки", description = "Управление виниловыми пластинками")
 public class VinylController {
     private final VinylService vinylService;
+    private final UserVinylFacade userVinylFacade;
 
     @Operation(summary = "Получить все пластинки")
     @GetMapping
@@ -90,7 +92,7 @@ public class VinylController {
     @Operation(summary = "Удалить пластинку по ID")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteVinyl(@PathVariable Integer id) {
-        vinylService.deleteVinyl(id);
+        userVinylFacade.deleteVinyl(id);
         return ResponseEntity.noContent().build();
     }
 }

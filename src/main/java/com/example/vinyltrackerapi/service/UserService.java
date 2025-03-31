@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -19,8 +18,6 @@ import org.springframework.web.server.ResponseStatusException;
 public class UserService {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
     private final UserRepository userRepository;
-    private final VinylService vinylService;
-    private final UserVinylService userVinylService;
     private final RoleService roleService;
     private final CacheService<User> userCache;
     private final CacheService<List<User>> userListCache;
@@ -29,15 +26,12 @@ public class UserService {
     private static final String KEY_ID = "user-";
     private static final String KEY_NAME = "user-username-";
 
-    public UserService(UserRepository userRepository, @Lazy VinylService vinylService,
+    public UserService(UserRepository userRepository,
                        CacheService<User> userCache,
-                       @Lazy UserVinylService userVinylService,
                        RoleService roleService,
                        CacheService<List<User>> userListCache,
                        CacheService<List<User>> userByUsernameCache) {
         this.userRepository = userRepository;
-        this.vinylService = vinylService;
-        this.userVinylService = userVinylService;
         this.roleService = roleService;
         this.userCache = userCache;
         this.userListCache = userListCache;
@@ -138,16 +132,11 @@ public class UserService {
     }
 
     public void deleteUser(Integer id) {
-        User user = userRepository.findById(id).orElseThrow(() -> {
+        final User user = userRepository.findById(id).orElseThrow(() -> {
             LOGGER.warn("[USER] Пользователь с таким ID={} не найден!", id);
             return new ResponseStatusException(HttpStatus.NOT_FOUND,
-                    "Пользователь с ID " + id + " не найден!");
-        });
-
-        userVinylService.handleUserDeletion(id);
-        vinylService.detachUserFromVinyl(user);
+                    "Пользователь с ID " + id + " не найден!"); });
         userRepository.deleteById(id);
-
         userCache.remove(KEY_ID + id);
         userListCache.put(KEY_ALL, userRepository.findAll());
         userByUsernameCache.remove(KEY_NAME + user.getUsername());

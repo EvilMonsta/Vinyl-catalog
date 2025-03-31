@@ -34,11 +34,6 @@ public class VinylStatusService {
         return Optional.ofNullable(statusCache.get(id));
     }
 
-    public List<VinylStatus> getAll() {
-        LOGGER.info("[VINYL-STATUS] Получены все статусы");
-        return new ArrayList<>(statusCache.values());
-    }
-
     public void refreshCache() {
         statusCache.clear();
         vinylStatusRepository.findAll()

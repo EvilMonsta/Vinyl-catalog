@@ -37,9 +37,4 @@ public class GenreService {
         }
         return genre;
     }
-
-    public List<Genre> getAllGenres() {
-        LOGGER.info("[GENRE] Получены все жанры!");
-        return new ArrayList<>(genreCache.values());
-    }
 }
