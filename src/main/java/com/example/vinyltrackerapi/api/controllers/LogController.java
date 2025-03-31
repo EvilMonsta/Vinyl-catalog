@@ -19,23 +19,21 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Slf4j
 @RestController
 @RequestMapping("/logs")
 @Tag(name = "Логирование", description = "Эндпоинты для получения лог-файлов")
+@Slf4j
 public class LogController {
-    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm");
+    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-    @Operation(summary = "Получить лог-файл по дате и времени",
-            description = "Возвращает .log файл," +
-                    " сформированный в конкретный момент времени (формат: yyyy-MM-dd_HH-mm)")
-    @GetMapping("/{datetime}")
-    public ResponseEntity<?> getLogsByDateTime(@Parameter(description = "Дата и время в формате " +
-            "yyyy-MM-dd_HH-mm")
-                                               @PathVariable String datetime) {
+    @Operation(summary = "Получить лог-файл по дате",
+            description = "Возвращает .log файл, сформированный в указанный день (формат: yyyy-MM-dd)")
+    @GetMapping("/{date}")
+    public ResponseEntity<?> getLogsByDate(
+            @Parameter(description = "Дата в формате yyyy-MM-dd") @PathVariable String date) {
         try {
-            LocalDateTime targetDateTime = LocalDateTime.parse(datetime, DATE_FORMATTER);
-            String fileName = "logs/vinyltracker-" + DATE_FORMATTER.format(targetDateTime) + ".log";
+            LocalDateTime localDate = LocalDateTime.parse(date, DATE_FORMATTER);
+            String fileName = "logs/vinyltracker-" + localDate + ".log";
             Path path = Paths.get(fileName);
 
             if (!Files.exists(path)) {
@@ -43,15 +41,15 @@ public class LogController {
             }
 
             InputStreamResource resource = new InputStreamResource(new FileInputStream(fileName));
-
             return ResponseEntity.ok()
                     .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + path.getFileName())
                     .contentType(MediaType.TEXT_PLAIN)
                     .body(resource);
+
         } catch (Exception e) {
             log.error("[LOG] Ошибка получения логов: {}", e.getMessage());
             return ResponseEntity.badRequest().body("Ошибка формата или чтения логов. " +
-                    "Ожидаемый формат: yyyy-MM-dd_HH-mm");
+                    "Ожидаемый формат: yyyy-MM-dd");
         }
     }
 }

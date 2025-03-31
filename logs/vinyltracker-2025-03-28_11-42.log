@@ -1,3 +1,0 @@
-2025-03-28 11:42:04.330 INFO  [http-nio-8080-exec-4] c.e.v.api.aspects.LoggingAspect - [GET] /logs/-2025-03-28_11-40 - ResponseEntity com.example.vinyltrackerapi.api.controllers.LogController.getLogsByDateTime(String)
-2025-03-28 11:42:04.332 ERROR [http-nio-8080-exec-4] c.e.v.api.controllers.LogController - [LOG] Ошибка получения логов: Text '-2025-03-28_11-40' could not be parsed: Invalid value for YearOfEra (valid values 1 - 999999999/1000000000): -2025
-2025-03-28 11:42:12.048 INFO  [http-nio-8080-exec-9] c.e.v.api.aspects.LoggingAspect - [GET] /logs/2025-03-28_11-40 - ResponseEntity com.example.vinyltrackerapi.api.controllers.LogController.getLogsByDateTime(String)

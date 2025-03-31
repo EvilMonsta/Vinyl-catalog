@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 public class CacheService<T> {
     private static final Logger LOGGER = LoggerFactory.getLogger(CacheService.class);
     private final Map<String, CacheEntry<T>> cache = new ConcurrentHashMap<>();
-    private static final long CACHE_EXPIRATION_TIME_MS = 5L * 60 * 1000;
+    private static final long CACHE_EXPIRATION_TIME_MS = 30L * 60 * 1000;
     private static final int MAX_CACHE_SIZE = 100;
 
     public CacheService() {

@@ -24,6 +24,7 @@ public class GlobalExceptionHandler {
         ex.getBindingResult().getFieldErrors().forEach(field ->
                 errors.put(field.getField(), field.getDefaultMessage())
         );
+        log.warn("[VALIDATION] Ошибка валидации: {}", errors);
         return ResponseEntity.badRequest().body(errors);
     }
 
