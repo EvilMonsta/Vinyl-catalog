@@ -191,4 +191,27 @@ public class VinylService {
         vinylsAddedByUser.forEach(vinyl -> vinyl.setAddedBy(null));
         vinylRepository.saveAll(vinylsAddedByUser);
     }
+
+    public List<Vinyl> createVinylsBulk(List<VinylDto> vinylDtos) {
+        List<Vinyl> vinyls = vinylDtos.stream()
+                .map(dto -> {
+                    Genre genre = genreService.getGenreById(dto.getGenreId());
+                    User addedBy = dto.getAddedById() !=
+                            null ? userService.getUser(dto.getAddedById()) : null;
+                    return dto.toEntity(genre, addedBy);
+                })
+                .toList();
+
+        List<Vinyl> savedVinyls = vinylRepository.saveAll(vinyls);
+
+        savedVinyls.forEach(vinyl -> {
+            String cacheKey = KEY_ID + vinyl.getId();
+            vinylCache.put(cacheKey, vinyl);
+        });
+
+        vinylListCache.put(KEY_ALL, vinylRepository.findAll());
+
+        LOGGER.info("[VINYL] Загружено {} новых пластинок", savedVinyls.size());
+        return savedVinyls;
+    }
 }

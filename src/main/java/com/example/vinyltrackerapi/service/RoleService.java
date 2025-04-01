@@ -3,7 +3,6 @@ package com.example.vinyltrackerapi.service;
 import com.example.vinyltrackerapi.api.models.Role;
 import com.example.vinyltrackerapi.api.repositories.RoleRepository;
 import jakarta.annotation.PostConstruct;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import org.slf4j.Logger;

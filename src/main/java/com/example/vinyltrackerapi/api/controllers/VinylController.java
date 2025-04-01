@@ -95,4 +95,11 @@ public class VinylController {
         userVinylFacade.deleteVinyl(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PostMapping("/bulk")
+    @Operation(summary = "Загрузить список новых пластинок")
+    public ResponseEntity<List<VinylDto>> createBulk(@RequestBody List<VinylDto> vinylDtos) {
+        List<Vinyl> saved = vinylService.createVinylsBulk(vinylDtos);
+        return ResponseEntity.ok(saved.stream().map(VinylDto::new).toList());
+    }
 }

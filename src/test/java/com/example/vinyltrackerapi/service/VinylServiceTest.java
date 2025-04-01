@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.*;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.server.ResponseStatusException;
-
 import java.util.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -23,7 +22,6 @@ class VinylServiceTest {
 
     @Mock private VinylRepository vinylRepository;
     @Mock private UserService userService;
-    @Mock private UserVinylService userVinylService;
     @Mock private GenreService genreService;
     @Mock private CacheService<Vinyl> vinylCache;
     @Mock private CacheService<List<Vinyl>> vinylListCache;
@@ -180,5 +178,61 @@ class VinylServiceTest {
         assertEquals(user, result.getAddedBy());
     }
 
-    // добавим ещё больше тестов по update, delete, search при необходимости
+    @Test
+    void bulkCreateVinyls_shouldCreateMultipleVinyls() {
+        Genre genre = new Genre(1, "Rock");
+        User user = new User();
+        user.setId(5);
+
+        VinylDto dto1 = new VinylDto(15, "Title1", "Artist1", 1, 2000, "Desc1", "url1", 5);
+        VinylDto dto2 = new VinylDto(16, "Title2", "Artist2", 1, 2001, "Desc2", "url2", 5);
+
+        when(genreService.getGenreById(1)).thenReturn(genre);
+        when(userService.getUser(5)).thenReturn(user);
+        when(vinylRepository.saveAll(anyList())).thenAnswer(inv -> inv.getArgument(0));
+
+        List<Vinyl> result = vinylService.createVinylsBulk(List.of(dto1, dto2));
+
+        assertThat(result).hasSize(2);
+        assertThat(result.get(0).getTitle()).isEqualTo("Title1");
+        assertThat(result.get(1).getTitle()).isEqualTo("Title2");
+    }
+
+    @Test
+    void bulkCreateVinyls_shouldHandleEmptyList() {
+        List<Vinyl> result = vinylService.createVinylsBulk(Collections.emptyList());
+        assertThat(result).isEmpty();
+    }
+
+    @Test
+    void getAllVinyls_shouldReturnCached() {
+        List<Vinyl> vinyls = List.of(new Vinyl());
+        when(vinylListCache.contains("all-vinyls")).thenReturn(true);
+        when(vinylListCache.get("all-vinyls")).thenReturn(vinyls);
+
+        List<Vinyl> result = vinylService.getAllVinyls();
+        assertEquals(1, result.size());
+    }
+
+    @Test
+    void getVinylsByUploaderUsername_shouldLogWarningIfEmpty() {
+        when(vinylRepository.findVinylsByUploaderUsername("nope")).thenReturn(Collections.emptyList());
+        List<Vinyl> result = vinylService.getVinylsByUploaderUsername("nope");
+        assertThat(result).isEmpty();
+    }
+
+    @Test
+    void detachUserFromVinyl_shouldSetAddedByNull() {
+        User user = new User();
+        Vinyl vinyl = new Vinyl();
+        vinyl.setAddedBy(user);
+        List<Vinyl> vinyls = List.of(vinyl);
+
+        when(vinylRepository.findByAddedBy(user)).thenReturn(vinyls);
+
+        vinylService.detachUserFromVinyl(user);
+
+        assertThat(vinyl.getAddedBy()).isNull();
+        verify(vinylRepository).saveAll(vinyls);
+    }
 }

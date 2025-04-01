@@ -33,4 +33,12 @@ public class UserVinylDto {
     public UserVinyl toEntity(User user, Vinyl vinyl, VinylStatus status) {
         return new UserVinyl(user, vinyl, status);
     }
+
+    public int getUserId() {
+        return user.getId();
+    }
+
+    public int getVinylId() {
+        return vinyl.getId();
+    }
 }

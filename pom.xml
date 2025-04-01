@@ -32,6 +32,18 @@
         <sonar.organization>rambros</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
         <sonar.login>${env.SONAR_TOKEN}</sonar.login>
+        <sonar.coverage.exclusions>
+            **/models/**/*,
+            **/dto/**/*,
+            **/controllers/**/*,
+            **/exceptions/**/*,
+            **/*Config*.java,
+            **/GlobalExceptionHandler.java,
+            **/mdc/**/*,
+            **/Pagination.java,
+            **/aspects/**/*,
+            **/*Aspect.java
+        </sonar.coverage.exclusions>
     </properties>
     <dependencies>
         <dependency>
