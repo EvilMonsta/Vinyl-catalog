@@ -1,34 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-
     <property name="LOG_PATH" value="logs"/>
 
-    <!-- Rolling File Appender: сохраняет файл с логами каждый день -->
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${LOG_PATH}/vinyltracker.log</file>
+        <!-- УБИРАЕМ <file>! -->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <!-- Формат: logs/vinyltracker-2025-03-31.log -->
+            <!-- Пишем СРАЗУ в файл с датой -->
             <fileNamePattern>${LOG_PATH}/vinyltracker-%d{yyyy-MM-dd}.log</fileNamePattern>
-            <maxHistory>5</maxHistory> <!-- Максимум 5 файлов -->
+            <maxHistory>5</maxHistory>
             <cleanHistoryOnStart>true</cleanHistoryOnStart>
         </rollingPolicy>
         <encoder>
             <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{36} - %msg%n</pattern>
-            <immediateFlush>true</immediateFlush> <!-- моментальная запись -->
         </encoder>
     </appender>
 
-    <!-- Консольный вывод -->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>%cyan(%d{HH:mm:ss.SSS}) [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
 
-    <!-- Уровни логирования -->
     <root level="INFO">
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="FILE"/>
     </root>
-
 </configuration>
