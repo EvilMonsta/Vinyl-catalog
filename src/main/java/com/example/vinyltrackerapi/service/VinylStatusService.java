@@ -3,7 +3,6 @@ package com.example.vinyltrackerapi.service;
 import com.example.vinyltrackerapi.api.models.VinylStatus;
 import com.example.vinyltrackerapi.api.repositories.VinylStatusRepository;
 import jakarta.annotation.PostConstruct;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

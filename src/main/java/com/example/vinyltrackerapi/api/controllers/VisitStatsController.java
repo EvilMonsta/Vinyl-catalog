@@ -24,7 +24,7 @@ public class VisitStatsController {
 
     @GetMapping("/{uri}")
     public int getVisitCount(@PathVariable String uri) {
-        String fullPath = "/" + uri;
+        String fullPath = String.join("/", "", uri);
         return visitCounterService.getCount(fullPath);
     }
 

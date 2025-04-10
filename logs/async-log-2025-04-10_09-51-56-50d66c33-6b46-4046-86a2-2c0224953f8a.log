@@ -1,3 +1,0 @@
-09:51:56.888 [http-nio-8080-exec-6] INFO com.example.vinyltrackerapi.service.LogGenerationService -- === СТАРТ async задачи ID=50d66c33-6b46-4046-86a2-2c0224953f8a ===
-09:51:56.888 [http-nio-8080-exec-6] INFO com.example.vinyltrackerapi.service.LogGenerationService -- Контроллеры, сервисы тоже будут писать в этот лог
-09:51:58.895 [http-nio-8080-exec-6] INFO com.example.vinyltrackerapi.service.LogGenerationService -- === КОНЕЦ async задачи ID=50d66c33-6b46-4046-86a2-2c0224953f8a ===
