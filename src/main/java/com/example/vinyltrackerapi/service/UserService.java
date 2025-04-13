@@ -143,7 +143,7 @@ public class UserService {
         LOGGER.info("[USER] Удалён пользователь с ID={}", id);
     }
 
-    private String hashPassword(String password) {
+    public String hashPassword(String password) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             byte[] encodedHash = digest.digest(password.getBytes(StandardCharsets.UTF_8));

@@ -1,7 +1,9 @@
 package com.example.vinyltrackerapi.api.controllers;
 
 import com.example.vinyltrackerapi.service.VisitCounterService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.Map;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/visits")
+@RequestMapping("/api/admin/visits")
+@Tag(name = "Администрирование пластинок", description = "Создание, редактирование и удаление винилов")
+@PreAuthorize("hasRole('ADMIN')")
 public class VisitStatsController {
     private final VisitCounterService visitCounterService;
 

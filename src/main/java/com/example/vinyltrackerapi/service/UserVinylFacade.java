@@ -5,6 +5,7 @@ import com.example.vinyltrackerapi.api.models.User;
 import com.example.vinyltrackerapi.api.models.UserVinyl;
 import com.example.vinyltrackerapi.api.models.Vinyl;
 import com.example.vinyltrackerapi.api.models.VinylStatus;
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
@@ -20,6 +21,45 @@ public class UserVinylFacade {
     private final VinylService vinylService;
     private final VinylStatusService vinylStatusService;
     private final UserVinylService userVinylService;
+
+    private User getCurrentUser(Principal principal) {
+        return userService.getUserByEmail(principal.getName())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED,
+                        "Пользователь не найден"));
+    }
+
+    public UserVinylDto addVinylToCurrentUser(Integer vinylId, Integer statusId, Principal principal) {
+        User user = getCurrentUser(principal);
+        Vinyl vinyl = vinylService.getVinyl(vinylId);
+        VinylStatus status = vinylStatusService.getById(statusId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Статус не найден!"));
+        return userVinylService.addVinylToUser(user, vinyl, status);
+    }
+
+    public void removeVinylFromCurrentUser(Integer vinylId, Principal principal) {
+        User user = getCurrentUser(principal);
+        userVinylService.removeVinylFromUser(user.getId(), vinylId);
+    }
+
+    public List<UserVinylDto> getCurrentUserVinyls(Principal principal) {
+        User user = getCurrentUser(principal);
+        return userVinylService.getUserVinyls(user.getId()).stream()
+                .map(UserVinylDto::new)
+                .toList();
+    }
+
+    public Optional<UserVinyl> findVinylForCurrentUser(Integer vinylId, Principal principal) {
+        User user = getCurrentUser(principal);
+        return userVinylService.findUserVinyl(user.getId(), vinylId);
+    }
+
+    public UserVinyl updateCurrentUserVinylStatus(Integer vinylId, Integer statusId, Principal principal) {
+        User user = getCurrentUser(principal);
+        Vinyl vinyl = vinylService.getVinyl(vinylId);
+        VinylStatus status = vinylStatusService.getById(statusId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Статус не найден!"));
+        return userVinylService.updateVinylStatus(user, vinyl, status);
+    }
 
     public UserVinylFacade(UserService userService, VinylService vinylService,
                            UserVinylService userVinylService,
