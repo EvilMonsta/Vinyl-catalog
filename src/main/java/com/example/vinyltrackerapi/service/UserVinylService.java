@@ -52,11 +52,11 @@ public class UserVinylService {
 
     public List<UserVinyl> getUserVinyls(Integer userId) {
         String cacheKey = KEY_USER_VINYLS + userId;
-        if (userVinylCache.contains(cacheKey)) {
-            return userVinylCache.get(cacheKey);
-        }
-        List<UserVinyl> userVinyls = userVinylRepository.findByUserId(userId);
+
+        List<UserVinyl> userVinyls = userVinylRepository.findAllWithVinylAndStatusByUserId(userId);
+
         userVinylCache.put(cacheKey, userVinyls);
+
         LOGGER.info("[USER-VINYL] Получены пластинки пользователя с ID={}", userId);
         return userVinyls;
     }
