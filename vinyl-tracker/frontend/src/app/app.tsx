@@ -5,6 +5,9 @@ import RegisterPage from '../pages/RegisterPage';
 import VinylListPage from '../pages/VinylsPage';
 import ProfilePage from '../pages/ProfilePage';
 import SubscriptionPage from '../pages/SubscriptionPage';
+import AdminPage from "../pages/admin/AdminPage";
+import AdminUserTable from '../pages/admin/AdminUserTable';
+import RequireAdmin from '../components/RequireAdmin';
 
 export default function App() {
     return (
@@ -16,6 +19,23 @@ export default function App() {
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/profile" element={<ProfilePage />} />
                 <Route path="/subscription" element={<SubscriptionPage />} />
+              <Route
+                path="/admin"
+                element={
+                  <RequireAdmin>
+                    <AdminPage />
+                  </RequireAdmin>
+                }
+              />
+
+              <Route
+                path="/admin/users"
+                element={
+                  <RequireAdmin>
+                    <AdminUserTable />
+                  </RequireAdmin>
+                }
+              />
             </Routes>
         </>
     );

@@ -4,6 +4,7 @@ import com.example.vinyltrackerapi.api.dto.VinylDto;
 import com.example.vinyltrackerapi.api.models.Genre;
 import com.example.vinyltrackerapi.api.models.User;
 import com.example.vinyltrackerapi.api.models.Vinyl;
+import com.example.vinyltrackerapi.api.repositories.GenreRepository;
 import com.example.vinyltrackerapi.api.repositories.VinylRepository;
 import com.example.vinyltrackerapi.api.specifications.VinylSpecification;
 import java.util.List;
@@ -19,6 +20,7 @@ import org.springframework.web.server.ResponseStatusException;
 public class VinylService {
     private static final Logger LOGGER = LoggerFactory.getLogger(VinylService.class);
     private final VinylRepository vinylRepository;
+    private final GenreRepository genreRepository;
     private final UserService userService;
     private final GenreService genreService;
     private final CacheService<Vinyl> vinylCache;
@@ -27,11 +29,14 @@ public class VinylService {
     private static final String KEY_ALL = "all-vinyls";
     private static final String KEY_ID = "vinyl-";
 
-    public VinylService(VinylRepository vinylRepository, UserService userService,
+    public VinylService(VinylRepository vinylRepository,
+                        GenreRepository genreRepository,
+                        UserService userService,
                         GenreService genreService,
                         CacheService<Vinyl> vinylCache, CacheService<List<Vinyl>> vinylListCache,
                         CacheKeyTracker vinylKeyTracker) {
         this.vinylRepository = vinylRepository;
+        this.genreRepository = genreRepository;
         this.userService = userService;
         this.genreService = genreService;
         this.vinylCache = vinylCache;
@@ -82,6 +87,50 @@ public class VinylService {
                     return new ResponseStatusException(HttpStatus.NOT_FOUND,
                             "Пластинка с ID " + id + " не найдена!");
                 });
+    }
+
+    public List<VinylDto> searchVinylsGlobal(String query) {
+        String normalizedQuery = query == null ? "" : query.trim().toLowerCase();
+        if (normalizedQuery.isEmpty()) return List.of();
+
+        // Ключ для кэша
+        String cacheKey = "search-vinyl-text-" + normalizedQuery;
+        if (vinylListCache.contains(cacheKey)) {
+            return vinylListCache.get(cacheKey).stream().map(VinylDto::new).toList();
+        }
+
+        Specification<Vinyl> spec = Specification.where(null);
+
+        try {
+            Integer year = Integer.parseInt(normalizedQuery);
+            spec = spec.or(VinylSpecification.hasReleaseYear(year));
+        } catch (NumberFormatException e) {
+            // не число, значит не год
+        }
+
+        List<Genre> matchedGenres = genreRepository.findByNameContainingIgnoreCase(normalizedQuery);
+        if (!matchedGenres.isEmpty()) {
+            Specification<Vinyl> genreSpec = Specification.where(null);
+            for (Genre genre : matchedGenres) {
+                genreSpec = genreSpec.or(VinylSpecification.hasGenreId(genre.getId()));
+            }
+            spec = spec.or(genreSpec);
+        }
+
+        spec = spec.or(VinylSpecification.hasTitleLike(normalizedQuery))
+                .or(VinylSpecification.hasArtistLike(normalizedQuery));
+
+        List<Vinyl> result = vinylRepository.findAll(spec);
+
+        for (Vinyl vinyl : result) {
+            vinylKeyTracker.addVinylCacheKey(vinyl.getId(), cacheKey);
+        }
+
+        vinylListCache.put(cacheKey, result);
+
+        LOGGER.info("[VINYL] Выполнен универсальный поиск по строке: {}", query);
+
+        return result.stream().map(VinylDto::new).toList();
     }
 
     public List<VinylDto> searchVinyls(String title, String artist, Integer releaseYear, String genre) {

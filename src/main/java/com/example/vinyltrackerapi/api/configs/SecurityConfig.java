@@ -27,6 +27,7 @@ public class SecurityConfig {
                 .securityMatcher("/api/**")
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/vinyls/**").permitAll()
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/vip/**").hasAnyRole("VIP_USER", "ADMIN")
                         .requestMatchers("/api/user/**").hasAnyRole("USER", "VIP_USER", "ADMIN")

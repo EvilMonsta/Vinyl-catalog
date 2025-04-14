@@ -2,6 +2,7 @@ package com.example.vinyltrackerapi.service;
 
 import com.example.vinyltrackerapi.api.dto.VinylDto;
 import com.example.vinyltrackerapi.api.models.*;
+import com.example.vinyltrackerapi.api.repositories.GenreRepository;
 import com.example.vinyltrackerapi.api.repositories.VinylRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,6 +22,7 @@ class VinylServiceTest {
     private VinylService vinylService;
 
     @Mock private VinylRepository vinylRepository;
+    @Mock private GenreRepository genreRepository;
     @Mock private UserService userService;
     @Mock private GenreService genreService;
     @Mock private CacheService<Vinyl> vinylCache;
@@ -33,7 +35,7 @@ class VinylServiceTest {
     void setUp() {
         closeable = MockitoAnnotations.openMocks(this);
         vinylService = new VinylService(
-                vinylRepository, userService,
+                vinylRepository,genreRepository ,userService,
                 genreService, vinylCache, vinylListCache, vinylKeyTracker
         );
     }

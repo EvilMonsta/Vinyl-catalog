@@ -29,4 +29,16 @@ public class VinylSpecification {
         return (root, query, criteriaBuilder) -> genre == null ? null :
                 criteriaBuilder.equal(root.get("genre"), genre);
     }
+
+    public static Specification<Vinyl> hasTitleLike(String title) {
+        return (root, query, cb) -> cb.like(cb.lower(root.get("title")), "%" + title.toLowerCase() + "%");
+    }
+
+    public static Specification<Vinyl> hasArtistLike(String artist) {
+        return (root, query, cb) -> cb.like(cb.lower(root.get("artist")), "%" + artist.toLowerCase() + "%");
+    }
+
+    public static Specification<Vinyl> hasGenreId(Integer genreId) {
+        return (root, query, cb) -> cb.equal(root.get("genre").get("id"), genreId);
+    }
 }

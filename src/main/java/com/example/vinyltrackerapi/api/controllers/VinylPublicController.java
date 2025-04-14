@@ -48,6 +48,14 @@ public class VinylPublicController {
         return vinylService.searchVinyls(title, artist, releaseYear, genre);
     }
 
+    @Operation(summary = "Гибкий поиск пластинок по текстовому запросу")
+    @GetMapping("/search/global")
+    public List<VinylDto> searchVinylsByText(
+            @Parameter(description = "Произвольный поисковый запрос (название, артист, жанр или год)")
+            @RequestParam String query) {
+        return vinylService.searchVinylsGlobal(query);
+    }
+
     @Operation(summary = "Получить пластинки по username загрузившего пользователя (Path)")
     @GetMapping("/uploaded-by/{username}")
     public List<VinylDto> getVinylsByUploader(@Parameter(description = "Username")

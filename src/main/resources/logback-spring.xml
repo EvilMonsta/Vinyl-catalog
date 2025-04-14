@@ -7,7 +7,7 @@
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- Пишем СРАЗУ в файл с датой -->
             <fileNamePattern>${LOG_PATH}/vinyltracker-%d{yyyy-MM-dd}.log</fileNamePattern>
-            <maxHistory>5</maxHistory>
+            <maxHistory>10</maxHistory>
             <cleanHistoryOnStart>true</cleanHistoryOnStart>
         </rollingPolicy>
         <encoder>

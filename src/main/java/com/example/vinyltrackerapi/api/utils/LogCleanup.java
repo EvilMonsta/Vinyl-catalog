@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 public class LogCleanup {
     private static final String LOG_DIR = "logs";
     private static final String GENERATED_PREFIX = "generated-log-";
+    private static final String VINYL_TRACKER_PREFIX = "vinyltracker-";
 
     @PostConstruct
     public void deleteAllGeneratedLogsOnStartup() {
