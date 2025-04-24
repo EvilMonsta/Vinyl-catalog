@@ -157,4 +157,22 @@ public class UserService {
             throw new IllegalStateException("Error occurred while hashing the password", e);
         }
     }
+
+    public User updateUserRole(Integer id, Integer roleId) {
+        return userRepository.findById(id).map(user -> {
+            user.setRole(roleService.getRoleById(roleId));
+            User updatedUser = userRepository.save(user);
+
+            userCache.put(KEY_ID + id, updatedUser);
+            userListCache.put(KEY_ALL, userRepository.findAll());
+            userByUsernameCache.put(KEY_NAME + updatedUser.getUsername(), List.of(updatedUser));
+
+            LOGGER.info("[USER] Обновлена роль пользователя ID={} на роль ID={}", id, roleId);
+
+            return updatedUser;
+        }).orElseThrow(() -> {
+            LOGGER.warn("[USER] При попытке изменить роль пользователь не нашелся!");
+            return new ResponseStatusException(HttpStatus.NOT_FOUND, "Пользователь не найден!");
+        });
+    }
 }

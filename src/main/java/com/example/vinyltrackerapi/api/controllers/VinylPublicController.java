@@ -8,6 +8,8 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,8 +46,8 @@ public class VinylPublicController {
             @Parameter(description = "Название") @RequestParam(required = false) String title,
             @Parameter(description = "Артист") @RequestParam(required = false) String artist,
             @Parameter(description = "Год выпуска") @RequestParam(required = false) Integer releaseYear,
-            @Parameter(description = "Жанр") @RequestParam(required = false) String genre) {
-        return vinylService.searchVinyls(title, artist, releaseYear, genre);
+            @Parameter(description = "Жанр") @RequestParam(required = false) Integer genreId) {
+        return vinylService.searchVinyls(title, artist, releaseYear, genreId);
     }
 
     @Operation(summary = "Гибкий поиск пластинок по текстовому запросу")
@@ -73,5 +75,23 @@ public class VinylPublicController {
                 .stream()
                 .map(VinylDto::new)
                 .toList();
+    }
+
+    @Operation(summary = "Получить рандомные пластинки 2025 года")
+    @GetMapping("/new")
+    public List<VinylDto> getRandomVinyls2025(@RequestParam(defaultValue = "10") int limit) {
+        return vinylService.getRandomVinylsByYear(2025, limit);
+    }
+
+    @Operation(summary = "Получить случайные пластинки")
+    @GetMapping("/random")
+    public List<VinylDto> getRandomVinyls(@RequestParam(defaultValue = "10") int limit) {
+        return vinylService.getRandomVinyls(limit);
+    }
+
+    @Operation(summary = "Получить страницу пластинок с пагинацией")
+    @GetMapping("/page")
+    public ResponseEntity<Page<VinylDto>> getVinylsPage(Pageable pageable) {
+        return ResponseEntity.ok(vinylService.getVinylsPage(pageable));
     }
 }

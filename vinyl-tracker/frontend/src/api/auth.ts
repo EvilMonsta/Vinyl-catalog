@@ -16,7 +16,7 @@ export interface RegisterRequest {
   username: string;
   email: string;
   password: string;
-  roleId?: number; // 👈 добавь это поле (можно с ? если хочешь гибкость)
+  roleId?: number;
 }
 
 export interface UserDto {

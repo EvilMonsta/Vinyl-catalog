@@ -89,3 +89,68 @@ button, [role="button"], [tabindex]:focus {
   outline: none !important;
   box-shadow: none !important;
 }
+.swiper-button-next,
+.swiper-button-prev {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.swiper:hover .swiper-button-next,
+.swiper:hover .swiper-button-prev {
+  opacity: 1;
+}
+.neon-header th {
+  position: relative;
+  color: #00e5ff;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  background-color: #1f1f1f;
+  padding-bottom: 12px;
+  text-align: left;  /* Явно укажем выравнивание */
+}
+
+.neon-header th::after {
+  content: '';
+  position: absolute;
+  bottom: 6px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, #00e5ff, transparent);
+  border-radius: 2px;
+}
+
+.action-edit {
+  background-color: rgba(0, 150, 255, 0.1) !important;
+  color: #009dff !important;
+  border: 1px solid rgba(0, 150, 255, 0.3);
+  margin-right: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.action-edit:hover {
+  background-color: rgba(0, 150, 255, 0.3) !important;
+}
+
+.action-info {
+  background-color: rgba(0, 255, 150, 0.1) !important;
+  color: #00ffcc !important;
+  border: 1px solid rgba(0, 255, 150, 0.3);
+  transition: background-color 0.3s ease;
+}
+
+.action-info:hover {
+  background-color: rgba(0, 255, 150, 0.3) !important;
+}
+
+.action-delete {
+  background-color: rgba(221, 104, 104, 0.1) !important;
+  color: rgba(251, 61, 134, 0.98) !important;
+  border: 1px solid rgba(205, 79, 255, 0.3);
+  transition: background-color 0.3s ease;
+}
+
+.action-delete:hover {
+  background-color: rgba(255, 0, 0, 0.3) !important;
+}

@@ -117,7 +117,7 @@ class VinylServiceTest {
         String title = "test";
         String artist = "artist";
         Integer year = 2020;
-        String genre = "rock";
+        Integer genreId = 1;
 
         Vinyl vinyl1 = new Vinyl();
         vinyl1.setTitle("test");
@@ -126,7 +126,7 @@ class VinylServiceTest {
         when(vinylRepository.findAll(Mockito.<Specification<Vinyl>>any()))
                 .thenReturn(List.of(vinyl1));
 
-        List<VinylDto> result = vinylService.searchVinyls(title, artist, year, genre);
+        List<VinylDto> result = vinylService.searchVinyls(title, artist, year, genreId);
 
         assertThat(result)
                 .isNotNull()

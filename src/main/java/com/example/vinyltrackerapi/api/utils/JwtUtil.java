@@ -15,7 +15,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class JwtUtil {
     private Key getSignInKey() {
-        String secret = "super-secret-key-1234567890-long-enough";
+        String secret = "super-secret-key-1234567890-bnmfdjgklgadhjkgfdhjagfhag-" +
+                "dfhsdgfhasdfgahfgadhfgasdhjfg-adshfgahsdfgdjfgasdhfgas-" +
+                "dhjfgasdfhjasgfhjasgdfhasgfhjagsdfhjasdgfasdgkf";
         byte[] keyBytes = secret.getBytes(StandardCharsets.UTF_8);
         return Keys.hmacShaKeyFor(keyBytes);
     }
@@ -25,7 +27,7 @@ public class JwtUtil {
                 .setSubject(user.getEmail())
                 .addClaims(Map.of("role", user.getRole().getName()))
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10)) // 10 часов
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }

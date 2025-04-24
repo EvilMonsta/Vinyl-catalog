@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from 'react';
+import { setLogoutCallback } from '../utils/logoutUtil';
 
 export interface AuthUser {
   username: string;
@@ -15,27 +16,60 @@ const AuthContext = createContext<AuthContextType | null>(null);
 
 export const useAuth = () => useContext(AuthContext);
 
+function parseJwt(token: string): any {
+  try {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+
+    return JSON.parse(jsonPayload);
+  } catch (e) {
+    return {};
+  }
+}
+
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<AuthUser | null>(null);
+  const [isInitialized, setIsInitialized] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
     const username = localStorage.getItem('username');
     const role = localStorage.getItem('role');
+    const currentPath = window.location.pathname;
+
     if (token && username && role) {
-      setUser({ token, username, role });
-    }
+      const payload = parseJwt(token);
+
+      const isExpired = !payload.exp || payload.exp * 1000 < Date.now();
+      const isValidStructure = payload.sub && payload.role;
+
+      if (isExpired || !isValidStructure) {
+        logout();
+      } else {
+        setUser({token, username, role });
+      }
+    } else {
+      if (currentPath !== '/login' && currentPath !== '/register') {
+        logout();
+      }    }
+
+    setLogoutCallback(logout);
+    setIsInitialized(true);
   }, []);
 
   const logout = () => {
     localStorage.clear();
     setUser(null);
-    window.location.href = '/login';
+    window.location.replace('/login');
   };
 
-  return (
+  return isInitialized ? (
     <AuthContext.Provider value={{ user, logout }}>
       {children}
     </AuthContext.Provider>
-  );
+  ) : null;
 }
+

@@ -23,5 +23,4 @@ public interface UserVinylRepository extends JpaRepository<UserVinyl, UserVinylI
             "JOIN FETCH uv.status s " +
             "WHERE uv.user.id = :userId")
     List<UserVinyl> findAllWithVinylAndStatusByUserId(@Param("userId") Integer userId);
-
 }

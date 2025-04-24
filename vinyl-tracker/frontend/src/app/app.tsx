@@ -2,28 +2,28 @@ import { Routes, Route } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import LoginPage from '../pages/LoginPage';
 import RegisterPage from '../pages/RegisterPage';
-import VinylListPage from '../pages/VinylsPage';
 import ProfilePage from '../pages/ProfilePage';
 import SubscriptionPage from '../pages/SubscriptionPage';
-import AdminPage from "../pages/admin/AdminPage";
-import AdminUserTable from '../pages/admin/AdminUserTable';
+import AdminVinylsPage from "../pages/admin/AdminVinylsPage";
+import AdminUserPage from '../pages/admin/AdminUserPage';
 import RequireAdmin from '../components/RequireAdmin';
+import VinylsPage from '../pages/VinylsPage';
 
 export default function App() {
     return (
         <>
             <Navbar />
             <Routes>
-                <Route path="/" element={<VinylListPage />} />
+                <Route path="/" element={<VinylsPage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/profile" element={<ProfilePage />} />
                 <Route path="/subscription" element={<SubscriptionPage />} />
               <Route
-                path="/admin"
+                path="/admin/vinyls"
                 element={
                   <RequireAdmin>
-                    <AdminPage />
+                    <AdminVinylsPage/>
                   </RequireAdmin>
                 }
               />
@@ -32,7 +32,7 @@ export default function App() {
                 path="/admin/users"
                 element={
                   <RequireAdmin>
-                    <AdminUserTable />
+                    <AdminUserPage />
                   </RequireAdmin>
                 }
               />

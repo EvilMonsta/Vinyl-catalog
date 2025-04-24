@@ -29,6 +29,9 @@ public class UserVinylFacade {
     }
 
     public UserVinylDto addVinylToCurrentUser(Integer vinylId, Integer statusId, Principal principal) {
+        if (statusId < 1 || statusId > 3) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Недопустимый статус");
+        }
         User user = getCurrentUser(principal);
         Vinyl vinyl = vinylService.getVinyl(vinylId);
         VinylStatus status = vinylStatusService.getById(statusId)

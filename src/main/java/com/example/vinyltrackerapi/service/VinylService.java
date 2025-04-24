@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -133,18 +135,27 @@ public class VinylService {
         return result.stream().map(VinylDto::new).toList();
     }
 
-    public List<VinylDto> searchVinyls(String title, String artist, Integer releaseYear, String genre) {
-        String cacheKey = "search-vinyl-" + title + "-" + artist + "-" + releaseYear + "-" + genre;
+    public List<VinylDto> searchVinyls(String title, String artist, Integer releaseYear, Integer genreId) {
+        String cacheKey = "search-vinyl-" + title + "-" + artist + "-" + releaseYear + "-" + genreId;
 
         if (vinylListCache.contains(cacheKey)) {
             return vinylListCache.get(cacheKey).stream().map(VinylDto::new).toList();
         }
 
-        Specification<Vinyl> spec = Specification
-                .where(VinylSpecification.hasTitle(title))
-                .and(VinylSpecification.hasArtist(artist))
-                .and(VinylSpecification.hasReleaseYear(releaseYear))
-                .and(VinylSpecification.hasGenre(genre));
+        Specification<Vinyl> spec = Specification.where(null);
+
+        if (title != null && !title.isBlank()) {
+            spec = spec.and(VinylSpecification.hasTitle(title));
+        }
+        if (artist != null && !artist.isBlank()) {
+            spec = spec.and(VinylSpecification.hasArtist(artist));
+        }
+        if (releaseYear != null) {
+            spec = spec.and(VinylSpecification.hasReleaseYear(releaseYear));
+        }
+        if (genreId != null) {
+            spec = spec.and(VinylSpecification.hasGenreId(genreId));
+        }
 
         List<Vinyl> result = vinylRepository.findAll(spec);
 
@@ -262,5 +273,24 @@ public class VinylService {
 
         LOGGER.info("[VINYL] Загружено {} новых пластинок", savedVinyls.size());
         return savedVinyls;
+    }
+
+    public List<VinylDto> getRandomVinyls(int limit) {
+        List<Vinyl> vinyls = vinylRepository.findRandomVinyls(limit);
+        LOGGER.info("[VINYL] Получены {} рандоных пластинок", limit);
+        return vinyls.stream().map(VinylDto::new).toList();
+    }
+
+    public List<VinylDto> getRandomVinylsByYear(int year, int limit) {
+        List<Vinyl> vinyls = vinylRepository.findRandomVinylsByYear(year, limit);
+        LOGGER.info("[VINYL] Получены {} рандоных пластинок {} года", limit, year);
+        return vinyls.stream().map(VinylDto::new).toList();
+    }
+
+    public Page<VinylDto> getVinylsPage(Pageable pageable) {
+        Page<Vinyl> vinylPage = vinylRepository.findAll(pageable);
+        LOGGER.info("[VINYL] Получена страница винилов: {}/{}", pageable.getPageNumber() + 1,
+                vinylPage.getTotalPages());
+        return vinylPage.map(VinylDto::new);
     }
 }

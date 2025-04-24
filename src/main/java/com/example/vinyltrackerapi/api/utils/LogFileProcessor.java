@@ -1,5 +1,7 @@
 package com.example.vinyltrackerapi.api.utils;
 
+import static java.lang.Thread.sleep;
+
 import com.example.vinyltrackerapi.api.dto.LogTask;
 import com.example.vinyltrackerapi.api.enums.LogTaskStatus;
 import java.io.BufferedWriter;
@@ -36,7 +38,7 @@ public class LogFileProcessor {
                     logFiles.add(path);
                 }
             }
-
+            sleep(90000);
             if (logFiles.isEmpty()) throw new FileNotFoundException("Логи за период не найдены");
 
             Path mergedPath = Paths.get("logs/generated-log-" + taskId + ".log");

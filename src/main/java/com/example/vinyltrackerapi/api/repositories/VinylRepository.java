@@ -17,6 +17,14 @@ public interface VinylRepository extends JpaRepository<Vinyl, Integer>, JpaSpeci
             "WHERE u.username = :username", nativeQuery = true)
     List<Vinyl> findVinylsByUploaderUsername(@Param("username") String username);
 
+    @Query(value = "SELECT * FROM vinyls ORDER BY RANDOM() LIMIT :limit", nativeQuery = true)
+    List<Vinyl> findRandomVinyls(@org.springframework.data.repository.query.Param("limit") int limit);
+
+    @Query(value = "SELECT * FROM vinyls WHERE release_year = :year ORDER BY RANDOM() LIMIT :limit",
+            nativeQuery = true)
+    List<Vinyl> findRandomVinylsByYear(@org.springframework.data.repository.query.Param("year") int year,
+                                       @org.springframework.data.repository.query.Param("limit") int limit);
+
     List<Vinyl> findByTitleContainingIgnoreCase(String title);
 
     List<Vinyl> findByArtistContainingIgnoreCase(String artist);

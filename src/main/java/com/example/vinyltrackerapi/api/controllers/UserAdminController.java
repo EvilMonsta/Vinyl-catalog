@@ -1,5 +1,6 @@
 package com.example.vinyltrackerapi.api.controllers;
 
+import com.example.vinyltrackerapi.api.dto.UpdateUserRoleDto;
 import com.example.vinyltrackerapi.api.dto.UserDto;
 import com.example.vinyltrackerapi.api.models.User;
 import com.example.vinyltrackerapi.service.UserService;
@@ -87,5 +88,13 @@ public class UserAdminController {
                                            @PathVariable Integer id) {
         userVinylFacade.deleteUser(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @Operation(summary = "Обновить роль пользователя по ID")
+    @PutMapping("/update-role/{id}")
+    public ResponseEntity<UserDto> updateUserRole(@PathVariable Integer id,
+                                                  @RequestBody @Valid UpdateUserRoleDto dto) {
+        User updatedUser = userService.updateUserRole(id, dto.getRoleId());
+        return ResponseEntity.ok(new UserDto(updatedUser));
     }
 }
