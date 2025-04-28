@@ -9,14 +9,17 @@ import {
   MenuItem,
   Typography,
   InputBase,
+  Paper,
   Popover,
   ListItem,
   ListItemButton,
-  ListItemText,
+  ListItemText, Popper,
 } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from '../api/axios';
+import VinylDetailsModal from './VinylDetailsModal';
 
 const SearchIcon = () => (
   <Box
@@ -46,12 +49,36 @@ const SearchIcon = () => (
   </Box>
 );
 
+interface Vinyl {
+  id: number;
+  title: string;
+  artist: string;
+  releaseYear: number;
+  description: string;
+  genreId: number;
+  coverUrl: string;
+}
+
+const genreMap: Record<number, string> = {
+  1: "Rock",
+  2: "Pop",
+  3: "Hip-hop",
+  4: "Jazz",
+  5: "Electronic",
+  6: "Rap",
+};
+
 export default function Navbar() {
   const auth = useAuth();
   const navigate = useNavigate();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [exploreAnchor, setExploreAnchor] = useState<null | HTMLElement>(null);
+  const [selectedVinyl, setSelectedVinyl] = useState<Vinyl | null>(null);
+
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState<Vinyl[]>([]);
+  const [searchAnchor, setSearchAnchor] = useState<null | HTMLElement>(null);
 
   const open = Boolean(anchorEl);
   const exploreOpen = Boolean(exploreAnchor);
@@ -61,6 +88,21 @@ export default function Navbar() {
 
   const handleExploreClick = (event: React.MouseEvent<HTMLElement>) => setExploreAnchor(event.currentTarget);
   const handleExploreClose = () => setExploreAnchor(null);
+
+
+  useEffect(() => {
+    const delayDebounce = setTimeout(() => {
+      if (searchQuery.trim().length > 1) {
+        axios.get(`/api/vinyls/search/global`, { params: { query: searchQuery } })
+          .then(res => setSearchResults(res.data.slice(0, 4)))
+          .catch(() => setSearchResults([]));
+      } else {
+        setSearchResults([]);
+      }
+    }, 700);
+
+    return () => clearTimeout(delayDebounce);
+  }, [searchQuery]);
 
   return (
     <AppBar position="static" sx={{ bgcolor: '#121212', boxShadow: '0 0 8px rgba(0,255,255,0.1)' }}>
@@ -76,12 +118,17 @@ export default function Navbar() {
             textShadow: '0 0 5px #00e5ff',
           }}
         >
-          Винилы
+          VinTrack
         </Typography>
 
         <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1, maxWidth: 600 }}>
           <InputBase
             placeholder="Поиск по названию, исполнителю и т.д."
+            value={searchQuery}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+              setSearchAnchor(e.currentTarget);
+            }}
             sx={{
               color: 'inherit',
               flex: 1,
@@ -94,13 +141,33 @@ export default function Navbar() {
               display: 'flex',
               alignItems: 'center',
               gap: 1,
-              '& input': {
-                padding: 0,
-              },
+              '& input': { padding: 0 },
             }}
             startAdornment={<SearchIcon />}
           />
-
+          <Popper open={searchResults.length > 0} anchorEl={searchAnchor} placement="bottom-start" sx={{ zIndex: 1300 }}>
+            <Paper sx={{ mt: 1, p: 1, bgcolor: '#1f1f1f', width: 400, boxShadow: '0 0 10px rgba(0,255,255,0.1)' }}>
+              {searchResults.map(vinyl => (
+                <Box
+                  key={vinyl.id}
+                  sx={{
+                    p: 1,
+                    borderBottom: '1px solid rgba(255,255,255,0.1)',
+                    cursor: 'pointer',
+                    '&:hover': { bgcolor: 'rgba(0,255,255,0.05)' }
+                  }}
+                  onClick={() => setSelectedVinyl(vinyl)}
+                >
+                  <Typography variant="subtitle2" sx={{ color: '#7cf152' }}>
+                    {vinyl.title} — {vinyl.artist}
+                  </Typography>
+                  <Typography variant="caption" sx={{ color: '#aaa' }}>
+                    {vinyl.releaseYear} • {genreMap[vinyl.genreId] || 'Жанр'}
+                  </Typography>
+                </Box>
+              ))}
+            </Paper>
+          </Popper>
           <Button
             onClick={handleExploreClick}
             sx={{
@@ -217,6 +284,11 @@ export default function Navbar() {
           )}
         </Box>
       </Toolbar>
+      <VinylDetailsModal
+        open={!!selectedVinyl}
+        onClose={() => setSelectedVinyl(null)}
+        vinyl={selectedVinyl}
+      />
     </AppBar>
   );
 }

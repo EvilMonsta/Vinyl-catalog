@@ -8,11 +8,24 @@ interface VinylCardProps {
     id: number;
     title: string;
     artist: string;
+    genreId: number;
+    description: string;
     coverUrl?: string;
   };
+  onOpenDetails: () => void;
+  onAdded?: (vinylId: number) => void;
 }
 
-export default function VinylCard({ vinyl }: VinylCardProps) {
+const genreMap: Record<number, string> = {
+  1: "Rock",
+  2: "Pop",
+  3: "Hip-hop",
+  4: "Jazz",
+  5: "Electronic",
+  6: "Rap",
+};
+
+export default function VinylCard({ vinyl, onOpenDetails, onAdded }: VinylCardProps) {
   const { user } = useAuth()!;
   const [adding, setAdding] = useState(false);
   const [isAlreadyAdded, setIsAlreadyAdded] = useState(false);
@@ -30,7 +43,7 @@ export default function VinylCard({ vinyl }: VinylCardProps) {
         }
       } catch (err: any) {
         if (err?.response?.status === 404) {
-          setIsAlreadyAdded(false); // не добавлена
+          setIsAlreadyAdded(false);
         } else {
           console.error('Ошибка при проверке наличия винила у пользователя:', err);
         }
@@ -48,10 +61,11 @@ export default function VinylCard({ vinyl }: VinylCardProps) {
       await axios.post('/api/user/user-vinyls/add', null, {
         params: {
           vinylId: vinyl.id,
-          statusId: 2, // статус "Имею"
+          statusId: 2,
         },
       });
       setIsAlreadyAdded(true);
+      onAdded?.(vinyl.id);
       alert(`✅ Пластинка "${vinyl.title}" добавлена в профиль!`);
     } catch (err) {
       console.error('Ошибка при добавлении винила', err);
@@ -63,38 +77,56 @@ export default function VinylCard({ vinyl }: VinylCardProps) {
 
   return (
     <Card
+      onClick={onOpenDetails}
       sx={{
         width: 250,
         position: 'relative',
         backgroundColor: '#1e1e1e',
-        borderRadius: 2,
+        borderRadius: 3,
         overflow: 'hidden',
         boxShadow: '0 0 10px rgba(0,255,255,0.1)',
-        transition: 'transform 0.3s ease',
-        '&:hover': { transform: 'scale(1.05)' },
+        transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+        '&:hover': { transform: 'translateY(-5px)', boxShadow: '0 0 14px rgba(0,255,255,0.2)' },
+        cursor: 'pointer',
       }}
     >
       <CardMedia
         component="img"
         height="250"
-        image={vinyl.coverUrl || '/placeholder-vinyl.jpg'}
+        src={vinyl.coverUrl}
         alt={vinyl.title}
+        onError={(e) => {
+          const target = e.target as HTMLImageElement;
+          target.onerror = null;
+          target.src = '/placeholder-vinyl.png';
+        }}
+        sx={{ objectFit: 'cover' }}
       />
+
       <Box sx={{ p: 1 }}>
-        <Typography variant="subtitle2" noWrap sx={{ color: '#fff' }}>{vinyl.title}</Typography>
-        <Typography variant="caption" noWrap sx={{ color: '#aaa' }}>{vinyl.artist}</Typography>
+        <Typography variant="subtitle2" noWrap sx={{ color: '#0ff', textShadow: '0 0 4px #0ff' }}>
+          {vinyl.title}
+        </Typography>
+        <Typography variant="caption" noWrap sx={{ color: '#aaa' }}>
+          {vinyl.artist}
+        </Typography>
+        <Typography variant="caption" sx={{ color: '#69d1d1', display: 'block' }}>
+          {genreMap[vinyl.genreId] || 'Неизвестный жанр'}
+        </Typography>
       </Box>
 
-      {/* Плюсик или галочка */}
       {user && (
         <Box
-          onClick={isAlreadyAdded ? undefined : handleAddVinyl}
+          onClick={(e) => {
+            e.stopPropagation();
+            if (!isAlreadyAdded) handleAddVinyl();
+          }}
           sx={{
             position: 'absolute',
             top: 8,
             right: 8,
-            width: 24,
-            height: 24,
+            width: 26,
+            height: 26,
             borderRadius: '50%',
             backgroundColor: isAlreadyAdded ? '#7cf152' : '#0ff',
             color: '#000',

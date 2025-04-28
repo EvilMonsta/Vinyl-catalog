@@ -95,7 +95,6 @@ public class VinylService {
         String normalizedQuery = query == null ? "" : query.trim().toLowerCase();
         if (normalizedQuery.isEmpty()) return List.of();
 
-        // Ключ для кэша
         String cacheKey = "search-vinyl-text-" + normalizedQuery;
         if (vinylListCache.contains(cacheKey)) {
             return vinylListCache.get(cacheKey).stream().map(VinylDto::new).toList();

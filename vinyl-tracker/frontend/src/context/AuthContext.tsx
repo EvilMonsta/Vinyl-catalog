@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import { setLogoutCallback } from '../utils/logoutUtil';
 
 export interface AuthUser {
+  id: number;
   username: string;
   role: string;
   token: string;
@@ -42,6 +43,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     if (token && username && role) {
       const payload = parseJwt(token);
+      console.log('JWT Payload:', payload);
 
       const isExpired = !payload.exp || payload.exp * 1000 < Date.now();
       const isValidStructure = payload.sub && payload.role;
@@ -49,7 +51,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (isExpired || !isValidStructure) {
         logout();
       } else {
-        setUser({token, username, role });
+        setUser({id: payload.sub,token, username, role });
       }
     } else {
       if (currentPath !== '/login' && currentPath !== '/register') {

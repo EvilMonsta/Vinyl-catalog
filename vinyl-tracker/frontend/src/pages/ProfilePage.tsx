@@ -22,6 +22,8 @@ interface Vinyl {
   title: string;
   artist: string;
   coverUrl?: string;
+  genreId:number;
+  description: string;
   status: {
     id: number;
     name: string;
@@ -33,6 +35,15 @@ interface User {
   username: string;
   email: string;
 }
+
+const genreMap: Record<number, string> = {
+  1: "Rock",
+  2: "Pop",
+  3: "Hip-hop",
+  4: "Jazz",
+  5: "Electronic",
+  6: "Rap",
+};
 
 export default function ProfilePage() {
   const auth = useAuth();
@@ -66,8 +77,11 @@ export default function ProfilePage() {
           title: item.vinyl.title,
           artist: item.vinyl.artist,
           coverUrl: item.vinyl.coverUrl,
+          genreId: item.vinyl.genreId,
+          description: item.vinyl.description,
           status: item.status,
         }));
+
 
         setVinyls(parsedVinyls);
       } catch (err) {
@@ -182,7 +196,7 @@ export default function ProfilePage() {
               key={v.id}
               sx={{
                 position: 'relative',
-                height: '100%',
+                height: '90%',
                 display: 'flex',
                 flexDirection: 'column',
                 background: '#222',
@@ -329,6 +343,9 @@ export default function ProfilePage() {
                 </Typography>
                 <Typography variant="caption" color="text.secondary" noWrap sx={{ color: '#ccc' }}>
                   {v.artist}
+                </Typography>
+                <Typography variant="caption" sx={{ color: '#69d1d1', display: 'block' }}>
+                  {genreMap[v.genreId] || 'Неизвестный жанр'}
                 </Typography>
               </CardContent>
             </Card>

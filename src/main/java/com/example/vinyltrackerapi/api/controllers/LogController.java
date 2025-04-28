@@ -100,7 +100,7 @@ public class LogController {
                     .header(HttpHeaders.CONTENT_DISPOSITION,
                             "attachment; filename=" + path.getFileName())
                     .contentLength(Files.size(path))
-                    .contentType(MediaType.APPLICATION_OCTET_STREAM) // универсальный MIME для скачивания
+                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
                     .body(resource);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();

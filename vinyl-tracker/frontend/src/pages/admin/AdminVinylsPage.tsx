@@ -15,7 +15,9 @@ interface Vinyl {
   artist: string;
   releaseYear: number;
   genreId: number;
+  description: string;
   coverUrl: string;
+  addedById?: number | null;
 }
 
 const genreMap: Record<number, string> = {
@@ -98,35 +100,65 @@ export default function AdminVinylPage() {
 
   const handleSaveEdit = async () => {
     if (!editVinyl) return;
+
     try {
-      await axios.put(`/api/admin/vinyls/update/${editVinyl.id}`, editVinyl, {
-        headers: { Authorization: `Bearer ${auth?.user?.token}` },
-      });
-      alert('✅ Пластинка обновлена!');
+      if (editVinyl.id === 0) {
+        const vinylToCreate = { ...editVinyl } as any;
+        delete vinylToCreate.id;
+        console.log('➡️ Отправляем данные:', vinylToCreate);
+
+        await axios.post(`/api/admin/vinyls/create`, vinylToCreate, {
+          headers: { Authorization: `Bearer ${auth?.user?.token}` },
+        });
+        alert('✅ Пластинка добавлена!');
+      } else {
+        await axios.put(`/api/admin/vinyls/update/${editVinyl.id}`, editVinyl, {
+          headers: { Authorization: `Bearer ${auth?.user?.token}` },
+        });
+        alert('✅ Пластинка обновлена!');
+      }
+
       setEditVinyl(null);
       loadVinyls(page);
     } catch (err) {
-      alert('❌ Не удалось обновить пластинку.');
+      alert('❌ Ошибка при сохранении пластинки.');
       console.error(err);
     }
   };
 
+
   return (
     <Box sx={{ p: 4 }}>
       <Typography variant="h4" gutterBottom sx={{ color: '#00e5ff', textShadow: '0 0 5px #00e5ff' }}>
-        Админ-панель — Винилы
+        Панель администратора — Винилы
       </Typography>
 
-      <Button
-        variant="outlined"
-        className="neon-glow"
-        onClick={() => navigate('/admin/users')}
-        sx={{ mb: 2 }}
-      >
-        Управление пользователями
-      </Button>
+      <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
+        <Button
+          variant="outlined"
+          className="neon-glow"
+          onClick={() => navigate('/admin/users')}
+        >
+          Управление пользователями
+        </Button>
 
-      {/* Фильтры */}
+        <Button
+          variant="contained"
+          onClick={() => setEditVinyl({
+            id: 0,
+            title: '',
+            artist: '',
+            releaseYear: new Date().getFullYear(),
+            genreId: 1,
+            description: '',
+            coverUrl: '',
+            addedById: 2
+          })}
+        >
+          ➕ Добавить пластинку
+        </Button>
+      </Box>
+
       <Paper sx={{ p: 2, mb: 3, backgroundColor: '#1f1f1f', boxShadow: '0 0 10px rgba(0,255,255,0.1)' }}>
         <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
           <TextField label="Название" value={filterTitle} onChange={(e) => setFilterTitle(e.target.value)} />
@@ -219,11 +251,9 @@ export default function AdminVinylPage() {
           onClose={() => setEditVinyl(null)}
           maxWidth="sm"
           fullWidth
-          PaperProps={{
-            sx: { backgroundColor: '#2a2a2a', boxShadow: '0 0 15px #00e5ff' }
-          }}
+          PaperProps={{ sx: { backgroundColor: '#2a2a2a', boxShadow: '0 0 15px #00e5ff' } }}
         >
-          <DialogTitle>Редактировать пластинку</DialogTitle>
+          <DialogTitle>{editVinyl.id === 0 ? 'Добавить новую пластинку' : 'Редактировать пластинку'}</DialogTitle>
           <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 2, mt: 1 }}>
             <TextField label="Название" value={editVinyl.title} onChange={(e) => setEditVinyl({ ...editVinyl, title: e.target.value })} />
             <TextField label="Артист" value={editVinyl.artist} onChange={(e) => setEditVinyl({ ...editVinyl, artist: e.target.value })} />
@@ -234,6 +264,7 @@ export default function AdminVinylPage() {
               ))}
             </Select>
             <TextField label="Cover URL" value={editVinyl.coverUrl} onChange={(e) => setEditVinyl({ ...editVinyl, coverUrl: e.target.value })} />
+            <TextField label="Описание" multiline rows={4} value={editVinyl.description} onChange={(e) => setEditVinyl({ ...editVinyl, description: e.target.value })} />
           </DialogContent>
           <DialogActions>
             <Button onClick={() => setEditVinyl(null)}>Отмена</Button>

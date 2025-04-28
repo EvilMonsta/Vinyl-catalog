@@ -59,7 +59,6 @@ export default function AdminUsersPage() {
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['adminUsers'] }),
   });
 
-
   const handleChangeRole = (id: number, currentRole: string, selected: string) => {
     if (currentRole !== selected) {
       setSelectedUserId(id);
@@ -84,13 +83,13 @@ export default function AdminUsersPage() {
 
   return (
     <Box sx={{ p: 4 }}>
-      <Typography variant="h4" gutterBottom sx={{ color: '#00e5ff', textShadow: '0 0 5px #00e5ff'}}>
+      <Typography variant="h4" gutterBottom sx={{ color: '#00e5ff', textShadow: '0 0 8px #00e5ff'}}>
         Панель администратора — Пользователи
       </Typography>
 
       <TableContainer component={Paper} sx={{ backgroundColor: '#1f1f1f', mt: 2 }}>
-        <Table>
-          <TableHead>
+        <Table size="small">
+          <TableHead className="neon-header">
             <TableRow>
               <TableCell>Имя пользователя</TableCell>
               <TableCell>Email</TableCell>
@@ -99,18 +98,20 @@ export default function AdminUsersPage() {
           </TableHead>
           <TableBody>
             {users.map((user) => (
-              <TableRow key={user.id}>
-                <TableCell>{user.username}</TableCell>
-                <TableCell>{user.email}</TableCell>
-                <TableCell>
+              <TableRow key={user.id} sx={{ height: 40 }}>
+                <TableCell sx={{ py: 0.5 }}>{user.username}</TableCell>
+                <TableCell sx={{ py: 0.5 }}>{user.email}</TableCell>
+                <TableCell sx={{ py: 0.5 }}>
                   <Select
-                    value={roleMap[user.roleId]}  // Отображаем строку роли по roleId
+                    value={roleMap[user.roleId]}
                     onChange={(e) => handleChangeRole(user.id, roleMap[user.roleId], e.target.value)}
+                    className="neon-select neon-glow"
                     sx={{
-                      color: '#ccc',
+                      fontSize: '0.8rem',
+                      width: 120,
                       backgroundColor: '#2a2a2a',
-                      fontSize: '0.85rem',
-                      width: 140
+                      borderRadius: '8px',
+                      '& .MuiSelect-icon': { color: '#6ee7ff' },
                     }}
                   >
                     <MenuItem value="USER">USER</MenuItem>
@@ -125,10 +126,10 @@ export default function AdminUsersPage() {
       </TableContainer>
 
       <Dialog open={confirmOpen} onClose={() => setConfirmOpen(false)}>
-        <DialogTitle>Подтверждение изменения роли</DialogTitle>
+        <DialogTitle sx={{ color: '#00e5ff' }}>Подтверждение изменения роли</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Вы уверены, что хотите изменить роль пользователя на <strong>{newRole}</strong>?
+            Вы уверены, что хотите изменить роль пользователя на <strong style={{ color: '#00ffcc' }}>{newRole}</strong>?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -139,15 +140,15 @@ export default function AdminUsersPage() {
         </DialogActions>
       </Dialog>
 
-      <Divider sx={{ my: 4 }} />
+      <Divider sx={{ my: 4, borderColor: '#00e5ff' }} />
 
       <Box>
-        <Typography variant="h6" gutterBottom>
+        <Typography variant="h6" gutterBottom sx={{ color: '#6ee7ff' }}>
           Управление винилами
         </Typography>
         <Button
           variant="outlined"
-          color="primary"
+          className="neon-glow"
           onClick={() => navigate('/admin/vinyls')}
         >
           Перейти к управлению винилами

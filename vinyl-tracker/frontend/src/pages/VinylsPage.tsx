@@ -7,6 +7,8 @@ import { useQuery } from '@tanstack/react-query';
 import axios from '../api/axios';
 import VinylCard from '../components/VinylCard';
 import Footer from '../components/Footer';
+import VinylDetailsModal from '../components/VinylDetailsModal';
+import { useState } from 'react';
 
 export default function HomePage() {
   const { data: newVinyls, isLoading: loadingNew } = useQuery({
@@ -18,6 +20,7 @@ export default function HomePage() {
     queryKey: ['randomVinyls'],
     queryFn: () => axios.get('/api/vinyls/random?limit=10').then(res => res.data)
   });
+  const [selectedVinyl, setSelectedVinyl] = useState<any>(null);
 
   const renderVinylSlides = (vinyls: any[], loading: boolean) => {
     if (loading) {
@@ -36,7 +39,7 @@ export default function HomePage() {
 
     return vinyls.map((vinyl) => (
       <SwiperSlide key={vinyl.id}>
-        <VinylCard vinyl={vinyl} />
+        <VinylCard vinyl={vinyl} onOpenDetails={() => setSelectedVinyl(vinyl)} />
       </SwiperSlide>
     ));
   };
@@ -51,13 +54,13 @@ export default function HomePage() {
           modules={[Navigation, Autoplay]}
           navigation
           autoplay={{
-            delay: 3000,
+            delay: 5000,
             disableOnInteraction: false,
             pauseOnMouseEnter: true,
           }}
           spaceBetween={20}
           loop
-          style={{ padding: '15px 15px 15px 15px', position: 'relative', height: '350px', border:'rgba(0,229,255,0.3) 2px solid'}}
+          style={{ padding: '7px 15px 15px 25px', position: 'relative', height: '350px', border:'rgba(0,229,255,0.3) 2px solid'}}
           breakpoints={{
             320: { slidesPerView: 1 },
             600: { slidesPerView: 2 },
@@ -76,13 +79,13 @@ export default function HomePage() {
           modules={[Navigation, Autoplay]}
           navigation
           autoplay={{
-            delay: 3000,
+            delay: 6000,
             disableOnInteraction: false,
             pauseOnMouseEnter: true,
           }}
           spaceBetween={20}
           loop
-          style={{ padding: '15px 15px 15px 15px', position: 'relative', height: '350px', border:'rgba(0,229,255,0.3) 2px solid'}}
+          style={{ padding: '7px 15px 15px 25px', position: 'relative', height: '350px', border:'rgba(0,229,255,0.3) 2px solid'}}
           breakpoints={{
             320: { slidesPerView: 1 },
             600: { slidesPerView: 2 },
@@ -120,7 +123,11 @@ export default function HomePage() {
           </Button>
         </Box>
       </Container>
-
+      <VinylDetailsModal
+        open={!!selectedVinyl}
+        onClose={() => setSelectedVinyl(null)}
+        vinyl={selectedVinyl}
+      />
       <Footer />
     </>
   );
