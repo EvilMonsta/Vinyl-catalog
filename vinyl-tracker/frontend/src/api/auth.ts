@@ -28,6 +28,8 @@ export interface UserDto {
 
 export const login = async (data: LoginRequest): Promise<LoginResponse> => {
   const response = await instance.post('/api/auth/login', data);
+  console.log('BASE API URL:', import.meta.env.VITE_API_URL);
+    console.log('response.data', response.data);
   return response.data;
 };
 

@@ -1,0 +1,5 @@
+
+.nx/installation
+.nx/cache
+.nx/workspace-data
+.env.production

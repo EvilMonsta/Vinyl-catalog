@@ -2,7 +2,7 @@ import axios from 'axios';
 import { triggerLogout } from '../utils/logoutUtil';
 
 const instance = axios.create({
-  baseURL: 'http://localhost:8080',
+  baseURL: import.meta.env.VITE_API_URL
 });
 
 instance.interceptors.request.use((config) => {

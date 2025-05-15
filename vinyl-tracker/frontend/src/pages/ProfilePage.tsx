@@ -15,7 +15,7 @@ import {
 } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import axios from 'axios';
+import axios from '../api/axios';
 
 interface Vinyl {
   id: number;
@@ -67,6 +67,12 @@ export default function ProfilePage() {
         const vinylsRes = await axios.get('/api/user/user-vinyls', {
           headers: { Authorization: `Bearer ${token}` },
         });
+
+        console.log('[DEBUG] Response from /user-vinyls:', vinylsRes.data);
+
+        if (!Array.isArray(vinylsRes.data)) {
+          throw new Error('Ожидался массив винилов, но пришло: ' + JSON.stringify(vinylsRes.data));
+        }
 
         if (!Array.isArray(vinylsRes.data)) {
           throw new Error('Ожидался массив винилов');

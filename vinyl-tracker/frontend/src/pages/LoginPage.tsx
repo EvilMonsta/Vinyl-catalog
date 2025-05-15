@@ -20,13 +20,30 @@ export default function LoginPage() {
 
   const mutation = useMutation({
     mutationFn: login,
-    onSuccess: (data) => {
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('username', data.username);
-      localStorage.setItem('role', data.role);
-      navigate('/');
-      window.location.reload(); // перерисовать навбар
-    },
+onSuccess: (data) => {
+  if (!data?.token) {
+    console.error('Token is missing in response:', data);
+    setError('Ошибка авторизации: не получен токен');
+    return;
+  }
+
+  const token = data.token;
+  localStorage.setItem('token', token);
+
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    localStorage.setItem('username', payload.username);
+    localStorage.setItem('role', payload.role);
+  } catch (e) {
+    console.error('Ошибка при разборе токена:', e);
+    setError('Ошибка при обработке токена. Попробуйте снова.');
+    return;
+  }
+
+  navigate('/');
+  window.location.reload();
+}
+,
     onError: () => setError('Неверный email или пароль'),
   });
 

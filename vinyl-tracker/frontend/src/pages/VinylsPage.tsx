@@ -11,38 +11,55 @@ import VinylDetailsModal from '../components/VinylDetailsModal';
 import { useState } from 'react';
 
 export default function HomePage() {
-  const { data: newVinyls, isLoading: loadingNew } = useQuery({
-    queryKey: ['newVinyls2025'],
-    queryFn: () => axios.get('/api/vinyls/new?limit=10').then(res => res.data)
-  });
+const { data: newVinyls, isLoading: loadingNew } = useQuery({
+  queryKey: ['newVinyls2025'],
+  queryFn: () =>
+    axios.get('/api/vinyls/new?limit=10').then(res => {
+      console.log('newVinyls response:', res.data);
+      return Array.isArray(res.data) ? res.data : res.data.vinyls || [];
+    })
+});
 
-  const { data: randomVinyls, isLoading: loadingRandom } = useQuery({
-    queryKey: ['randomVinyls'],
-    queryFn: () => axios.get('/api/vinyls/random?limit=10').then(res => res.data)
-  });
+const { data: randomVinyls, isLoading: loadingRandom } = useQuery({
+  queryKey: ['randomVinyls'],
+  queryFn: () =>
+    axios.get('/api/vinyls/random?limit=10').then(res => {
+      console.log('randomVinyls response:', res.data);
+      return Array.isArray(res.data) ? res.data : res.data.vinyls || [];
+    })
+});
+
   const [selectedVinyl, setSelectedVinyl] = useState<any>(null);
 
-  const renderVinylSlides = (vinyls: any[], loading: boolean) => {
-    if (loading) {
-      return Array.from({ length: 4 }).map((_, idx) => (
-        <SwiperSlide key={idx}>
-          <Skeleton variant="rectangular" width={200} height={250} sx={{ bgcolor: '#333', borderRadius: 2 }} />
-        </SwiperSlide>
-      ));
-    }
-
-    if (!vinyls || vinyls.length === 0) {
-      return (
-        <Typography sx={{ color: '#ccc', mt: 2 }}>Нет доступных пластинок.</Typography>
-      );
-    }
-
-    return vinyls.map((vinyl) => (
-      <SwiperSlide key={vinyl.id}>
-        <VinylCard vinyl={vinyl} onOpenDetails={() => setSelectedVinyl(vinyl)} />
+const renderVinylSlides = (vinyls: any[], loading: boolean) => {
+  if (loading) {
+    return Array.from({ length: 4 }).map((_, idx) => (
+      <SwiperSlide key={idx}>
+        <Skeleton
+          variant="rectangular"
+          width={200}
+          height={250}
+          sx={{ bgcolor: '#333', borderRadius: 2 }}
+        />
       </SwiperSlide>
     ));
-  };
+  }
+
+  if (!Array.isArray(vinyls) || vinyls.length === 0) {
+    return (
+      <Typography sx={{ color: '#ccc', mt: 2 }}>
+        Нет доступных пластинок.
+      </Typography>
+    );
+  }
+
+  return vinyls.map((vinyl) => (
+    <SwiperSlide key={vinyl.id}>
+      <VinylCard vinyl={vinyl} onOpenDetails={() => setSelectedVinyl(vinyl)} />
+    </SwiperSlide>
+  ));
+};
+
 
   return (
     <>

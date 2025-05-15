@@ -35,32 +35,37 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<AuthUser | null>(null);
   const [isInitialized, setIsInitialized] = useState(false);
 
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    const username = localStorage.getItem('username');
-    const role = localStorage.getItem('role');
-    const currentPath = window.location.pathname;
+useEffect(() => {
+  const token = localStorage.getItem('token');
+  const currentPath = window.location.pathname;
 
-    if (token && username && role) {
-      const payload = parseJwt(token);
-      console.log('JWT Payload:', payload);
+  if (token) {
+    const payload = parseJwt(token);
+    console.log('JWT Payload:', payload);
 
-      const isExpired = !payload.exp || payload.exp * 1000 < Date.now();
-      const isValidStructure = payload.sub && payload.role;
+    const isExpired = !payload.exp || payload.exp * 1000 < Date.now();
+    const isValidStructure = payload.sub && payload.username && payload.role;
 
-      if (isExpired || !isValidStructure) {
-        logout();
-      } else {
-        setUser({id: payload.sub,token, username, role });
-      }
+    if (isExpired || !isValidStructure) {
+      logout();
     } else {
-      if (currentPath !== '/login' && currentPath !== '/register') {
-        logout();
-      }    }
+      setUser({
+        id: parseInt(payload.sub),
+        token,
+        username: payload.username,
+        role: payload.role
+      });
+    }
+  } else {
+    if (currentPath !== '/login' && currentPath !== '/register') {
+      logout();
+    }
+  }
 
-    setLogoutCallback(logout);
-    setIsInitialized(true);
-  }, []);
+  setLogoutCallback(logout);
+  setIsInitialized(true);
+}, []);
+
 
   const logout = () => {
     localStorage.clear();

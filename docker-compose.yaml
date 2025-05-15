@@ -1,0 +1,44 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    container_name: backend
+    environment:
+      DBUsername: ${DBUsername}
+      DBPassword: ${DBPassword}
+      JWT_SECRET: ${JWT_SECRET}
+    ports:
+      - "8080:8080"
+    restart: always
+    networks:
+      - backend
+
+  frontend:
+    build:
+      context: ./vinyl-tracker
+    container_name: frontend
+    ports:
+      - "4200:4200"
+    restart: always
+    networks:
+      - backend
+
+  postgres:
+    image: postgres:17
+    container_name: postgres_server
+    environment:
+      POSTGRES_USER: ${DBUsername}
+      POSTGRES_PASSWORD: ${DBPassword}
+      POSTGRES_DB: ${DBName}
+    ports:
+      - "5431:5432"
+    volumes:
+      - ./pg_data:/var/lib/postgresql/data
+    restart: always
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: bridge
+
