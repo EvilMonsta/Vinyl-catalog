@@ -7,7 +7,6 @@ RUN npm install -g pnpm
 
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml nx.json tsconfig.base.json eslint.config.mjs ./
 COPY frontend ./frontend
-COPY .nx ./.nx
 
 RUN pnpm install
 RUN pnpm nx build frontend
