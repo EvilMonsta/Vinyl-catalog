@@ -16,6 +16,7 @@ import {
 import { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import axios from '../api/axios';
+import VinylCard from '../components/VinylCard';
 
 interface Vinyl {
   id: number;
