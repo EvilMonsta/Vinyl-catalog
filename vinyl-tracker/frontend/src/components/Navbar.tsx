@@ -1,19 +1,6 @@
 import {
-  AppBar,
-  Toolbar,
-  Button,
-  IconButton,
-  Avatar,
-  Box,
-  Menu,
-  MenuItem,
-  Typography,
-  InputBase,
-  Paper,
-  Popover,
-  ListItem,
-  ListItemButton,
-  ListItemText, Popper,
+  AppBar, Toolbar, Button, IconButton, Avatar, Box, Menu, MenuItem,
+  Typography, InputBase, Paper, Popover, ListItem, ListItemButton, ListItemText, Popper, Container
 } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
@@ -22,51 +9,26 @@ import axios from '../api/axios';
 import VinylDetailsModal from './VinylDetailsModal';
 
 const SearchIcon = () => (
-  <Box
-    component="span"
-    sx={{
-      display: 'inline-block',
-      width: 24,
-      height: 24,
-      mr: 1,
-      '& svg': {
-        fill: '#aaa',
-        transition: 'fill 0.3s ease',
-      },
-      '&:hover svg': {
-        fill: '#7cf152',
-      },
-    }}
-  >
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      height="24"
-      viewBox="0 0 24 24"
-      width="24"
-    >
-      <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zM10 14a4 4 0 110-8 4 4 0 010 8z" />
+  <Box component="span" sx={{ display:'inline-block', width:20, height:20, mr:1, '& svg':{ fill:'#9aa4b2' } }}>
+    <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 24 24" width="20">
+      <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zM10 14a4 4 0 110-8 4 4 0 010 8z"/>
     </svg>
   </Box>
 );
 
 interface Vinyl {
-  id: number;
-  title: string;
-  artist: string;
-  releaseYear: number;
-  description: string;
-  genreId: number;
-  coverUrl: string;
+  id: number; title: string; artist: string; releaseYear: number;
+  description: string; genreId: number; coverUrl: string;
 }
 
-const genreMap: Record<number, string> = {
-  1: "Rock",
-  2: "Pop",
-  3: "Hip-hop",
-  4: "Jazz",
-  5: "Electronic",
-  6: "Rap",
-};
+const genreLinks = [
+  { label: 'Rock', id: 1 },
+  { label: 'Electronic', id: 5 },
+  { label: 'Pop', id: 2 },
+  { label: 'Jazz', id: 4 },
+  { label: 'Hip-Hop', id: 3 },
+  { label: 'Rap', id: 6 },
+];
 
 export default function Navbar() {
   const auth = useAuth();
@@ -83,212 +45,120 @@ export default function Navbar() {
   const open = Boolean(anchorEl);
   const exploreOpen = Boolean(exploreAnchor);
 
-  const handleAvatarClick = (event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget);
+  const handleAvatarClick = (e: React.MouseEvent<HTMLElement>) => setAnchorEl(e.currentTarget);
   const handleClose = () => setAnchorEl(null);
-
-  const handleExploreClick = (event: React.MouseEvent<HTMLElement>) => setExploreAnchor(event.currentTarget);
+  const handleExploreClick = (e: React.MouseEvent<HTMLElement>) => setExploreAnchor(e.currentTarget);
   const handleExploreClose = () => setExploreAnchor(null);
 
-
   useEffect(() => {
-    const delayDebounce = setTimeout(() => {
+    const t = setTimeout(() => {
       if (searchQuery.trim().length > 1) {
         axios.get(`/api/vinyls/search/global`, { params: { query: searchQuery } })
-          .then(res => setSearchResults(res.data.slice(0, 4)))
+          .then(res => setSearchResults(res.data.slice(0, 6)))
           .catch(() => setSearchResults([]));
-      } else {
-        setSearchResults([]);
-      }
-    }, 700);
-
-    return () => clearTimeout(delayDebounce);
+      } else setSearchResults([]);
+    }, 500);
+    return () => clearTimeout(t);
   }, [searchQuery]);
 
   return (
-    <AppBar position="static" sx={{ bgcolor: '#121212', boxShadow: '0 0 8px rgba(0,255,255,0.1)' }}>
-      <Toolbar sx={{ gap: 2 }}>
-        <Typography
-          variant="h6"
-          component={Link}
-          to="/"
-          sx={{
-            textDecoration: 'none',
-            color: '#00e5ff',
-            fontWeight: 'bold',
-            textShadow: '0 0 5px #00e5ff',
-          }}
-        >
-          VinTrack
-        </Typography>
-
-        <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1, maxWidth: 600 }}>
-          <InputBase
-            placeholder="Поиск по названию, исполнителю и т.д."
-            value={searchQuery}
-            onChange={(e) => {
-              setSearchQuery(e.target.value);
-              setSearchAnchor(e.currentTarget);
-            }}
-            sx={{
-              color: 'inherit',
-              flex: 1,
-              fontSize: '0.95rem',
-              backgroundColor: 'rgba(255,255,255,0.05)',
-              borderRadius: 2,
-              px: 2,
-              py: 0.5,
-              ml: 2,
-              display: 'flex',
-              alignItems: 'center',
-              gap: 1,
-              '& input': { padding: 0 },
-            }}
-            startAdornment={<SearchIcon />}
-          />
-          <Popper open={searchResults.length > 0} anchorEl={searchAnchor} placement="bottom-start" sx={{ zIndex: 1300 }}>
-            <Paper sx={{ mt: 1, p: 1, bgcolor: '#1f1f1f', width: 400, boxShadow: '0 0 10px rgba(0,255,255,0.1)' }}>
-              {searchResults.map(vinyl => (
-                <Box
-                  key={vinyl.id}
-                  sx={{
-                    p: 1,
-                    borderBottom: '1px solid rgba(255,255,255,0.1)',
-                    cursor: 'pointer',
-                    '&:hover': { bgcolor: 'rgba(0,255,255,0.05)' }
-                  }}
-                  onClick={() => setSelectedVinyl(vinyl)}
-                >
-                  <Typography variant="subtitle2" sx={{ color: '#7cf152' }}>
-                    {vinyl.title} — {vinyl.artist}
-                  </Typography>
-                  <Typography variant="caption" sx={{ color: '#aaa' }}>
-                    {vinyl.releaseYear} • {genreMap[vinyl.genreId] || 'Жанр'}
-                  </Typography>
-                </Box>
-              ))}
-            </Paper>
-          </Popper>
-          <Button
-            onClick={handleExploreClick}
-            sx={{
-              ml: 2,
-              color: '#00e5ff',
-              fontWeight: 'bold',
-              textTransform: 'none',
-              '&:hover': { color: '#7cf152' },
-            }}
+    <AppBar position="sticky" color="transparent" sx={{ backdropFilter:'blur(6px)', borderBottom:'1px solid', borderColor:'divider' }}>
+      <Container maxWidth="lg">
+        <Toolbar disableGutters sx={{ gap: 2, minHeight: 64 }}>
+          <Typography
+            variant="h6"
+            component={Link}
+            to="/"
+            style={{ textDecoration: 'none' }}
+            sx={{ color:'text.primary', fontWeight: 800, letterSpacing:.3 }}
           >
-            Изучить
-          </Button>
+            VinTrack
+          </Typography>
 
-          <Popover
-            open={exploreOpen}
-            anchorEl={exploreAnchor}
-            onClose={handleExploreClose}
-            anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
-            transformOrigin={{ vertical: 'top', horizontal: 'left' }}
-            PaperProps={{
-              sx: {
-                mt: 1,
-                p: 2,
-                bgcolor: '#1f1f1f',
-                color: '#ccc',
-                borderRadius: 2,
-                boxShadow: '0 0 12px rgba(0,255,255,0.1)',
-                minWidth: 800,
-              },
-            }}
-          >
-            <Box display="flex" justifyContent="space-evenly" width="100%" alignItems="flex-start">
-              {[{
-                title: 'Открыть',
-                links: [
-                  { label: 'Каталог всех пластинок', path: '/catalog' },
-                  { label: 'Расширенный поиск', path: '/advanced-search' },
-                  { label: 'Популярные релизы', path: '/popular' },
-                ],
-              }, {
-                title: 'Жанры',
-                links: ['Rock', 'Electronic', 'Pop', 'Jazz', 'Hip-Hop', 'Classical', 'Folk'].map(g => ({ label: g, path: `/genre/${g.toLowerCase()}` })),
-              }, {
-                title: 'Внести вклад',
-                links: [
-                  { label: 'Рейтинг', path: '/rating' },
-                  { label: 'Предложить релиз', path: '/contribute' },
-                  { label: 'Подписка', path: '/subscription' },
-                ],
-              }].map((section) => (
-                <Box key={section.title} flex={1}>
-                  <Typography sx={{ color: '#7cf152', fontWeight: 'bold', fontSize: '1rem', mb: 2, textAlign: 'left', pl: 1 }}>
-                    {section.title}
-                  </Typography>
-                  {section.links.map(({ label, path }) => (
-                    <ListItem key={label} disablePadding sx={{ justifyContent: 'flex-start' }}>
-                      <ListItemButton
-                        component={Link}
-                        to={path}
-                        sx={{ py: 0.5, minHeight: 34 }}
-                      >
-                        <ListItemText
-                          primary={label}
-                          primaryTypographyProps={{
-                            sx: {
-                              fontSize: '0.8rem',
-                              color: '#ccc',
-                              textDecoration: 'none',
-                            },
-                          }}
-                        />
-                      </ListItemButton>
-                    </ListItem>
-                  ))}
-                </Box>
-              ))}
-            </Box>
-          </Popover>
-        </Box>
+          <Box sx={{ display:'flex', alignItems:'center', flexGrow:1, maxWidth: 640, ml: 3 }}>
+            <InputBase
+              placeholder="Поиск по названию, исполнителю и т.д."
+              value={searchQuery}
+              onChange={(e) => { setSearchQuery(e.target.value); setSearchAnchor(e.currentTarget); }}
+              startAdornment={<SearchIcon />}
+              sx={{
+                flex:1, px: 1.25, py: 0.5, borderRadius: 1.5,
+                backgroundColor:'#0f1317', border:'1px solid', borderColor:'divider',
+                '& input': { p:0, fontSize:14 }
+              }}
+            />
+            <Popper open={searchResults.length > 0} anchorEl={searchAnchor} placement="bottom-start" sx={{ zIndex: 1300 }}>
+              <Paper sx={{ mt: 1, width: 520, p: 0.5 }}>
+                {searchResults.map(v => (
+                  <Box key={v.id} sx={{ p: 1, borderRadius: 1, cursor:'pointer', '&:hover':{ backgroundColor:'rgba(255,255,255,.04)' } }}
+                       onClick={() => setSelectedVinyl(v)}>
+                    <Typography variant="subtitle2">{v.title} — {v.artist}</Typography>
+                    <Typography variant="caption" sx={{ color:'text.secondary' }}>{v.releaseYear}</Typography>
+                  </Box>
+                ))}
+              </Paper>
+            </Popper>
 
-        <Box sx={{ ml: 'auto' }}>
-          {!auth?.user ? (
-            <Button color="inherit" component={Link} to="/login">
-              Авторизация
+            <Button onClick={handleExploreClick} sx={{ ml: 2 }}>
+              Изучить
             </Button>
-          ) : (
-            <>
-              <IconButton onClick={handleAvatarClick} sx={{ p: 0 }}>
-                <Avatar alt={auth.user.username} src={`/api/user/avatar/${auth.user.username}`} />
-              </IconButton>
 
-              <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
-                <MenuItem onClick={() => { navigate('/profile'); handleClose(); }}>Профиль</MenuItem>
-                <MenuItem onClick={() => { navigate('/subscription'); handleClose(); }}>Подписка</MenuItem>
+            <Popover
+              open={exploreOpen}
+              anchorEl={exploreAnchor}
+              onClose={handleExploreClose}
+              anchorOrigin={{ vertical:'bottom', horizontal:'left' }}
+              transformOrigin={{ vertical:'top', horizontal:'left' }}
+              PaperProps={{ sx:{ mt: 1, p: 2, minWidth: 760 } }}
+            >
+              <Box display="flex" gap={4}>
+                {[{
+                  title: 'Открыть',
+                  links: [{ label:'Каталог всех пластинок', path:'/catalog' }]
+                },{
+                  title: 'Жанры',
+                  links: genreLinks.map(g => ({ label:g.label, path:`/catalog?genreId=${g.id}` }))
+                },{
+                  title: 'Ещё',
+                  links: [{ label:'Подписка', path:'/subscription' }]
+                }].map(section => (
+                  <Box key={section.title} flex={1}>
+                    <Typography sx={{ fontWeight:700, mb:1.5 }}>{section.title}</Typography>
+                    {section.links.map(({label, path}) => (
+                      <ListItem key={label} disablePadding>
+                        <ListItemButton component={Link} to={path} onClick={handleExploreClose}>
+                          <ListItemText primary={label} primaryTypographyProps={{ sx:{ fontSize:14 }}} />
+                        </ListItemButton>
+                      </ListItem>
+                    ))}
+                  </Box>
+                ))}
+              </Box>
+            </Popover>
+          </Box>
 
-                {auth.user?.role === 'ADMIN' && (
-                  <MenuItem onClick={() => { navigate('/admin/users'); handleClose(); }}>
-                    Админка
-                  </MenuItem>
-                )}
-
-                <MenuItem
-                  onClick={() => {
-                    handleClose();
-                    auth.logout();
-                  }}
-                >
-                  Выход
-                </MenuItem>
-              </Menu>
-
-
-            </>
-          )}
-        </Box>
-      </Toolbar>
-      <VinylDetailsModal
-        open={!!selectedVinyl}
-        onClose={() => setSelectedVinyl(null)}
-        vinyl={selectedVinyl}
-      />
+          <Box sx={{ ml:'auto' }}>
+            {!auth?.user ? (
+              <Button component={Link} to="/login">Войти</Button>
+            ) : (
+              <>
+                <IconButton onClick={handleAvatarClick} sx={{ p:0 }}>
+                  <Avatar alt={auth.user.username} src={`/api/user/avatar/${auth.user.username}`} />
+                </IconButton>
+                <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
+                  <MenuItem onClick={() => { navigate('/profile'); handleClose(); }}>Профиль</MenuItem>
+                  <MenuItem onClick={() => { navigate('/subscription'); handleClose(); }}>Подписка</MenuItem>
+                  {auth.user?.role === 'ADMIN' && (
+                    <MenuItem onClick={() => { navigate('/admin/users'); handleClose(); }}>Админка</MenuItem>
+                  )}
+                  <MenuItem onClick={() => { handleClose(); auth.logout(); }}>Выход</MenuItem>
+                </Menu>
+              </>
+            )}
+          </Box>
+        </Toolbar>
+      </Container>
+      <VinylDetailsModal open={!!selectedVinyl} onClose={() => setSelectedVinyl(null)} vinyl={selectedVinyl}/>
     </AppBar>
   );
 }

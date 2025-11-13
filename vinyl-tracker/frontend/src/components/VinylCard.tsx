@@ -79,75 +79,67 @@ export default function VinylCard({ vinyl, onOpenDetails, onAdded }: VinylCardPr
     <Card
       onClick={onOpenDetails}
       sx={{
-        width: 250,
-        position: 'relative',
-        backgroundColor: '#1e1e1e',
+        width: 240,
+        bgColor: 'background.paper',
         borderRadius: 3,
         overflow: 'hidden',
-        boxShadow: '0 0 10px rgba(0,255,255,0.1)',
-        transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-        '&:hover': { transform: 'translateY(-5px)', boxShadow: '0 0 14px rgba(0,255,255,0.2)' },
+        boxShadow: '0 2px 10px rgba(0,0,0,.35)',
+        transition: 'transform .18s ease, box-shadow .18s ease',
         cursor: 'pointer',
+        '&:hover': { transform: 'translateY(-2px)', boxShadow: '0 6px 18px rgba(0,0,0,.45)' },
       }}
     >
-      <CardMedia
-        component="img"
-        height="250"
-        src={vinyl.coverUrl}
-        alt={vinyl.title}
-        onError={(e) => {
-          const target = e.target as HTMLImageElement;
-          target.onerror = null;
-          target.src = '/placeholder-vinyl.png';
-        }}
-        sx={{ objectFit: 'cover' }}
-      />
-
-      <Box sx={{ p: 1 }}>
-        <Typography variant="subtitle2" noWrap sx={{ color: '#0ff', textShadow: '0 0 4px #0ff' }}>
-          {vinyl.title}
-        </Typography>
-        <Typography variant="caption" noWrap sx={{ color: '#aaa' }}>
-          {vinyl.artist}
-        </Typography>
-        <Typography variant="caption" sx={{ color: '#69d1d1', display: 'block' }}>
-          {genreMap[vinyl.genreId] || 'Неизвестный жанр'}
-        </Typography>
-      </Box>
-
-      {user && (
-        <Box
-          onClick={(e) => {
-            e.stopPropagation();
-            if (!isAlreadyAdded) handleAddVinyl();
+      <Box sx={{ position: 'relative' }}>
+        <CardMedia
+          component="img"
+          alt={vinyl.title}
+          src={vinyl.coverUrl}
+          onError={(e) => {
+            const t = e.target as HTMLImageElement;
+            t.onerror = null; t.src = '/placeholder-vinyl.png';
           }}
           sx={{
-            position: 'absolute',
-            top: 8,
-            right: 8,
-            width: 26,
-            height: 26,
-            borderRadius: '50%',
-            backgroundColor: isAlreadyAdded ? '#7cf152' : '#0ff',
-            color: '#000',
-            fontWeight: 'bold',
-            fontSize: '18px',
-            cursor: adding || isAlreadyAdded ? 'default' : 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            boxShadow: '0 0 6px rgba(0,255,255,0.5)',
-            transition: 'all 0.3s',
-            '&:hover': {
-              backgroundColor: isAlreadyAdded ? '#7cf152' : '#7cf152',
-              boxShadow: '0 0 8px rgba(124, 241, 82, 0.6)',
-            },
+            width: '100%',
+            aspectRatio: '1 / 1',   // КВАДРАТ
+            objectFit: 'cover'
           }}
-          title={isAlreadyAdded ? 'Уже в коллекции' : 'Добавить в профиль'}
-        >
-          {isAlreadyAdded ? '✓' : '+'}
-        </Box>
-      )}
+        />
+
+        {/* затемнённый градиент внизу */}
+        <Box sx={{
+          position: 'absolute', left: 0, right: 0, bottom: 0, height: '42%',
+          background: 'linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,.55) 40%, rgba(0,0,0,.7) 100%)'
+        }} />
+
+        {/* плюсик компактно */}
+        {user && (
+          <Box
+            onClick={(e) => { e.stopPropagation(); if (!isAlreadyAdded) handleAddVinyl(); }}
+            sx={{
+              position: 'absolute', top: 8, right: 8, width: 25, height: 25,
+              borderRadius: '50%', bgcolor: isAlreadyAdded ? 'success.main' : 'rgba(0,0,0,.55)',
+              color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center',
+              border: '1px solid rgba(255,255,255,.25)', backdropFilter: 'blur(4px)',
+              '&:hover': { bgcolor: isAlreadyAdded ? 'success.main' : 'rgba(0,0,0,.7)' }
+            }}
+            title={isAlreadyAdded ? 'Уже в коллекции' : 'Добавить в профиль'}
+          >
+            {isAlreadyAdded ? '✓' : '+'}
+          </Box>
+        )}
+      </Box>
+
+      <Box sx={{ px: 1.25, py: 1 }}>
+        <Typography variant="subtitle2" sx={{ color: 'text.primary' }} noWrap>
+          {vinyl.title}
+        </Typography>
+        <Typography variant="caption" sx={{ color: 'text.secondary' }} noWrap>
+          {vinyl.artist}
+        </Typography>
+        <Typography variant="caption" sx={{ color: 'primary.main', display: 'block', mt: .25 }}>
+          {genreMap[vinyl.genreId] || 'Genre'}
+        </Typography>
+      </Box>
     </Card>
   );
 }

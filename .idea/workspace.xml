@@ -5,12 +5,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4708744d-b2a8-4121-a5e1-581ab9761112" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.dockerignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/backend/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vinyl-tracker/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/vinyl-tracker/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vinyl-tracker/frontend/src/components/ProfileVinylDetailsModal.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vinyl-tracker/frontend/src/pages/CatalogPage.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vinyl-tracker/frontend/src/pages/WipPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/example/vinyltrackerapi/api/configs/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/example/vinyltrackerapi/api/configs/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/example/vinyltrackerapi/api/controllers/VinylPublicController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/example/vinyltrackerapi/api/controllers/VinylPublicController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/example/vinyltrackerapi/api/repositories/GenreRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/example/vinyltrackerapi/api/repositories/GenreRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/example/vinyltrackerapi/api/specifications/VinylSpecification.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/example/vinyltrackerapi/api/specifications/VinylSpecification.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/example/vinyltrackerapi/service/UserVinylFacade.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/example/vinyltrackerapi/service/UserVinylFacade.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/example/vinyltrackerapi/service/VinylService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/example/vinyltrackerapi/service/VinylService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vinyl-tracker/frontend/.env.production" beforeDir="false" afterPath="$PROJECT_DIR$/vinyl-tracker/frontend/.env.production" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vinyl-tracker/frontend/src/app/app.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/vinyl-tracker/frontend/src/app/app.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vinyl-tracker/frontend/src/components/Navbar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/vinyl-tracker/frontend/src/components/Navbar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vinyl-tracker/frontend/src/components/VinylCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/vinyl-tracker/frontend/src/components/VinylCard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vinyl-tracker/frontend/src/main.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/vinyl-tracker/frontend/src/main.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vinyl-tracker/frontend/src/pages/ProfilePage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/vinyl-tracker/frontend/src/pages/ProfilePage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vinyl-tracker/frontend/src/pages/SubscriptionPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/vinyl-tracker/frontend/src/pages/SubscriptionPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vinyl-tracker/frontend/src/pages/VinylsPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/vinyl-tracker/frontend/src/pages/VinylsPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vinyl-tracker/frontend/src/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/vinyl-tracker/frontend/src/styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vinyl-tracker/frontend/src/theme.ts" beforeDir="false" afterPath="$PROJECT_DIR$/vinyl-tracker/frontend/src/theme.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vinyl-tracker/frontend/vite.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/vinyl-tracker/frontend/vite.config.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,51 +51,40 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Maven. [site:run].executor": "Run",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "Spring Boot.VinylTrackerApiApplication.executor": "Run",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/JCP/VinylTrackerAPI/backend",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "prettierjs.PrettierConfiguration.Package": "C:\\JCP\\VinylTrackerAPI\\vinyl-tracker\\node_modules\\prettier",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Maven. [site:run].executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;Spring Boot.VinylTrackerApiApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/JCP/VinylTrackerAPI/backend&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;C:\\JCP\\VinylTrackerAPI\\vinyl-tracker\\node_modules\\prettier&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\JCP\\VinylTrackerAPI\\vinyl-tracker\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunAnythingCache">
     <option name="myCommands">
       <command value="mvn site:run" />
     </option>
   </component>
-  <component name="RunManager">
-    <configuration default="true" type="JetRunConfigurationType">
-      <module name="VinylTrackerAPI" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="VinylTrackerAPI" />
-      <option name="filePath" />
-      <method v="2" />
-    </configuration>
-  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-125ca727e0f0-intellij.indexing.shared.core-IU-243.23654.189" />
-        <option value="bundled-js-predefined-d6986cc7102b-822845ee3bb5-JavaScript-IU-243.23654.189" />
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.26830.84" />
+        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-IU-252.26830.84" />
       </set>
     </attachedChunks>
   </component>
@@ -98,6 +102,10 @@
       <workItem from="1746976998253" duration="33000" />
       <workItem from="1746977036298" duration="55000" />
       <workItem from="1746988887131" duration="18000" />
+      <workItem from="1762806878016" duration="75000" />
+      <workItem from="1762807943229" duration="9373000" />
+      <workItem from="1762884528897" duration="173000" />
+      <workItem from="1763043258526" duration="927000" />
     </task>
     <servers />
   </component>

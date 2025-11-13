@@ -57,11 +57,11 @@ body {
   pointer-events: none;
   background: conic-gradient(
           from 0deg,
-          rgba(0, 255, 255, 0.4) 0deg 40deg,
+          rgba(0, 255, 255, 0) 0deg 40deg,
           transparent 40deg 120deg,
-          rgba(0, 255, 255, 0.4) 120deg 160deg,
+          rgba(0, 255, 255, 0) 120deg 160deg,
           transparent 160deg 280deg,
-          rgba(0, 255, 255, 0.4) 280deg 320deg,
+          rgba(0, 255, 255, 0) 280deg 320deg,
           transparent 320deg 360deg
   );
   animation: rotateBorder 6s linear infinite;

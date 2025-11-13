@@ -89,9 +89,19 @@ public class VinylPublicController {
         return vinylService.getRandomVinyls(limit);
     }
 
-    @Operation(summary = "Получить страницу пластинок с пагинацией")
+    @Operation(summary = "Получить страницу пластинок с фильтрами")
     @GetMapping("/page")
-    public ResponseEntity<Page<VinylDto>> getVinylsPage(Pageable pageable) {
-        return ResponseEntity.ok(vinylService.getVinylsPage(pageable));
+    public ResponseEntity<Page<VinylDto>> getVinylsPage(
+            Pageable pageable,
+            @RequestParam(required = false) String title,
+            @RequestParam(required = false) String artist,
+            @RequestParam(required = false) Integer releaseYear,
+            @RequestParam(required = false, name = "genre") String genreName,
+            @RequestParam(required = false) Integer genreId
+    ) {
+        return ResponseEntity.ok(
+                vinylService.getVinylsPage(pageable, title, artist, releaseYear, genreName, genreId)
+        );
     }
+
 }

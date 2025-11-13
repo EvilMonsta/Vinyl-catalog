@@ -5,20 +5,20 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import App from './app/app';
 import './styles.css';
 import { AuthProvider } from './context/AuthContext';
-import { ThemeProvider } from '@mui/material/styles';
-import { CssBaseline } from '@mui/material';
-import { neonTheme } from './theme';
+import { ThemeProvider, CssBaseline } from '@mui/material';
+import { calmTheme } from './theme';
 
 const queryClient = new QueryClient();
 
 const root = ReactDOM.createRoot(document.getElementById('root')!);
+const theme = calmTheme('teal'); // 'blue' | 'purple' если захочешь
 
 root.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <AuthProvider>
-          <ThemeProvider theme={neonTheme('blue')}>
+          <ThemeProvider theme={theme}>
             <CssBaseline />
             <App />
           </ThemeProvider>

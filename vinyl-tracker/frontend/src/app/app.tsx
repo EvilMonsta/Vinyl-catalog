@@ -8,35 +8,43 @@ import AdminVinylsPage from "../pages/admin/AdminVinylsPage";
 import AdminUserPage from '../pages/admin/AdminUserPage';
 import RequireAdmin from '../components/RequireAdmin';
 import VinylsPage from '../pages/VinylsPage';
+import CatalogPage from '../pages/CatalogPage';
+import WipPage from '../pages/WipPage';
 
 export default function App() {
-    return (
-        <>
-            <Navbar />
-            <Routes>
-                <Route path="/" element={<VinylsPage />} />
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="/register" element={<RegisterPage />} />
-                <Route path="/profile" element={<ProfilePage />} />
-                <Route path="/subscription" element={<SubscriptionPage />} />
-              <Route
-                path="/admin/vinyls"
-                element={
-                  <RequireAdmin>
-                    <AdminVinylsPage/>
-                  </RequireAdmin>
-                }
-              />
+  return (
+    <>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<VinylsPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/subscription" element={<SubscriptionPage />} />
 
-              <Route
-                path="/admin/users"
-                element={
-                  <RequireAdmin>
-                    <AdminUserPage />
-                  </RequireAdmin>
-                }
-              />
-            </Routes>
-        </>
-    );
+        {/* новый каталог */}
+        <Route path="/catalog" element={<CatalogPage />} />
+
+        {/* "Предложить релиз" пока в разработке */}
+        <Route path="/contribute" element={<WipPage title="Страница «Предложить релиз» в разработке" />} />
+
+        <Route
+          path="/admin/vinyls"
+          element={
+            <RequireAdmin>
+              <AdminVinylsPage/>
+            </RequireAdmin>
+          }
+        />
+        <Route
+          path="/admin/users"
+          element={
+            <RequireAdmin>
+              <AdminUserPage />
+            </RequireAdmin>
+          }
+        />
+      </Routes>
+    </>
+  );
 }

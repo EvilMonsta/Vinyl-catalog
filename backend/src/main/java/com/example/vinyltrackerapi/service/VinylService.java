@@ -292,4 +292,45 @@ public class VinylService {
                 vinylPage.getTotalPages());
         return vinylPage.map(VinylDto::new);
     }
+
+    public Page<VinylDto> getVinylsPage(
+            Pageable pageable,
+            String title,
+            String artist,
+            Integer releaseYear,
+            String genreName,
+            Integer genreId
+    ) {
+        Specification<Vinyl> spec = Specification.where(null);
+
+        if (title != null && !title.isBlank()) {
+            spec = spec.and(VinylSpecification.hasTitle(title));
+        }
+        if (artist != null && !artist.isBlank()) {
+            spec = spec.and(VinylSpecification.hasArtist(artist));
+        }
+        if (releaseYear != null) {
+            spec = spec.and(VinylSpecification.hasReleaseYear(releaseYear));
+        }
+
+        // приоритет: genreId, иначе пробуем genreName
+        if (genreId != null) {
+            spec = spec.and(VinylSpecification.hasGenreId(genreId));
+        } else if (genreName != null && !genreName.isBlank()) {
+            // exact match (без contains), чтобы не ловить "Rock" внутри "Rockabilly"
+            var g = genreRepository.findByNameIgnoreCase(genreName.trim());
+            if (g.isPresent()) {
+                spec = spec.and(VinylSpecification.hasGenreId(g.get().getId()));
+            } else {
+                // жанр не найден — вернём пустую страницу без запроса к таблице
+                return Page.empty(pageable);
+            }
+        }
+
+        Page<Vinyl> page = vinylRepository.findAll(spec, pageable);
+        LOGGER.info("[VINYL] Страница с фильтрами: page={}/{}, size={}, total={}",
+                pageable.getPageNumber() + 1, page.getTotalPages(), pageable.getPageSize(), page.getTotalElements());
+
+        return page.map(VinylDto::new);
+    }
 }

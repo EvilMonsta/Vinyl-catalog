@@ -41,4 +41,10 @@ public class VinylSpecification {
     public static Specification<Vinyl> hasGenreId(Integer genreId) {
         return (root, query, cb) -> cb.equal(root.get("genre").get("id"), genreId);
     }
+
+    public static Specification<Vinyl> hasGenreName(String name) {
+        return (root, query, cb) -> name == null ? null :
+                cb.equal(cb.lower(root.get("genre").get("name")), name.toLowerCase());
+    }
+
 }
