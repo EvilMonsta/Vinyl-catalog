@@ -9,10 +9,10 @@ export default defineConfig(() => ({
   cacheDir: '../node_modules/.vite/frontend',
   server: {
     port: 4200,
-    host: '0.0.0.0',
+    host: 'localhost',
     proxy: {
       '/api': {
-        target: 'http://backend:8080',
+        target: 'http://localhost:8080',
         changeOrigin: true,
         secure: false,
       },
