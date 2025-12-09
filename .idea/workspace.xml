@@ -5,27 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4708744d-b2a8-4121-a5e1-581ab9761112" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/vinyl-tracker/frontend/src/components/ProfileVinylDetailsModal.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vinyl-tracker/frontend/src/pages/CatalogPage.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vinyl-tracker/frontend/src/pages/WipPage.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/example/vinyltrackerapi/api/configs/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/example/vinyltrackerapi/api/configs/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/example/vinyltrackerapi/api/controllers/VinylPublicController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/example/vinyltrackerapi/api/controllers/VinylPublicController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/example/vinyltrackerapi/api/repositories/GenreRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/example/vinyltrackerapi/api/repositories/GenreRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/example/vinyltrackerapi/api/specifications/VinylSpecification.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/example/vinyltrackerapi/api/specifications/VinylSpecification.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/example/vinyltrackerapi/service/UserVinylFacade.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/example/vinyltrackerapi/service/UserVinylFacade.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/example/vinyltrackerapi/service/VinylService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/example/vinyltrackerapi/service/VinylService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vinyl-tracker/frontend/.env.production" beforeDir="false" afterPath="$PROJECT_DIR$/vinyl-tracker/frontend/.env.production" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vinyl-tracker/frontend/src/app/app.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/vinyl-tracker/frontend/src/app/app.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vinyl-tracker/frontend/src/components/Navbar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/vinyl-tracker/frontend/src/components/Navbar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vinyl-tracker/frontend/src/components/VinylCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/vinyl-tracker/frontend/src/components/VinylCard.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vinyl-tracker/frontend/src/main.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/vinyl-tracker/frontend/src/main.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vinyl-tracker/frontend/src/pages/ProfilePage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/vinyl-tracker/frontend/src/pages/ProfilePage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vinyl-tracker/frontend/src/pages/SubscriptionPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/vinyl-tracker/frontend/src/pages/SubscriptionPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vinyl-tracker/frontend/src/pages/VinylsPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/vinyl-tracker/frontend/src/pages/VinylsPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vinyl-tracker/frontend/src/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/vinyl-tracker/frontend/src/styles.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vinyl-tracker/frontend/src/theme.ts" beforeDir="false" afterPath="$PROJECT_DIR$/vinyl-tracker/frontend/src/theme.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vinyl-tracker/frontend/vite.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/vinyl-tracker/frontend/vite.config.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,7 +85,7 @@
       <workItem from="1762806878016" duration="75000" />
       <workItem from="1762807943229" duration="9373000" />
       <workItem from="1762884528897" duration="173000" />
-      <workItem from="1763043258526" duration="927000" />
+      <workItem from="1763043258526" duration="2825000" />
     </task>
     <servers />
   </component>
